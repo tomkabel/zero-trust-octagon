@@ -134,6 +134,32 @@ The hardening path (Chapter 15) breaks this loop by adding runtime attestation w
 
 ---
 
+## The Supply Chain Attack Landscape
+
+The typosquatted dependency attack traced above is not a hypothetical. It is the most common and fastest-growing attack vector against cloud-native organizations.
+
+**The dependency tree problem:** A typical Node.js or Python microservice pulls in 200-500 transitive dependencies — packages it never explicitly declared but that its declared dependencies depend on, and their dependencies depend on, forming a tree where the developer can only realistically audit the first 2-3 levels. A malicious package at depth 4 of the dependency tree is functionally invisible to human review. The developer runs `npm install` or `pip install` and trusts the output. That trust is the TOFU vulnerability.
+
+**Attack sophistication gradients:** The attacker who typosquats a package name and hopes it gets installed is at the lowest tier of sophistication. At the mid-tier, attackers compromise legitimate maintainer accounts on package registries and push malicious updates to packages that already have thousands of legitimate dependents — a technique that is virtually undetectable because the package name, maintainer history, and version history all appear legitimate. At the top tier — nation-state supply chain operations — the attacker compromises the build infrastructure itself (the CI/CD runner, the artifact registry, the signing key) and injects malicious code at the point of artifact creation, after all tests have passed and all signatures have been applied. The SolarWinds incident demonstrated this pattern at scale: the attacker compromised the build system, and every customer who downloaded the signed, attested update received the backdoor.
+
+**The defense must be layered:** No single mechanism stops all three tiers. Typosquatting is partially addressed by package registry monitoring and namespace verification. Maintainer account compromise requires behavioral anomaly detection — "this package, which has published updates quarterly for 3 years, just published three updates in one day" — plus cryptographic provenance for the maintainer's identity. Build infrastructure compromise requires the most aggressive defense: reproducible builds (the same inputs always produce the same output, verifiable independently) plus hardware-attested build environments where the CI/CD runner's integrity is continuously verified by a TPM.
+
+Archetype C's starting state — TOFU attestation — addresses none of these tiers. The hardening path adds layered defense at each tier without breaking velocity.
+
+---
+
+## The CI/CD Integrity Problem
+
+The CI/CD pipeline is simultaneously the most powerful piece of infrastructure in the organization — it can deploy code to production with no human approval — and the least secured. This asymmetry is a structural consequence of velocity optimization.
+
+**What CI/CD typically has, but should not:** Access to every production secret (database passwords, API keys, signing certificates). The ability to modify infrastructure (Terraform state, Kubernetes manifests, IAM policies). Network access to production environments. The ability to bypass code review (automated merges on green builds). The ability to modify its own configuration. In many organizations, compromising the CI/CD pipeline is equivalent to compromising the entire infrastructure — and the pipeline is secured by a GitHub Personal Access Token stored in a `.env` file.
+
+**What CI/CD should have, but typically does not:** A bounded authority vector (Axiom 5) — "this pipeline runner can deploy to staging but not production," "this pipeline can build container images but not modify IAM policies." Hardware-attested execution — the runner's TPM attests to its integrity before the pipeline is trusted to deploy. Independent verification of pipeline output — another system, running in a different trust domain, verifies that the artifact produced by the pipeline matches what the source code declares, before admitting it to production.
+
+**The fix within Archetype C's velocity constraints:** The SPIRE deployment (Chapter 15, Q2-3) provides cryptographic workload identity for the pipeline runner itself. The runner is no longer "a process with a PAT" — it is "a workload with a verified SPIFFE identity that is authorized to deploy to staging but not to production, and its authority expires in 15 minutes." The CI/CD pipeline becomes a machine identity subject to the same attestation requirements as any other workload. This closes the asymmetry without adding human approval gates that would slow deploys.
+
+---
+
 ## Key Takeaways
 
 1. **Trust on First Use (TOFU) is the fundamental vulnerability of velocity-optimized architectures. Code that passes CI/CD is trusted at runtime forever — making the CI/CD pipeline the single point of architectural failure.**

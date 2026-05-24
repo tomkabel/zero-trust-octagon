@@ -68,13 +68,37 @@ AI-generated attacks disproportionately threaten two axiom dimensions:
 
 **The mitigation is the same:** Hardware-anchored cryptographic provenance. AI can fake software signals. It cannot fake a TPM-signed attestation report from hardware it does not control.
 
-### The Convergence of Dimensions
+### The Hardware Attestation Commoditization
 
-As cloud-native infrastructure matures, the nine morphological dimensions will converge:
+Over the next 5-7 years, hardware attestation capabilities — TPM 2.0, confidential computing enclaves, measured boot, firmware transparency — will become standard on all server-class CPUs, not just hyperscaler SKUs. AMD SEV, Intel TDX, and ARM CCA will converge on a common interface for attesting workload integrity. The cost floor for D1 (Trust Anchor) will drop from "foundry relationship + custom silicon" to "standard server procurement."
 
-- **D1 (Trust Anchor) and D4 (Attestation) will merge** as hardware roots become the universal foundation and multiple attestation modalities become standard on all platforms, not just top-tier hyperscalers.
-- **D6 (Policy Distribution) and D7 (Observability Trust) will converge** as the event stream becomes the observability pipeline — the same Kafka backbone carries policy updates and authenticated telemetry, blurring the boundary between "policy distribution" and "observability."
-- **D8 (Organizational Posture) will remain the hardest to automate.** Culture does not converge with technology. The fused organization, the blameless autopsy, the presumptively-wrong mindset—these are not engineering problems that hardware can solve. They are the constant drag that determines which organizations reach the Octagon and which remain in the Fortune 500 violation matrix.
+When hardware attestation is a commodity, the Octagon's hardest dimension — D1/D4 co-upgrade — becomes accessible to every archetype, not just A. The limiting factor becomes not technology availability but organizational willingness to accept the brittleness that hardware attestation introduces — the 10% self-quarantine rate, the attestation triage burden, the cryptographic ceremonies for hardware onboarding. These operational costs are independent of hardware cost. The architecture gets cheaper to build. It does not get cheaper to operate.
+
+### The SaaS Enforcement Common Interface
+
+The SaaS Blind Spot — the gap between what the IAP protects and what the SaaS layer exposes — will close over the next decade through regulatory pressure. An open standard where any identity-aware proxy can query any SaaS platform for a policy decision before a user's request is honored. The SaaS platform becomes a PEP like any other, reachable through a standard API, auditable through a standard log format.
+
+When this exists, the SaaS Coverage Map becomes an automated inventory rather than a manual survey. The SaaS Blind Spot closes structurally. Trickle-Truth becomes applicable to SaaS platforms — the garden environment can serve synthetic data through the same protocol. This is a regulatory and standards trajectory, not a technology one. The technology exists. The business incentives for SaaS vendors to support it do not — yet.
+
+### The Three Futures of the Octagon
+
+**Future 1 — Universal Baseline (optimistic):** Hardware attestation becomes commodity. SaaS mediation becomes standard. The Octagon becomes the regulatory baseline for critical infrastructure. Every bank, hospital, utility, and defense contractor must demonstrate Octagon satisfaction annually. The architecture validation checklist (Appendix B) becomes the SOC 2 of the 2030s.
+
+**Future 2 — High-Side Standard (realistic):** Hardware attestation and bilateral enforcement remain operationally expensive even as hardware costs drop. The Octagon becomes the standard for high-security environments — financial transaction backbones, health data exchanges, defense networks, critical infrastructure control planes — while the broader enterprise continues at the B/C maturity level.
+
+**Future 3 — Theoretical Pole (pessimistic):** The complexity and brittleness of full Octagon satisfaction prove too high for widespread adoption. The axioms remain a theoretical ideal against which real architectures are measured and found wanting. The value of the Octagon becomes its diagnostic function — identifying which axioms an architecture violates, and what those violations cost.
+
+---
+
+## The Invariant Across Futures
+
+Three claims hold regardless of which future materializes:
+
+1. **Axiom 7 (Epistemic Integrity) is the asymptote.** As hardware attestation costs drop and cryptographic provenance becomes ubiquitous, the distance between current architectures and Axiom 7 shrinks faster than for any other axiom.
+
+2. **Axiom 6 (Byzantine Fault Tolerance) is the differentiator.** The gap between organizations that survive their own defense mechanisms and organizations that are harmed by them is not a technology gap — it is an organizational culture gap. BFT is satisfied by architectures that design for failure, not architectures that buy tools.
+
+3. **Axiom 8 (Bilateral Symmetry) is the frontier.** Mutual enforcement requires protocol standards that cross organizational boundaries — between companies, between cloud providers, between SaaS vendors and their customers. The technical capability exists. The regulatory frameworks for requiring it do not. This is the long pole in the Octagon's adoption timeline.
 
 ---
 

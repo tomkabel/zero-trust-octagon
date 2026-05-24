@@ -134,6 +134,39 @@ Archetype A's greatest operational challenge is not attackers. It is *itself*. T
 
 This is the trade-off at the peak of the capability surface: mathematical certainty of integrity at the cost of brittle infrastructure. Organizations that adopt Archetype A accept this trade-off as a first-order design decision.
 
+The operational rhythm that emerges from this trade-off is distinct from any other archetype:
+
+**The daily quarantine cycle:** Every 24 hours, approximately 0.3% of nodes fail attestation for reasons that are ultimately benign — a DIMM with a single-bit error that flipped a PCR measurement, a thermal excursion that triggered a TPM extension mismatch, a firmware microcode update that changed a measurement hash before the CBOM was updated. Each of these nodes is quarantined automatically. Each must be triaged by an operations engineer who determines whether this is hardware degradation (re-image and re-admit), a firmware update gap (update CBOM and re-admit), or an actual compromise (forensic investigation).
+
+**The cost of triage:** For a 10,000-node cluster, that's approximately 30 nodes per day requiring human triage. At 15 minutes per node, that's 7.5 hours of engineering time per day — a full-time equivalent just for attestation triage. This is the operational burden of Epistemic Integrity.
+
+**The triage automation horizon:** Over time, as the operations team builds heuristics for distinguishing benign failures from attacks, triage becomes partially automated. But the automation itself must satisfy Axiom 7 — its decisions must carry cryptographic provenance. A machine-learning model that says "this quarantine is probably benign" is a behavioral signal, not a cryptographic proof. The node stays quarantined until a cryptographically attestable threshold is met — either a human signs off, or an automated system with hardware-attested integrity confirms.
+
+---
+
+## Emergent Property: The Attack-Absorption Capacity
+
+Archetype A's architecture produces a property that no other archetype achieves: **attack-absorption capacity.** Because Trickle-Truth does not stop the attacker but instead converts the attack into an intelligence-gathering operation, the system can sustain multiple simultaneous attacks without degradation.
+
+In a traditional architecture (Archetype B), each Hard Deny is a discrete business-impacting event. Two simultaneous attacks mean two simultaneous lockout cascades. The system's capacity to absorb attacks is exactly one — past that, the business impact multiplies beyond the operations team's capacity to respond.
+
+In Archetype A, the system can sustain an arbitrary number of simultaneous attacks — limited only by the LLM inference capacity allocated to the garden environment and the event-stream throughput for propagating policy transitions. Ten attackers can be simultaneously deceived in ten parallel garden sessions, each receiving internally consistent but entirely synthetic data. None learn they have been detected. None impact the business. The bottleneck is compute, not operational capacity.
+
+This changes the economics of defense at scale. A well-resourced adversary running a coordinated multi-vector campaign against Archetype A faces the same outcome as a lone attacker: they expend resources, reveal TTPs, and receive no real data. The architecture scales to match the attacker's scale. This is a property no detection-and-response model can achieve, because detection-and-response scales with human operations capacity, which is always finite.
+
+---
+
+## The Event-Stream Trust Surface — Revisited
+
+The event stream is the nervous system of Archetype A. When a `transition:trickle-truth` event must propagate to every enforcement point globally in under the inter-request latency window (~50ms), the event backbone is on the critical path for security correctness. This produces a heightened standard for event-stream integrity beyond any other architecture:
+
+1. **Producer attestation:** Every event producer — every PDP, every observer, every policy controller — must hardware-attest before it can publish to the stream. The event bus refuses publications from producers that cannot present a valid, fresh attestation report.
+2. **Event-level signatures:** Every individual event is signed by its producer. Consumers verify the signature before applying the policy change. A consumer that receives an unsigned event — or one signed by an unknown producer — treats it as hostile and logs the divergence.
+3. **Independent stream observation:** A separate, air-gapped observer watches the event stream for anomalies: unexpected publication volumes, schema violations, producers publishing from unknown attestation states, events that arrive in impossible sequences. The independent observer is the analog of the Truth Pipeline for the event stream — a mathematically certain watcher of the watcher.
+4. **Consumer-local verification:** No PEP trusts the event stream. Each consumer cryptographically verifies every event independently. The event bus is an untrusted relay — a transport medium, not an authority.
+
+This quad-layered integrity model breaks the infinite regress. The event stream is the system's most sensitive surface, and it is secured by the same architectural patterns as every other surface: attestation, observation, verification, and zero intrinsic trust.
+
 ---
 
 ## Key Takeaways

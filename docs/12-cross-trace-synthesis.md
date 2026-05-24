@@ -108,6 +108,47 @@ The ranking is not aligned with budget. B spends more than A (on different thing
 
 ---
 
+## Synthesis 5: The Litmus Test as an Economic Principle
+
+The ZTA litmus test can be stated as an economic principle: **A security architecture is sound to the extent that its defensive errors impose costs on the attacker rather than the defender.** Every dollar of damage from a false positive, every minute of operational paralysis from a lockout, every regulatory exposure from a self-inflicted outage — these are costs the defender bears that produce no corresponding cost on the attacker. They are pure efficiency losses in the security system.
+
+Hard Deny (Archetype B) has an error-cost ratio approaching infinity: the defender bears all the cost, and the attacker bears none. Trickle-Truth (Archetype A) has an error-cost ratio approaching zero: the defender bears none, and the attacker bears the cost of analyzing fake data and revealing TTPs. The intervening mechanisms — Degrade (C), Auto-Escalate (D), Micro-Friction — lie on a spectrum between these endpoints.
+
+The litmus test also exposes a temporal dimension. In Archetype B, the cost of an error lasts as long as the outage persists — hours, potentially days if regulatory reporting extends the timeline. In Archetype A, the error has no cost at all — the attacker interacts with a garden environment indefinitely, and the defender's only cost is the LLM inference bill. In Archetype D, the cost depends on a random variable (Pat's availability), making the error cost itself stochastic — a property no conventional risk management framework accounts for.
+
+---
+
+## Synthesis 6: The Maturity Asymmetry Principle
+
+One of the most counterintuitive findings from the cross-trace analysis is that **maturity on one dimension can amplify the damage from immaturity on another.** This is the maturity asymmetry principle.
+
+Archetype B has a mature identity verification system (ABAC, comprehensive rule sets) but an immature violation response (Hard Deny). The mature detection system produces *precise, high-confidence detections* — and then the immature response *maximizes the business damage from each precise detection.* The more mature the detection, the more damage the immature response inflicts. This is why the D4/D5 dependency deadlock (Chapter 14) is so critical: upgrading one without the other worsens the outcome.
+
+Archetype C has mature deployment automation (GitOps, CI/CD, instant rollback) but immature attestation (TOFU). The mature deployment system ensures that malicious code *deploys to production as fast as legitimate code.* The rollback capability is world-class — but the damage has already been done by the time rollback begins. The very mechanism that makes the architecture fast to repair makes it fast to compromise.
+
+The corollary to this principle: **When planning an architectural upgrade, identify the dimension whose maturity amplifies the damage from your least-mature dimension, and upgrade that pair together.** For B, the pair is D4 + D5 (detection + response). For C, the pair is D3 + D4 (enforcement + attestation). For D, the pair is D5 + D9 (response + human continuity). The pairing discipline prevents the maturity asymmetry trap.
+
+---
+
+## Synthesis 7: The Classification of Architecture-Induced Losses
+
+The four traces reveal a taxonomy of losses that can be traced to specific dimension values:
+
+| Loss Type | Primary Cause | Archetypes Affected | Mechanism |
+|-----------|--------------|-------------------|-----------|
+| **Breach loss** | D4 (attestation) failure | B, C, D | Data exfiltrated because verification was insufficient |
+| **Cascade loss** | D5 (response) failure | B | Defensive action harms legitimate users and business operations |
+| **Window loss** | D5 + D7 interaction failure | C, D | Attacker operates during the detect-respond gap |
+| **Blindness loss** | D7 (observability) failure | B, C, D | Attack activity is invisible or unverifiable |
+| **Fragility loss** | D9 (human continuity) failure | D | Entire response capability depends on a single unavailable human |
+| **Compliance-only loss** | D8 (organizational) failure | B | Architecture satisfies audits but fails under adversarial stress |
+
+**The total loss for any archetype is not the sum of individual dimension losses. It is the product of interactions.** Archetype B's total loss = breach loss × cascade loss × blindness loss × compliance-only loss — each amplifying the others. Archetype A's total loss is bounded by the architecture's design: breach loss is zero (Trickle-Truth), cascade loss is zero (BFT), blindness loss is zero (air-gapped pipeline), and compliance-only loss is zero (architecture is auditable by construction).
+
+This multiplicative model explains why upgrading a single dimension in a low-maturity cluster produces diminishing returns: the other dimensions in the cluster continue to multiply the loss. Upgrading all dimensions in a cluster simultaneously — the approach recommended in Part IV — eliminates the multiplicative effect.
+
+---
+
 ## Key Takeaways
 
 1. **The Implicit Trust Trap is universal: every non-Holy-Grail archetype trusts its observability pipeline as a single source of truth. The fix — an independent verification path — is achievable at every budget level.**
