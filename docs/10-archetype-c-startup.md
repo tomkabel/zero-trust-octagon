@@ -146,6 +146,40 @@ The typosquatted dependency attack traced above is not a hypothetical. It is the
 
 Archetype C's starting state — TOFU attestation — addresses none of these tiers. The hardening path adds layered defense at each tier without breaking velocity.
 
+### 2025-2026: The Supply Chain Breach Cascade — Four Incidents at Unprecedented Scale
+
+The attack traced above is structurally identical to four major incidents that occurred between August 2025 and May 2026. These are not hypotheticals — they are documented breaches analyzed by Google/Mandiant, Microsoft, CSA, and Lyrie Research. Together they validate Archetype C's primary threat profile and the velocity-supply chain asymmetry.
+
+**Incident 1: s1ngularity → UNC6426 AWS Takeover (August 2025)**
+The s1ngularity npm package was compromised in a supply chain attack, seeding a malicious post-install script into downstream CI/CD pipelines. Google/Mandiant tracked a threat actor (UNC6426) who exploited this compromise to achieve full AWS administrator access at a victim organization in under 72 hours. The attack chain: compromised Nx build tool → GitHub Actions OIDC trust abuse → CloudFormation IAM escalation → AWS admin. The OIDC trust policy flaw was confirmed across more than 275 AWS accounts — a class of misconfiguration that is routinely deprioritized during initial CI/CD setup. No zero-day exploits were used. The attacker combined three independently documented but rarely chained risks into a complete cloud takeover.
+
+Source: CSA Research Note, "UNC6426: nx Supply Chain to AWS Admin via OIDC" (March 2026).
+
+**Incident 2: LiteLLM PyPI Compromise (March 2026)**
+Two malicious versions (1.82.7, 1.82.8) of the LiteLLM Python package — a unified gateway to 100+ LLM providers with ~95-97 million monthly downloads — were published to PyPI. The compromise cascaded from a prior attack on the Trivy security scanner: Trivy's CI/CD was compromised, the PYPI_PUBLISH token was stolen from the GitHub Actions runner, and LiteLLM's own CI/CD ran the malicious Trivy, propagating the credential theft. The payload deployed three stages: a credential harvester targeting 50+ categories of secrets (cloud credentials, SSH keys, Kubernetes secrets), a Kubernetes lateral movement toolkit (privileged pods with host filesystem mounts, systemd persistence), and a persistent backdoor for remote code execution. Organizations running LiteLLM during the 2-3 hour window had all connected LLM provider API keys exfiltrated.
+
+Source: CSA Research Note, "TeamPCP: Cascading Supply Chain Attack on AI/ML Tooling" (March 2026); Trend Micro, "Inside the LiteLLM Supply Chain Compromise" (March 2026).
+
+**Incident 3: Axios / Sapphire Sleet (March 2026)**
+A North Korean intelligence operation (Sapphire Sleet / UNC1069) hijacked the npm account of the primary maintainer of axios — the JavaScript HTTP client installed by over 100 million developers weekly. For exactly 174 minutes, anyone running `npm install axios` received a fully functional, cross-platform Remote Access Trojan with anti-forensic self-deletion. The RAT beaconed to ~135+ C2 endpoints. Among the compromised developer machines were those with privileged Vercel access. Two weeks later, Vercel confirmed unauthorized access occurred; data from the breach was listed on BreachForums at $2M. The human-in-the-loop SOC was irrelevant — by the time a threat analyst was paged, triaged the alert, confirmed it wasn't a false positive, escalated, and drafted a response, the RAT had already exfiltrated, established persistence, and deleted itself. The 174-minute poison window is shorter than the MTTR of every non-A architecture *for this class of attack*: the initial compromise does not produce an internal alert, so detection depends on ecosystem notification, which arrives after the damage is done. The best-case 3-minute MTTR that Pat can achieve when at-desk and alerted applies only to detections that produce an internal signal — and supply chain compromises produce none at the point of ingestion.
+
+This incident is distinct in its mechanism — account takeover rather than CI/CD compromise — but identical in its TOFU consequence: the package was trusted because npm's registry functions as a TOFU trust anchor. The maintainer's account was the key to that anchor. The attack did not bypass attestation; it occupied the identity that attestation was supposed to protect.
+
+Source: Lyrie Research, "The 174-Minute Poison Window: How North Korean Hackers Compromised 100 Million Weekly npm Downloads" (April 2026).
+
+**Incident 4: TanStack / TeamPCP (May 2026)**
+A sophisticated breach of the TanStack GitHub repository and npm publishing pipeline resulted in 84 malicious versions across 42 @tanstack npm packages. The attack was attributed to TeamPCP — the same group behind the LiteLLM compromise. The malicious payload (`router_init.js`) harvested credentials from AWS IMDS/Secrets Manager, GCP metadata, Kubernetes service-account tokens, Vault tokens, `.npmrc`, GitHub tokens, and SSH private keys — deliberately skipping tokens named `github_token` to avoid triggering secret scanning. The attack cascaded to 160+ secondary npm and PyPI packages by harvesting credentials and self-replicating through compromised developer and CI environments. Confirmed secondary victims included Mistral AI and UiPath.
+
+Seven days later, TeamPCP exploited credentials harvested during this campaign to compromise the Nx Console VS Code extension, publishing a malicious version that was live for 11-18 minutes and exfiltrated approximately 3,800 internal GitHub repositories before detection.
+
+Source: Rescana, "TanStack npm Supply Chain Attack: Detailed Analysis of the May 2026 GitHub Actions Breach" (May 2026); Rescana, "GitHub Internal Repositories Breached via Compromised Nx Console VS Code Extension" (May 2026).
+
+**Four incidents, one structural pattern.** Three of the four (s1ngularity, LiteLLM, TanStack) exploited a TOFU trust assumption at the CI/CD boundary and cascaded through credential chaining — the CI/CD runner's tokens were the keys to the kingdom. The Axios incident exploited the same TOFU trust assumption at a different boundary — the registry maintainer account as trust anchor — with credential chaining at the ecosystem level (npm publish token → developer machines → Vercel access). All four operated faster than human responders could act. These four were selected not for uniqueness but for documentation quality — they are the best-analyzed examples of a class of supply chain attacks that includes dozens of smaller, less-documented incidents. The pattern repeats because the architecture repeats.
+
+CSA's Zero Trust guidance on these incidents applies directly: "Limiting the scope and blast radius of CI/CD credentials — so that a CI runner's credentials cannot publish to PyPI, access LLM APIs, and modify Docker Hub repositories simultaneously — would have broken the cascading kill chain at multiple stages."
+
+This is the textbook's Axiom 5 (Deterministic Bounded Authority) applied to the supply chain: the CI/CD runner must have an authority vector scoped to its specific purpose, with hardware-attested provenance, and its authority must expire automatically. The hardening path in Chapter 15 addresses this through SPIFFE/SPIRE cryptographic workload identity for pipeline runners.
+
 ---
 
 ## The CI/CD Integrity Problem
