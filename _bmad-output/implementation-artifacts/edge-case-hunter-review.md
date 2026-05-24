@@ -17,7 +17,7 @@ index 988e502..e41d87e 100644
 +# architecture
 +See [architecture/taste.md](architecture/taste.md)
 diff --git a/docs/06-dimensions-response-to-human.md b/docs/06-dimensions-response-to-human.md
-index 65d58f5..03cd8ae 100644
+index 65d58f5..11fee0a 100644
 --- a/docs/06-dimensions-response-to-human.md
 +++ b/docs/06-dimensions-response-to-human.md
 @@ -69,7 +69,7 @@ The grafting protocol:
@@ -156,7 +156,7 @@ index 65d58f5..03cd8ae 100644
  ---
  
  ## Key Takeaways
-@@ -231,3 +335,5 @@ D9 forces the architecture to account for human availability as a design paramet
+@@ -250,3 +352,5 @@ D9 forces the architecture to account for human availability as a design paramet
  - **Builds on:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](./05-dimensions-trust-to-attestation.md)
  - **Related:** [Chapter 8: Archetype A — The Holy Grail (Full Attack Trace)](./08-archetype-a-holy-grail.md)
  - **Related:** [Appendix D: Quick-Reference Card](./appendix-d-quick-reference.md)
@@ -292,4 +292,3 @@ index eaef18e..fa943a2 100644
  **What breaks:** Virtually every asymmetric cryptographic primitive used in current zero-trust deployments.
  
  | Cryptosystem | Applications in ZTA | CRQC Impact |
-```
