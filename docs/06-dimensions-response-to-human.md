@@ -69,7 +69,7 @@ The grafting protocol:
 4. The session's authentication token, cookies, and headers remain valid — but they are valid *in the garden*. The user's browser state, local storage, and navigation history are unaffected.
 5. From the attacker's perspective, the application continues to function normally. Every button works. Every page renders. Every API returns data.
 
-The graft is atomic — there is no period during which the attacker sees a mix of real and fake data that could reveal the deception.
+The graft is atomic for serial request sequences — no interleaved real and fake responses. For in-flight or concurrent requests (an attacker paginating through a large result set, or multiple AJAX calls), the enforcement point buffers in-flight requests that arrived before the graft event and completes them against the real data plane. All subsequent requests route to the garden. This produces a clean transition at the request boundary — the attacker may receive one final real response before the garden takes over, but never a partial or interleaved response.
 
 **2. Garden Environment (Live Synthetic Data Plane)**
 
@@ -81,7 +81,7 @@ The garden is not a static honeypot. It is a live, adaptive, LLM-powered synthet
 - When the attacker requests a resource, the garden's data fabricator generates a response that matches the expected schema, data types, field lengths, and relational integrity of the real data.
 - The fabricator uses a domain-fine-tuned LLM to produce *convincingly realistic but entirely fictional* content: plausible names, addresses, financial figures, medical records, source code, configuration values — whatever the application domain requires.
 - Generated data maintains internal consistency across requests. If the attacker requests "customer #482" twice, they receive the same synthetic customer both times, with consistent transaction history, consistent contact information, and consistent relational references.
-- The data carries subtle **watermark markers** — non-obvious patterns or specific values seeded into the generation — that allow the defender to identify exfiltrated garden data later, even if the attacker attempts to obscure its origin.
+- The data carries subtle **watermark markers** — non-obvious patterns or specific values seeded into the generation — that allow the defender to identify exfiltrated garden data later, even if the attacker attempts to obscure its origin. LLM-generated data carries additional detectable artifacts beyond intentional watermarks: statistical distribution patterns, repetition structures, and coherence failures in long sequences that differ from production data. An APT attacker running distributional analysis on exfiltrated data may detect these artifacts. Garden data generation quality must be validated against production data distributions before deployment, and the garden must periodically regenerate to incorporate improvements in LLM generation fidelity.
 
 **Freshness and evolution:**
 
@@ -113,6 +113,40 @@ Trickle-Truth depends on D6 = Event-Streamed policy distribution. The transition
 If the attacker's requests arrive with 50ms gaps, the `transition:trickle-truth` event must propagate to every sidecar, API gateway, and load balancer in under 50ms. At typical event-stream latencies (Kafka with local consumers: sub-10ms; NATS JetStream: sub-5ms), this is achievable. At push-model latencies (30-second to 5-minute sync intervals), it is not — the attacker would see a glitch.
 
 **Failure mode:** If the event does not propagate before the next request, the enforcement point serves real data. The attacker receives one real response in a sequence of fake ones — a detectable inconsistency. The event stream must provide at-least-once delivery with bounded latency. Missed events are a breach of the deception.
+
+**5. De-Grafting / Session Termination**
+
+Trickle-Truth is not indefinite. The deception has a finite window — the attacker will eventually pause, exfiltrate enough data to attempt monetization, or notice inconsistencies. The de-grafting protocol defines the transition from deception to termination:
+
+1. **Intelligence satiation:** The system tracks the attacker's TTP inventory. When the rate of new TTP discovery drops below a threshold (the attacker is repeating known techniques), the intelligence yield has peaked.
+2. **Garden decommission:** The enforcement point stops routing to the garden. The session is terminated — not by locking the account (which would confirm detection) but by returning a generic "service unavailable" error that mimics a production outage.
+3. **Attestation hygiene:** All compromised session tokens, cookies, and credentials are revoked. The attacker's known C2 infrastructure is added to blocklists. Any watermarked garden data that was exfiltrated is registered in threat intelligence feeds for future detection.
+4. **Post-deception analysis:** The full session recording — every request, every response, every TTP extracted — is packaged for the defender's threat intelligence pipeline. The attacker receives no indication that they were in a garden.
+
+#### Prior Art Foundations
+
+Trickle-Truth is not without precedent. It synthesizes several well-established security research fields into a unified operational framework. The following prior art informs and grounds the specification:
+
+**Honeypots and Honeynets (1990s–present):** The foundational concept of decoy environments dates to early honeypot research (Spitzner, *Honeypots: Tracking Hackers*, Addison-Wesley, 2002, Ch. 2). Production honeypot deployments — decoy servers, databases, and services designed to attract and monitor attackers — established the principle that deception yields intelligence. Trickle-Truth extends honeypots from *static decoys* (fixed environment, predictable data) to *adaptive synthetic data planes* (LLM-generated, session-consistent, evolving data) and from *separate infrastructure* (dedicated decoy servers) to *graft-in-place* (the enforcement point intercepts the attacker's request stream and rewrites responses, transparently replacing the real data plane with the synthetic one without moving the attacker to new infrastructure).
+
+**Canary Tokens and Honey Tokens (Thinkst Canary, 2015–present):** Embedded credentials, files, and records that alert on access represent the narrowest and most operationally proven form of deception. A canary AWS key dropped into a production server generates an alert the moment an attacker attempts to use it. Trickle-Truth generalizes this from *single alert* (access to a canary token triggers a PagerDuty notification) to *continuous, proportional, multi-dimensional response* (an entire synthetic environment, not a single decoy credential).
+
+**Moving Target Defense (MTD, 2010–present):** DARPA and academic research into dynamically shifting attack surfaces — rotating IP addresses, re-randomizing memory layouts, mutating network topologies — established the principle that attacker cost increases with environmental unpredictability. Trickle-Truth applies MTD to the *data layer* rather than the *infrastructure layer*: the content the attacker receives shifts and evolves rather than the network paths they traverse.
+
+**DARPA Active Cyber Defense Programs (2012–2020):** DARPA's Plan X (2012-2017) and Cyber Grand Challenge (2014-2016) explored autonomous cyber defense, including automated vulnerability discovery, patching, and deception at machine speed. Plan X specifically explored programmatic deception and dynamic defense orchestration, the structural ancestors of event-stream-driven policy transitions. The Cyber Grand Challenge's fully autonomous CTF format proved that machine-speed defense is possible; Trickle-Truth applies this principle to a production deception framework.
+
+**Cyber Deception Theory (Academic, 2015–present):** Pawlick et al., "Game Theory for Cyber Deception" (2020) and related literature model the attacker-defender interaction as a signaling game where the defender's optimal strategy involves mixing real and deceptive signals. Trickle-Truth operationalizes this theory with a specific architectural instantiation: the pollution rate $R$ is the game-theoretic mixing parameter, the garden environment is the signaling channel, and the event-stream graft is the mechanism for transitioning between strategies without the attacker detecting the state change.
+
+**Epistemic Binding Key — Prior Art:**
+The Epistemic Binding Key (EBK) — a cryptographic key that binds specific attestations to specific temporal states, serving as "truth insurance" — has the following foundations:
+
+- **Certificate Transparency (RFC 6962, 2013):** Public, verifiable, append-only logs of issued certificates. CT established that a tamper-evident log structure (Merkle tree) plus independent monitors can detect CA misbehavior that the CA itself has no incentive to report. EBK applies the same principle to telemetry attestation: a Merkle-attested log of system state claims, independently verifiable by any observer.
+
+- **Merkle Trees and Verifiable Data Structures (1980s–present):** Git's content-addressed object store, Bitcoin's transaction Merkle trees, and Certificate Transparency's log proofs all demonstrate that a Merkle root can serve as a compact, cryptographically binding commitment to a large, dynamic dataset. EBK uses Merkle trees to bind attestation claims to temporal states — the root hash at time $t$ is the binding proof of what was claimed at $t$.
+
+- **Transparency Logs in Software Supply Chains (Sigstore/Rekor, 2021–present):** Sigstore's Rekor transparency log records signed container image attestations in an append-only, publicly verifiable log. This is the closest operational analogue to EBK: a cryptographic proof that a specific artifact was attested at a specific time, independently verifiable, with no dependency on the attester's continued honesty.
+
+The EBK concept extends these foundations from *object provenance* (this container image was signed at time $t$) to *telemetry provenance* (this system state claim was attested at time $t$ by an observer whose identity is cryptographically bound to the hardware that produced the observation).
 
 ---
 
@@ -213,6 +247,76 @@ Archetype D has one person — Pat. If Pat is asleep, on a flight, or burnt out,
 D9 forces the architecture to account for human availability as a design parameter. If D5 = Auto-Escalate to Human and D9 = Single Point of Failure, the system's MTTR is bimodal: 3 minutes when Pat is available, 25+ minutes when Pat is not. Bimodal distributions produce false confidence — "last incident was resolved in 3 minutes" masks the structural risk.
 
 **Upgrade path:** Automated response for clear-cut cases (session revocation on obvious device posture failure) reduces Pat's alert load and eliminates the human dependency for high-confidence detections. For ambiguous cases, a small rotation (hire a second person) moves D9 from "single" to "small rotation."
+
+### D9 Sub-Dimensions: Measurable Operational Metrics
+
+D9 (Human Continuity) is the dimension most universally overlooked. To make it actionable for practitioners, it decomposes into four measurable sub-dimensions that together define the architecture's dependence on human availability:
+
+**D9a: Response Automation Coverage ($A_{D9}$)**
+
+The fraction of detection events that receive an automated response without human intervention.
+
+$$A_{D9} = \frac{\text{detections with automated response}}{\text{total detections}}$$
+
+- **Mostly Manual ($A_{D9} < 0.2$):** Fewer than 20% of detections trigger any automated action. Nearly everything requires a human.
+- **Partially Automated ($0.2 \leq A_{D9} < 0.6$):** Automated handling for high-confidence, low-ambiguity events. Human required for the rest.
+- **Highly Automated ($0.6 \leq A_{D9} < 0.95$):** Most detections handled automatically. Humans handle ambiguous escalations only.
+- **Fully Automated ($A_{D9} \geq 0.95$):** No human in the loop for standard detection-response. Only novel attack patterns require human analysis.
+
+**Operational significance:** Every additional 0.1 of $A_{D9}$ reduces the alert load on the humans in rotation by a proportional amount. At $A_{D9} = 0.2$ and a rotation of 1, Pat is the bottleneck. At $A_{D9} = 0.6$ and a rotation of 2, each person handles a sustainable load.
+
+**D9b: Response Depth ($D_{D9}$)**
+
+The number of independent responders available during any given hour.
+
+$$D_{D9} = |\{\text{responders available during time window}\}|$$
+
+- **Single ($D_{D9} = 1$):** One person. MTTR is bimodal as described above.
+- **Small Rotation ($D_{D9} = 2$):** Two people. If one is unavailable, the other covers. MTTR variance decreases.
+- **Shifted ($D_{D9} \geq 3$):** Three or more people in rotation with formal shift coverage. 24/7 availability guaranteed.
+- **Redundant Shifted ($D_{D9} \geq 5$):** Multiple independent responders available simultaneously. No single point of failure even during shift transitions.
+
+**D9c: Response Time Variance ($\sigma_{MTTR}$)**
+
+The standard deviation of mean time to respond across all incidents.
+
+$$\sigma_{MTTR} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(MTTR_i - \overline{MTTR})^2}$$
+
+- **Single ($\sigma_{MTTR}$ high):** MTTR ranges from 3 minutes (Pat at desk) to 25+ minutes (Pat unavailable). Average MTTR is meaningless — it obscures the structural risk.
+- **Small Rotation ($\sigma_{MTTR}$ moderate):** Variance narrows with redundancy but still spikes during shift transitions.
+- **Enterprise SOC ($\sigma_{MTTR}$ low):** Consistent response time regardless of time of day or personnel availability.
+- **Fully Automated ($\sigma_{MTTR}$ near-zero):** Response time is bounded by the automation pipeline, not human availability.
+
+**D9d: On-Call Rotation Burnout Risk ($B_{D9}$)**
+
+A qualitative metric measuring the sustainability of the current response staffing model.
+
+The four variables that determine burnout severity are: alert volume (events per day requiring human attention), rotation size (number of people sharing the load), automation coverage ($A_{D9}$), and alert quality (signal-to-noise ratio). Burnout occurs when the product of alert volume and false-positive rate exceeds the rotation size's sustainable attention budget, compounded by low automation.
+
+- **Unsustainable ($B_{D9}$ critical):** One person receiving >10 alerts per day with no automation. Burnout is not a risk — it is a guarantee.
+- **Fragile ($B_{D9}$ high):** Small rotation with moderate automation but high false-positive rate. Alert fatigue degrades response quality over time.
+- **Stable ($B_{D9}$ moderate):** Rotation sized to the alert volume. Automation handles routine events. False positives managed through policy tuning.
+- **Sustainable ($B_{D9}$ low):** Automation handles the majority of events. Humans handle only ambiguous cases. False positives tracked as a system quality metric.
+
+**Diagnostic for Practitioners:**
+
+To assess your D9 posture, ask:
+
+1. What is your $A_{D9}$? Run a 30-day trace of all detections. Count how many received automated response vs. human response.
+2. What is your $D_{D9}$ during 2-6 AM in your primary time zone? The worst-case availability matters more than the average.
+3. What is your $\sigma_{MTTR}$ over the last 12 months? If the standard deviation exceeds 2x the mean, you have a human continuity problem.
+4. What is your $B_{D9}$? Ask your primary responder: "How many times in the last month did you receive an alert and think 'I cannot handle another one' before opening it?" This question works reliably only in confidential, anonymous, or post-mortem contexts. For public self-assessment, substitute: "What is the ratio of alerts handled to alerts acknowledged?" An unacknowledged alert is a burnout signal regardless of what the responder says aloud.
+
+**The D9 upgrade path in practice:**
+
+| Starting State | $A_{D9}$ | $D_{D9}$ | Action | Cost |
+|---------------|----------|----------|--------|------|
+| Solo Operator (Pat) | <0.2 | 1 | Add automated response for top 3 alert types (session revocation, device posture failure, MFA anomaly) | $0-3K (cloud function + policy tuning) |
+| Small Team | 0.2-0.4 | 2 | Expand automation to include medium-confidence events. Add a third responder. | $0 (automation) + salary (third person) |
+| Growth Phase | 0.4-0.6 | 3 | Tune false positive rate. Implement shift coverage for night hours. | $0 (tuning) + shift differential |
+| Enterprise | 0.6-0.95 | 5+ | Full automation for all categories except novel attack patterns. Redundant coverage. | Continuous operational cost |
+
+*The $0–3K figure is the cost of the first automation step, not the cost of architectural hardening. Automation without attestation, without bounded authority, without policy distribution — automation without the other eight dimensions — produces a faster path to failure, not a hardened architecture.*
 
 ---
 
