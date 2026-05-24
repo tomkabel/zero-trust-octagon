@@ -4,3 +4,6 @@
 
 # brainstorming
 See [brainstorming/taste.md](brainstorming/taste.md)
+
+# architecture
+See [architecture/taste.md](architecture/taste.md)
