@@ -14,6 +14,42 @@ This appendix stress-tests each Octagon axiom against two future threat models t
 
 **Timeline:** Most estimates place CRQC availability in the 2028-2035 window for nation-state actors. The conservative side of this range (2028-2030) means that infrastructure being procured and deployed today will still be in service when the threat materializes.
 
+#### Regulatory PQC Timeline (NIST IR 8547, NSM-10, CNSA 2.0)
+
+The migration to post-quantum cryptography is not speculative — it is mandated by an escalating set of federal requirements with fixed deadlines:
+
+| Regulatory Action | Date | Requirement |
+|------------------|------|-------------|
+| NIST FIPS 203/204/205 PQC Standards | August 2024 | ML-KEM (key encapsulation), ML-DSA (digital signatures), SLH-DSA (hash-based signatures) standardized |
+| NSM-10 Strategic Posture | May 2022 | Federal systems must migrate to quantum-resistant cryptography; bulk of work before 2035 |
+| OMB M-23-02 Cryptographic Inventory | Annual from 2023 | Agencies must submit prioritized cryptographic inventories of systems using quantum-vulnerable cryptography |
+| CNSA 2.0 Phase 1: Software/firmware signing | 2025 | All software and firmware signing must transition to CNSA 2.0-approved algorithms |
+| First CAVP PQC Certifications | January 2026 | CIQ NSS and SafeLogic modules received CAVP certification covering ML-KEM and ML-DSA — *but these are NOT FIPS 140-3 validated* |
+| FIPS 140-2 → FIPS 140-3 Transition Complete | September 21, 2026 | All newly procured or renewed cryptographic modules must carry FIPS 140-3 compliant validation |
+| CNSA 2.0 Phase 2: Web browsers/servers, cloud services | 2026 | All web browsers, servers, and cloud services must use CNSA 2.0-approved algorithms by default |
+| DoD ZTA Target-Level Deadline | September 2027 | All DoD information systems must achieve Target-level ZTA — **before PQC migration is complete** |
+| NIST IR 8547: RSA/ECC Deprecated | After 2030 | All new systems must use post-quantum cryptography; RSA and ECC deprecated for new deployments |
+| NIST IR 8547: RSA/ECC Disallowed | After 2035 | No quantum-vulnerable public-key algorithms permitted in any federal system |
+| CNSA 2.0 Phase 3: Networking technologies | 2030 | All networking technologies (VPNs, routers, etc.) must use CNSA 2.0-approved algorithms |
+| CNSA 2.0 Phase 4: Niche equipment, legacy OT | 2033 | Final phase — niche equipment with long refresh cycles must complete migration |
+
+**The ZTA-PQC Dependency Problem (September 2027 vs. 2030-2035):**
+
+The DoD ZTA Target-Level deadline (September 2027) requires all DoD information systems to achieve Target-level zero trust architecture. But the PQC migration deadline is 2030-2035 — three to eight years later. This is a coordination gap between regulatory schedules set by different working groups, not a flaw in zero trust architecture. But do not mistake a coordination gap for a paperwork problem. It means that the cryptographic foundation of every system achieving ZTA compliance in 2027 — TPM attestation chains, SPIFFE SVID signatures, mTLS cipher suites, policy-hash verification — will need to be *replaced*, not upgraded, within 3–8 years. The cost of that replacement is not budgeted in current ZTA procurement cycles. The practical consequence is unchanged:
+
+1. Systems achieve ZTA compliance in 2027 using classical cryptography (ECDSA certificates, ECDHE key exchange, RSA policy signatures).
+2. Those same systems then require complete cryptographic rework when PQC mandates take effect between 2030 and 2035.
+3. This includes TPM attestation chains (currently ECDSA P-256), SPIFFE SVID signatures, mTLS cipher suites, policy-hash verification — every cryptographic primitive that ZTA depends on.
+4. PQC algorithms use 4-10x larger key and signature sizes than their classical equivalents, impacting performance, network bandwidth, and certificate chain management.
+
+**As of May 2026, NO FIPS 140-3 validated PQC module exists.** NIST's own projection (summer/fall 2025, presented at the PKI Consortium PQC Conference in Austin) was not met. The first validated module has no fixed closing date. Organizations that defer PQC planning until the first validated module appears will compress an already-constrained migration timeline — cryptographic migration cycles average 7-10 years across enterprise environments, and organizations starting PQC work in 2026 are already targeting completion at the boundary of the disallowance window with no schedule slack.
+
+- *The PKI Consortium conference projection is corroborated by pqcinformation.com's April 2026 tracking of the FIPS 140-3 validation gap.*
+
+**The action window for PQC migration in zero-trust is 2026-2030.** Infrastructure procured in 2026 will be receiving firmware updates until 2030-2032. The migration must be planned and funded before the hardware procurement cycle locks in non-PQC silicon. Dual-stack cryptography — conventional and PQC in parallel — is the correct strategy, with an expected 5-7 years of overlap before conventional algorithms can be fully deprecated.
+
+Sources: [NIST IR 8547 (Initial Public Draft, November 2024)](https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf), [Federal PQC Migration Deadlines (April 2026)](https://www.pqcinformation.com/federal-pqc-migration-deadlines-what-agencies-actually-face-in-2026-and-beyond/), [FIPS 140-3 Validation Gap (April 2026)](https://www.pqcinformation.com/fips-140-3-validation-gap-why-no-pqc-algorithm-has-a-validated-module-yet/), [MDPI: Synchronizing PQC, ZTA, and AI Security (February 2026)](https://www.mdpi.com/2079-8954/14/3/233), [DoD DTM 25-003: Zero Trust Strategy (July 2025)](https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dtm/DTM%2025-003.PDF)
+
 **What breaks:** Virtually every asymmetric cryptographic primitive used in current zero-trust deployments.
 
 | Cryptosystem | Applications in ZTA | CRQC Impact |
