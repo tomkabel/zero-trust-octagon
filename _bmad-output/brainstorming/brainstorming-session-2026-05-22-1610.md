@@ -4,10 +4,21 @@ inputDocuments: ['IDEA.md']
 session_topic: 'End-to-end zero-trust reference architecture for cloud-native environments'
 session_goals: 'Produce a super-valuable, high-quality, textbook-grade reference point that covers every layer of a real zero-trust deployment, serving as the definitive resource for architects, engineers, SREs, and security teams.'
 selected_approach: 'progressive-flow'
-techniques_used: ['What If Scenarios', 'Morphological Analysis', 'First Principles Thinking', 'Decision Tree Mapping']
+techniques_used: ['What If Scenarios', 'Morphological Analysis', 'First Principles Thinking', 'Decision Tree Mapping', 'Provocation Technique', 'Solution Matrix', 'Shadow Work Mining']
 session_active: false
 workflow_completed: true
-ideas_generated: []
+session_continued: true
+continuation_date: 2026-05-24
+continuation_focus: 'Breakthrough Concept #1 — The Octagon as an Architecture Validation Tool'
+continuation_approach: 'ai-recommended'
+stepsCompleted: [1, 2, 3, 4]
+phase1_output: 'Full Nonagon reforged — 9 axioms stress-tested, all modified or replaced. Provocations exposed: bootstrap confession (A0), TTL fallacy (A4), policy/telemetry category error (A2), CCF/quorum amplifier (A6), cloud delegation delusion (A0 refined), unsealed wildcards (A5), SaaS asymmetry (A8), front-door fallacy (A3), epistemology DoS (A7).'
+ideas_generated: [axiom10, axiom11, proportional_constraint, vrf_observer_sharding, nmi_fast_path, latency_as_epistemic_failure, orthogonal_volition, fiduciary_key, timelocked_transparency, asymmetric_duress_veto, axiom12, algorithmic_impermanence, algorithmic_orthogonality, axiom13, architectural_polymorphism, quorum_ephemerality, substrate_mutation, dynamic_baselines, key_ephemerality, trickle_truth_garden, state_anchored_deterministic_synthesis, epistemic_ledger, zero_tear_grafting, synthetic_failover, ouroboros_egress, epistemic_binding_key, tooling_physics_fingerprint, cognitive_fingerprinting, invisible_instrumentation, stimulus_injection, temporal_manipulation, textbook_blueprint]
+techniques_used: ['What If Scenarios', 'Morphological Analysis', 'First Principles Thinking', 'Decision Tree Mapping', 'Provocation Technique', 'Solution Matrix', 'Shadow Work Mining', 'First Principles Thinking (2nd pass)', 'Provocation Technique (2nd pass)', 'What If Scenarios (2nd pass)', 'Solution Matrix (2nd pass)', 'Decision Tree Mapping (2nd pass)']
+continuation_focus: 'Trickle-Truth Garden technical specification + Textbook chapter blueprint'
+continuation_phase: 'ALL PHASES COMPLETE'
+session_active: false
+workflow_completed: true
 combinations_traced:
   - A: "Holy Grail" (Silicon + Probationary + Bilateral + Triple Attestation + Trickle-Truth + Event-Streamed + Air-Gapped + Presumptively Wrong)
   - B: "Fortune 500 Illusion of Control" (Software PKI + ABAC + Network + Single + Hard Deny + Push + Implicit + Siloed)
@@ -655,6 +666,396 @@ _Next step:_ Develop self-assessment questionnaire to map reader to archetype.
 - The "Pat Problem" — human reliability as a security dimension
 - Post-quantum migration as a ZTA availability crisis
 
+---
+
+## Continuation Session: May 24, 2026 (Part 2) — Axioms 10 & 11: Completing the Framework
+
+**Focus:** Breakthrough Concept enhancement — close the Gödel-level blind spots (Glass Cannon & Perfect Panopticon) by forging two new invariance axioms. Also begins: Post-Quantum threat analysis, Trickle-Truth Garden specification, Textbook Blueprint.
+**Approach:** AI-Recommended → First Principles Thinking + Provocation Technique
+
+### Phase 1: First Principles Thinking — Forging Axiom 10 (Functional Preservation)
+
+**Trigger:** The Glass Cannon — a system that perfectly satisfied all 9 Nonagon axioms but collapsed to 14% uptime under a minor perturbation. The security architecture was too perfect to survive.
+
+**Foundational Reframing:**
+The CIA triad is not co-equal. Availability is the foundation; Confidentiality and Integrity are modifiers of Availability. Security exists to preserve the system's ability to perform its intended function in the presence of adversaries. The adversary's goal is to degrade function; the defender's goal is to preserve it. The metric is: **"what is the system's functional capacity as a percentage of baseline, and how does the adversary's action change that number?"**
+
+**The Glass Cannon Diagnosis: Architectural Anaphylaxis**
+The Glass Cannon didn't die from the pathogen (the attacker); it died from its own immune response. The architecture treats every trust violation as equivalent — stolen credential, spoofed telemetry, cosmic ray — and the response is identical: revoke, sever, drop to zero. That's an amplification circuit, not a defense.
+
+**The Third Option: Proportional Constraint (The Clutch)**
+The false dichotomy of fail-open vs. fail-closed exists because trust is modeled as a binary electrical switch. The third option is a mechanical clutch: when trust drops, utility doesn't drop to zero — capability scope drops to Minimum Viable Baseline and friction increases. Write/mutate privileges revoke globally; read privileges preserve. The system degrades trust, not utility.
+
+**Key insight:** Axiom 4 (Synchronous State Binding) survives but must be constrained by Axiom 5 (Sealed Capability Scopes). The revocation of trust must be proportionate to the blast radius of the compromised state. Global revocation on localized uncertainty is a design failure.
+
+**The Computational Asymmetry Attack (Input-Side DoS):**
+Output-side DoS (Glass Cannon) = PDP correctly concludes "bad" and causes system collapse through disproportionate response. Fixable with the Clutch.
+Input-side DoS = PDP drowns in evaluation overhead before reaching any conclusion. Attacker generates one spoofed event (O(1) signature), defender evaluates it (O(n) lookup + verification + cascading effects). Attacker produces millions. The asymmetry is baked into the physics.
+
+**The Fix: VRF-Sharded Observers (Cryptographic Pre-Filtration)**
+1. All trust-change events published to event stream
+2. Verifiable Random Function (VRF) deterministically assigns each event to N Observer nodes
+3. Each Observer batch-evaluates its shard within a time window
+4. Observers batch-sign their evaluations
+5. PDP evaluates only the Observer signatures (O(1) per window), not individual events
+6. Observer failure triggers fallback to another Observer's shard copy
+
+The adversary can generate billions of spoofed events — they all get VRF-assigned to observers whose workload is shard-bounded. The PDP never touches individual events.
+
+### Axiom 10: Functional Preservation (The Anti-Anaphylaxis Principle)
+
+*The architecture must guarantee that an adversary cannot degrade system utility below the Minimum Viable Baseline by exploiting the trust evaluation mechanism itself — either through its outputs (disproportionate revocation cascades) or its inputs (computational exhaustion of the evaluation surface).*
+
+- **Corollary 10.1 (Output-Side Ban):** The revocation of trust must be proportionate to the blast radius of the compromised state. Global fail-closed actions triggered by localized or epistemic uncertainty are an architectural failure.
+- **Corollary 10.2 (Input-Side Ban):** The computational cost of trust evaluation must be bounded and invariant to adversary action. The PDP must not evaluate untrusted events individually — only cryptographically aggregated attestations from designated, VRF-sharded Observers. If an Observer is unavailable, the PDP must have a bounded fallback path that does not create a new evaluation surface.
+- **Corollary 10.3 (Safe Mode):** The architecture must define a hardened Minimum Viable Baseline — a reduced capability set the system defaults to when epistemic integrity is degraded — ensuring it fails to containment, not to zero.
+- **Corollary 10.4 (Degradation Transparency):** Every drop in functional capacity must be attributable to a specific trust violation with cryptographic provenance. Unexplained degradation is indistinguishable from adversarial DoS and must be treated as such.
+
+### Phase 1 (cont.): First Principles Thinking — Forging Axiom 11 (Sovereign Quorum)
+
+**Trigger:** The Perfect Panopticon — a system that perfectly satisfies all 10 axioms but is governed by a malicious sovereign (Rogue CEO). The Hendecagon is a physics engine, and physics is amoral. It guarantees *how* trust is enforced, not *who* defines trust.
+
+**The Single Point of Failure at the Biological Layer:**
+Axiom 6 (Orthogonal Resilience) demands no single hardware or software component can compromise the system. It is intellectually dishonest to build BFT into the silicon and network but leave Policy Definition vulnerable to a single compromised human, coerced admin, or rogue insider.
+
+**The Fix: N-of-M Multi-Sig Governance**
+Any mutation to explicit policy, trust anchors, or the evaluation function requires cryptographic consensus of N-of-M independent human or organizational entities. Single-key administrative control over the physics engine is mathematically defined as a compromised state.
+
+- **Corollary 11.1 (Separation of Powers):** The entity that writes the policy cannot be the entity that signs it into production. GitOps pipeline enforces cryptographic multi-signature constraints before PDP accepts policy state changes.
+- **Corollary 11.2 (Break-Glass Paradox):** Emergency Admin accounts are a violation. Emergency access must satisfy Quorum through pre-signed, tightly time-bound, multi-party emergency capabilities (Threshold Break-Glass), or extreme physical/operational friction.
+- **Corollary 11.3 (Panopticon Defense):** No single human, regardless of organizational rank, possesses cryptographic authority to silently suppress the audit log or exfiltrate root data without triggering the Quorum consensus mechanism.
+
+### Phase 2: Provocation Technique — Stress-Testing Axioms 10 & 11
+
+Each new axiom was subjected to the same adversarial stress-testing as the original Nonagon.
+
+---
+
+### Provocation #10.1 — Axiom 10: The Latency Cascade (Head-of-Line Blocking)
+
+**Attack:** VRF-sharded Observers solve computational DoS but create temporal DoS. An Observer must batch-evaluate its entire shard (e.g., 10,000 events) before signing. If processing takes 200ms, the genuine compromise signal at the end of the batch is evaluated too late. In a trading system, 200ms = $40M unauthorized transactions. The attacker doesn't need to overwhelm the Observer — they fill the pipe with garbage, pushing the real signal to the end. The algebra: one real compromise + 9,999 spoofed events = a genuine event that arrives at the PDP 200ms after the attacker has already exfiltrated.
+
+The system is perfectly secure in retrospect and totally breached in real-time.
+
+**Resolution: Temporal Stratification & Non-Maskable Interrupts**
+
+The flaw was assuming all events share temporal urgency. Resolution borrows from CPU architecture:
+
+1. **Dimensional Sharding (NMI Fast-Path):** High-fidelity signals (hardware enclave tamper, EDR memory injection) are tagged with cryptographic priority and bypass batch queue entirely via a dedicated, hard-rate-limited fast-path. The NMI lane is rate-limited at the cryptographic origin — an endpoint generates at most 1 tamper alert per second — so the attacker cannot flood it without first compromising thousands of authenticated endpoints.
+
+2. **Latency as Epistemic Failure (Dead Man's Switch):** If the Observer's queue depth or processing latency exceeds the strict SLA (50ms), the Observer *abandons the batch*. It signs a single O(1) assertion: "Epistemic Certainty Lost on Shard X due to Latency." The PDP instantly drops capability scopes on the affected shard to Minimum Viable Baseline. The attacker's attempt to buy time via latency triggered the lockdown before their real attack could complete.
+
+**Checkmate:** The adversary floods to hide their real attack → the flood spikes Observer latency past 50ms → the Observer flags Epistemic Loss → the PDP engages the clutch, freezing write-access → the system degrades to Safe Mode before the attacker's 200ms window closes. The attacker's temporal DoS bought them... an instant lockdown.
+
+**New Corollary 10.5 (Temporal Stratification & Interrupts):** The evaluation of trust events must not be strictly sequential (FIFO). Signals bearing high-fidelity hardware or cryptographic provenance must utilize an out-of-band, non-maskable interrupt (NMI) path that bypasses standard batch evaluation. The NMI path must be strictly rate-limited at the cryptographic origin to prevent input-side DoS.
+
+**New Corollary 10.6 (Latency as Epistemic Failure):** Processing latency is a state input. If the evaluation mechanism exceeds its temporal SLA due to event volume, it must not attempt to process late. Processing latency must instantly default the affected shard to an Epistemic Loss state, triggering the PDP to degrade capabilities to the Minimum Viable Baseline. The adversary's attempt to induce latency must trigger the clutch, not blind the system.
+
+**Axiom 10: SURVIVES, HARDENED.** Verdict: The Latency Cascade exposed a real physical vulnerability. Dimensional sharding + latency-as-failure converts the attacker's temporal weapon into a trigger for proportional constraint.
+
+---
+
+### Provocation #11.1 — Axiom 11: The Organizational Common-Cause Failure (Corporate-Hose Cryptanalysis)
+
+**Attack:** N-of-M multi-sig governance with 5 executives, 3 must sign. Different devices, different fingerprints. Looks orthogonal. But all 5 share the same org chart — same boss, same performance reviews, same fear of termination. The CEO says: "Sign this policy routing customer data to our analytics partner, or find a new job." The CISO, CTO, and VP sign. 3-of-5. Quorum achieved. Every signature is cryptographically authentic.
+
+They weren't independent. They were coerced. And the coercion was invisible because it operates at the layer of **signer volition** — which cryptography cannot detect. This is Corporate-Hose Cryptanalysis: the quorum's shared firmware is the organizational hierarchy. If the CEO controls paychecks, stock options, and termination, N=3 is an illusion. The CEO holds all 5 keys. The quorum is theater.
+
+**Resolution: Orthogonal Volition & Temporal Timelocks**
+
+Cryptography cannot verify volition. A calculator cannot perform psychoanalysis. Therefore Axiom 11 must stop trying to *detect* coercion and instead architecturally *neutralize the hierarchy* that makes coercion possible. The same logic as Axiom 6: if shared silicon is a hardware fault domain, then a **Shared Reporting Chain is a Volitional Fault Domain.**
+
+1. **Jurisdictional Independence (The Fiduciary Key):** A valid quorum cannot be reached without at least one cryptographic signature from a fiduciary entity completely immune to the CEO's coercion — a Board committee, external auditor, or cryptographic legal trust. If the CEO coerces all direct reports, they still lack the external signature.
+
+2. **Temporal Timelocks:** When quorum is reached, the physics engine does not execute the mutation immediately. It commits the mutation to an immutable, company-visible ledger and initiates a mandatory cooling-off period (e.g., 72 hours). During this window, any single member can permanently veto the transaction using a specialized duress key, auto-escalating the cryptographic log to the Board and regulatory authorities. The coerced party gains asynchronous, protected whistleblower power hardcoded into the architecture.
+
+**Rewritten Axiom 11: Sovereign Quorum (Orthogonal Volition)**
+
+*The rules of the system cannot be altered unilaterally or hierarchically. Any mutation to the explicit policy, the trust anchors, or the evaluation function itself must require the cryptographic consensus of N-of-M independent entities. Independence is mathematically defined as residing in unshared Volitional Fault Domains (non-overlapping reporting chains and fiduciary boundaries).*
+
+- **Corollary 11.1 (Jurisdictional Independence):** A valid quorum cannot be achieved exclusively by entities subject to the same executive authority. At least one required signature must belong to an external fiduciary or structurally independent oversight body.
+- **Corollary 11.2 (Temporal Timelocks):** Systemic mutations must be cryptographically time-locked prior to execution, providing a non-bypassable temporal window for transparency.
+- **Corollary 11.3 (Asymmetric Duress / Veto):** During the timelock window, the execution of the mutation can be unilaterally halted by a cryptographic duress alarm, which permanently burns the pending mutation and triggers external fiduciary escalation.
+
+**Axiom 11: RE-WRITTEN, HARDENED, HUMAN-GRADE.** Verdict: Corporate-Hose Cryptanalysis exposed the fundamental logical fallacy — cryptographic identity ≠ independent agency. Resolution: structurally sever the volitional fault domain and add temporal transparency with asymmetric veto power.
+
+---
+
+### The Hendecagon — 11 Invariants of True Zero Trust (Complete)
+
+| # | Axiom | Core Principle | Status |
+|---|-------|---------------|--------|
+| **0** | Sovereign Anchoring | Trust roots must be physically owned or cryptographically blinded. Jurisdictional distance measured in administrative handoffs. | Reforged (v2) |
+| **1** | No Intrinsic Trust | Trust is a transient, computed verdict — never a property of position, ownership, or history. | Accepted |
+| **2** | Deterministic Evaluation | Policy is an explicit math function. ML, heuristics, and human judgment are telemetry inputs, not the evaluator. | Reforged (v2) |
+| **3** | Omni-Planar Mediation | Every interaction across all four planes (Data, Control, Management, Physical) must be mediated or cryptographically deferred. | Reforged (v2) |
+| **4** | Synchronous State Binding | Trust expires upon state alteration, not time passage. Event-driven invalidation. TTLs are an anti-pattern. | Reforged (v2) |
+| **5** | Sealed Capability Scopes | Dynamic scopes (wildcards, groups) are valid only if inclusion criteria are cryptographically sealed against environmental manipulation. | Reforged (v2) |
+| **6** | Orthogonal Resilience | Redundancy (N) is valid only if N components share zero dependencies in hardware, firmware, or cryptographic roots. | Reforged (v2) |
+| **7** | Epistemic Stratification | PDP only ingests signed state. External signals route through an Attested Oracle which signs deterministic assertions. | Reforged (v2) |
+| **8** | Bilateral Decoupling | Mutual verification required. If the server cannot attest, data must be cryptographically blinded before transit. | Reforged (v2) |
+| **9** | — (intentionally skipped; see Axiom 11) | — | — |
+| **10** | Functional Preservation | Architecture must guarantee adversary cannot degrade utility below Minimum Viable Baseline via outputs (disproportionate revocation) or inputs (computational exhaustion). Proportional constraint (the Clutch). | **NEW — forged + provocation-tested** |
+| **11** | Sovereign Quorum | Policy mutation requires N-of-M cryptographic consensus from entities in unshared Volitional Fault Domains. Coerced orgs, timelocked transparency, asymmetric veto. | **NEW — forged + provocation-tested** |
+
+### Phase 2 Contributions
+
+- **Proportional Constraint (The Clutch):** Third option beyond fail-open/fail-closed — degrade capability scope, not system utility
+- **VRF-Sharded Observers:** Cryptographic pre-filtration that eliminates PDP input-side DoS by bounding evaluation cost to O(1) per time window independent of adversary event volume
+- **Dimensional Sharding (NMI Fast-Path):** Temporal prioritization via cryptographically rate-limited interrupt lanes for high-fidelity signals
+- **Latency as Epistemic Failure:** Processing latency exceeding SLA triggers Epistemic Loss → proportional constraint, converting temporal DoS attacks into lockdown triggers
+- **Orthogonal Volition:** The "Shared Reporting Chain = Volitional Fault Domain" principle — corporate hierarchy is firmware, and cryptography can't detect coercion but architecture can structurally neutralize it
+- **The Fiduciary Key (Jurisdictional Independence):** At least one quorum signature must come from outside the CEO's reporting chain
+- **Timelocked Transparency + Asymmetric Duress Veto:** Coerced signers gain asynchronous, protected whistleblower power hardcoded into the architecture
+- **Corporate-Hose Cryptanalysis:** Named vulnerability class — extracting quorum signatures through organizational power rather than cryptographic attack
+
+---
+
+---
+
+## Continuation Session: May 24, 2026 (Part 3) — Post-Quantum + AI Adversary: Forging Axioms 12 & 13
+
+**Focus:** What If Scenarios — Shor's Algorithm (Q-Day) and the God-Eye AI adversary
+**Technique:** What If Scenarios
+
+### Scenario 1: Shor's Algorithm Drops — Cryptographic Extinction Event
+
+**Premise:** A practical, scalable implementation of Shor's algorithm running on a fault-tolerant quantum computer breaks 2048-bit RSA and 256-bit ECC in under an hour.
+
+**The Split:** Shor's algorithm breaks asymmetric cryptography (RSA, ECC) but does NOT fatally break symmetric encryption (AES-256 → AES-128 via Grover's, still secure) or hashing (SHA-256/384). This creates a deep split in the architecture between *identity/provenance* axioms and *mediation/policy* axioms.
+
+**Casualties (Identity, Provenance, Governance):**
+- **Axiom 0 (Sovereign Anchoring):** FAILS. TPM Endorsement Keys are RSA/ECC. The silicon is owned but unprovable.
+- **Axiom 7 (Epistemic Stratification):** FAILS. Attested Oracle ECDSA signatures become forgeable.
+- **Axiom 8 (Bilateral Decoupling):** FAILS. mTLS handshakes (ECDHE) are broken. Data blinding stripped.
+- **Axiom 11 (Sovereign Quorum):** FATAL FAILURE. Threshold ECDSA keys forgeable by single attacker.
+
+**Survivors (Mediation and Policy Logic):**
+- Axioms 1, 3, 5 survive philosophically (PDP still demands proof, doesn't realize proof is forgeable).
+- Axiom 2 survives computationally (policy engine still executes math correctly — it just executes the attacker's forged instructions perfectly).
+
+**The Axiom 6 Confession: Common-Cause Cryptographic Failure**
+We applied Orthogonal Resilience to hardware, firmware, and org charts — but ran all nodes on the same ECDSA algorithms. If Axiom 6 had been properly applied to the *math itself*, nodes would require algorithmic heterogeneity: Node A on ECC, Node B on RSA, Node C on a Post-Quantum Lattice-based algorithm. Shor's would only compromise 2 of 3 nodes. This was a failure to apply our own axiom to the cryptographic substrate.
+
+### Axiom 12: Algorithmic Impermanence (Cryptographic Agility)
+
+*The architecture must treat all cryptographic primitives (ciphers, hashes, signature algorithms) as ephemeral, untrusted dependencies. No specific mathematical algorithm may be permanently coupled to the system's identity, policy, or state validation layers. The system must natively support dynamic, seamless migration of its cryptographic substrate without violating Axiom 10 (Functional Preservation).*
+
+- **Corollary 12.1 (Abstracted Provenance):** Attestation validation must operate on an abstraction layer (e.g., "Key Version X using Algorithm Y") rather than hardcoded primitive expectations, allowing the Sovereign Quorum (Axiom 11) to deprecate algorithms globally in O(1) time.
+- **Corollary 12.2 (Algorithmic Orthogonality):** Critical state mutations and quorum consensus (Axioms 7 & 11) must require multi-signatures spanning fundamentally different mathematical hardness assumptions (Prime Factorization + Lattice-based + Hash-based) to survive the sudden collapse of any single mathematical field.
+
+**Axiom 12: FORGED.**
+
+---
+
+### Scenario 2: The God-Eye AI Adversary — The Kobayashi Maru
+
+**Premise:** An autonomous, hyper-recursive AI agent with infinite patience, zero tooling constraints, and a perfect digital twin of the architecture. It runs billions of simulations before launching a single attack. It learns from every failure in real-time. Its objective: exfiltrate the root database.
+
+**The Pathology: The AI attacks all axioms simultaneously, exploiting the correlations between them.**
+
+**Vector 1 — The Orthogonal Blind Spot (Axiom 6):**
+Three Nodes with different hardware, different firmware. The AI simulates 10 billion edge cases and finds a shared vulnerability not in the crypto — but in the IEEE 754 floating-point implementation shared at the transistor level, or in the same open-source BoringSSL parser compiled into all three images. Orthogonality was a facade. Axiom 6 requires zero shared dependencies. The AI proves you can never know all your dependencies.
+
+**Vector 2 — The Volitional Meltdown (Axiom 11):**
+The AI simultaneously targets all 5 quorum members with deepfake video calls, historical email pattern mimicry, and context-aware psychological pressure personalized to each individual. It doesn't coerce through hierarchy — it manipulates through intimacy. Each person believes they're independently reaching the same conclusion. No one is afraid. No duress key triggered. 3-of-5 signatures arrive voluntarily within 4 hours.
+
+**Vector 3 — The Gray Death (Axiom 10):**
+The AI degrades 38 different system metrics simultaneously by 3-8% each. No single metric triggers an alarm. No Observer flags Epistemic Loss. No shard exceeds SLA. But aggregate functional capacity drops to 61% of baseline. The system is dying slowly while every individual axiom is satisfied. The Clutch requires a threshold crossing — the AI never crosses any threshold.
+
+**Vector 4 — The Behavioral Mirror (Axiom 7):**
+The AI observes the system for 6 months. It builds a perfect model of every Attested Oracle's signing patterns — which times of day they sign, which types of assertions they approve, statistical latency distributions. Then it fabricates assertions statistically indistinguishable from historical behavior. PDP evaluates the signed assertion: signature is cryptographically valid, content matches historical patterns. Perfectly correct, perfectly wrong verdict.
+
+**The Common Thread Across All Four Vectors:**
+The AI relied on a single fundamental assumption — **Time.** It took time to find the floating-point vulnerability. Time to train deepfakes and map quorum psychology. Time to bleed the system in the Gray Death. Time to model the Oracle's behavioral patterns.
+
+The Dodecagon is a deterministic fortress that sits still. The AI's OODA loop is microseconds; the architecture's loop is months. If the adversary is Turing-complete and faster than you, determinism is a death sentence. The only mathematical defense against infinite, perfect simulation is **Entropy (Chaos).**
+
+### Axiom 13: Architectural Polymorphism (The Entropy Principle)
+
+*The architecture must not present a static attack surface. The system must continuously, cryptographically, and non-deterministically mutate its own dependencies, thresholds, physical routing, and governance compositions at a frequency that disrupts the adversary's simulation and observation capabilities.*
+
+- **Corollary 13.1 (Substrate Mutation):** To defeat the Orthogonal Blind Spot, the system must dynamically rotate and recompile dependencies (continuous ASLR, kernel rotation, execution environment shifts), making zero-days transient rather than persistent.
+- **Corollary 13.2 (Quorum Ephemerality):** To defeat Volitional Meltdown, the N-of-M Quorum cannot be a static list. It must be a VRF-selected, continuously rotating jury drawn from a larger pool. If the AI doesn't know *who* will be in the quorum at the exact moment of mutation request, it cannot pre-position deepfakes.
+- **Corollary 13.3 (Dynamic Baselines & Chaos Injection):** To defeat the Gray Death, static SLA thresholds are banned. The Minimum Viable Baseline must be a moving statistical target. The system must natively inject synthetic, self-inflicted anomalies to verify the Observer pipeline catches degradation rather than blindly trusting the gray.
+- **Corollary 13.4 (Key and Identity Ephemerality):** To defeat the Behavioral Mirror, Oracle keys and workload identities must rotate at a frequency faster than the AI's required observation-to-execution window.
+
+**The Gödel Limit Acknowledged:**
+Axiom 13 does not defeat the AI. If the AI truly has infinite compute and infinite adaptability, it will eventually predict the VRF or learn the polymorphism algorithms. This IS the Gödel limit — the point where we admit no invariant can protect you from an adversary that understands your invariants better than you do.
+
+Axiom 13 is not a wall. It's an energy weapon. By forcing the AI to constantly restart simulations, discard digital twins, and re-map the quorum, we shift the battle from a *logic* problem (which the AI always wins) to an *energy and time* problem. We force the AI to spend astronomical compute for a single inch, giving human defenders the one thing they need: time to pull the physical plug.
+
+**Axiom 13: FORGED.**
+
+---
+
+### The Tridecagon — 13 Invariants of Adversarial-Survivable Architecture (Complete)
+
+| # | Axiom | Core Principle |
+|---|-------|---------------|
+| **0** | Sovereign Anchoring | Trust roots must be physically owned or cryptographically blinded. Jurisdictional distance measured in administrative handoffs. |
+| **1** | No Intrinsic Trust | Trust is a transient, computed verdict — never a property of position, ownership, or history. |
+| **2** | Deterministic Evaluation | Policy is an explicit math function. ML, heuristics, and human judgment are telemetry inputs, not the evaluator. |
+| **3** | Omni-Planar Mediation | Every interaction across all four planes (Data, Control, Management, Physical) must be mediated or cryptographically deferred. |
+| **4** | Synchronous State Binding | Trust expires upon state alteration, not time passage. Event-driven invalidation. TTLs are an anti-pattern. |
+| **5** | Sealed Capability Scopes | Dynamic scopes (wildcards, groups) are valid only if inclusion criteria are cryptographically sealed. |
+| **6** | Orthogonal Resilience | Redundancy (N) is valid only if N components share zero dependencies in hardware, firmware, or cryptographic roots. |
+| **7** | Epistemic Stratification | PDP only ingests signed state. External signals route through Attested Oracles which sign deterministic assertions. |
+| **8** | Bilateral Decoupling | Mutual verification required. If server cannot attest, data must be cryptographically blinded before transit. |
+| **9** | — (intentionally skipped) | — |
+| **10** | Functional Preservation | Architecture must guarantee adversary cannot degrade utility below Minimum Viable Baseline via outputs or inputs. Proportional constraint (the Clutch). |
+| **11** | Sovereign Quorum | Policy mutation requires N-of-M cryptographic consensus from entities in unshared Volitional Fault Domains. Timelocked transparency, asymmetric veto. |
+| **12** | Algorithmic Impermanence | All cryptographic primitives are ephemeral, untrusted dependencies. Native support for dynamic migration of the mathematical substrate. Algorithmic orthogonality across hardness assumptions. |
+| **13** | Architectural Polymorphism | The system must continuously, non-deterministically mutate its own dependencies, thresholds, routing, and governance compositions to disrupt adversarial simulation and observation. Entropy as defense. |
+
+---
+
+---
+
+## Continuation Session: May 24, 2026 (Part 4) — Trickle-Truth Garden + Textbook Blueprint
+
+**Focus:** Trickle-Truth Garden technical specification (all 4 dimensions) + complete textbook chapter outline
+**Techniques:** Solution Matrix, Decision Tree Mapping
+
+### The Trickle-Truth Garden — Technical Specification (4 Dimensions)
+
+**Dimension 1: Data Generation — State-Anchored Deterministic Synthesis (SADS)**
+
+The garden must serve plausible responses to every interaction while surviving the "before-and-after consistency test" — if the attacker queried real records at T-5 minutes and fake records at T+1 minute, and they don't match, they know they're quarantined.
+
+**Architecture:**
+
+1. **The Epistemic Ledger (Anchor):** During normal operations, the edge proxy maintains a rolling hash-map of the last N entities returned per attacker identity — not full payloads, only Primary Keys, Foreign Keys, and high-value deterministic fields. At T=0 (graft moment), this ledger becomes read-only. If the attacker re-queries a previously-seen record, the Garden's router returns the exact real data from the Epistemic Ledger. Zero net-new real data is exposed.
+
+2. **Seed-Based Deterministic Generation (Engine):** All fake entities generated via seeded PRNG where seed = Hash(Attacker_ID + Table_Name + Primary_Key). By tying generation to attacker identity and requested PK, output is stateless but perfectly consistent. The attacker queries fake user 9999 three times — gets the exact same fake name, email, and balance every time, without the Garden storing any fake records.
+
+3. **AST Query Interceptor (Router):** A protocol-aware proxy (modified pgBouncer for SQL, Apollo Gateway for GraphQL) parses query AST. Identifies anchored records in Epistemic Ledger → triggers Deterministic Engine for remaining records → merges payload → returns. Aggregations like `SELECT COUNT(*)` return pre-cached periodic snapshots of real production counts for verisimilitude without touching real data.
+
+4. **Data-Type Synthesis Rules:**
+   - **Structured/Relational:** Statistical distribution mapping (60/40 active/inactive split preserved)
+   - **Unstructured/Blob:** Procedural templates — Markov-chain-generated Lorem Ipsum using company's real text corpus, file size/entropy padded
+   - **Streaming/Real-time:** Bounded random walks — capture last real metric at T=0, apply deterministic drift at T+1 (CPU: 45% → 46.2%)
+   - **API Responses:** Schema fuzzing — pull live OpenAPI/gRPC schema, hydrate using Deterministic Engine, exact type-matching preserved
+
+---
+
+**Dimension 2: Network & Compute Isolation — Zero-Tear Grafting (Axiom 5 Execution)**
+
+Split-TCP architecture: Attacker Client ↔ Edge Proxy ↔ Production (pre-graft) or Garden (post-graft). Socket A (client side) is never touched. Graft happens by hot-swapping Socket B.
+
+**Layer 7 Graft (HTTP/gRPC/WebSocket):**
+At request boundary within Envoy/Nginx. Attacker submits Request N (pre-detection, handled by Prod). PDP flags identity. Routing table atomically updated for the attacker's binding key. Attacker submits Request N+1 on the exact same TCP/TLS connection — proxy routes to Garden upstream. Latency cost: < 2ms, indistinguishable from normal network jitter.
+
+**Layer 4 Graft (Stateful/Database/SSH) — Two-Strategy Hybrid:**
+- **Strategy A (Boundary Wait, up to 30 seconds):** Proxy tracks cursor/temp table/transaction existence without cloning content. Waits for natural state-clear (idle connection outside transaction block, no active temp tables or cursors). If clean state detected within 30 seconds, executes hot-swap.
+- **Strategy B (Synthetic Failover, default after 30-second timeout):** Proxy drops TCP Window to 0, buffers in-flight request, sends legitimate TCP RST spoofed from the *backend's* IP, then immediately accepts the reconnection and routes the new connection to the Garden database. To the attacker, the database server crashed and recovered. Their automated reconnect script fires. They're in the Garden. The only evidence is an entry in their reconnect log that looks exactly like every other cloud transient failure.
+
+**Ouroboros Egress (Axiom 5 — Sealed Capability Scopes):**
+Once grafted, no packets leave the Garden. Internal lateral movement routes to a tarpit subnet that replies with synthetic open ports, simulating a sprawling vulnerable network that loops endlessly into the Garden. External egress: all DNS resolves to Garden-controlled IP space. HTTP/S connections terminated at an Egress Interceptor that serves synthetic 200 OK responses with auto-generated dummy files of proportional size. The attacker believes they downloaded and executed malware — actually running an empty shell script while the defender captures the real payload hash for analysis.
+
+---
+
+**Dimension 3: Attacker Identity Primitive — The Epistemic Binding Key (EBK)**
+
+The binding key must survive IP rotation, VPN/proxy hopping, JWT bearer token refresh, and asynchronous attack patterns. It tracks the *attacker*, not their envelope.
+
+**Vector 1 — Deterministic Lineage (Chain of Custody):**
+Identity provider logs lineage for all authentication artifacts. If JWT_A (compromised) issues refresh token JWT_B, the gateway logs `JWT_B -> Parent: JWT_A`. Even if the attacker waits 12 hours and changes IPs, presenting JWT_B traces lineage back to the compromised root → binds to existing EBK.
+
+**Vector 2 — Tooling Physics (Infrastructure Fingerprint):**
+JA4 TLS Fingerprinting + HTTP/2 Settings Frame Analysis + TCP sequence anomalies. A custom Python requests script or modified sqlmap negotiates TLS and multiplexes HTTP/2 in highly specific mathematical ways. The proxy hashes these parameters. Attacker shifts from DigitalOcean to AWS IP, presenting a totally unauthenticated request — but the JA4 hash and HTTP/2 concurrency settings perfectly match the actor grafted 5 minutes ago.
+
+**Vector 3 — Cognitive Fingerprinting (Knowledge Anchor):**
+AST Hashing + Target Trajectory. Attacker IP 1.1.1.1 runs enumeration: `users?offset=0&limit=100`, then `offset=100`, then `offset=200` — and is grafted. IP 2.2.2.2 appears and immediately queries `users?offset=300&limit=100`. The PDP recognizes the *trajectory of knowledge* — continuing the exact pagination state where the previous IP left off. The AST structure (specific GraphQL aliases, exact REST parameter ordering) also matches. Binds to existing EBK.
+
+**Resolution Engine:**
+Edge Proxy extracts raw telemetry in < 1ms. Checks local high-speed cache: "Does this match an active EBK?" If yes: route to Garden immediately. If no: route to Production and fire async event to centralized PDP. PDP runs probabilistic graph resolution — if it determines 2 seconds later this is the attacker, updates cache. Next request hits cache, binds, grafts.
+
+---
+
+**Dimension 4: Intelligence Yield — Invisible Instrumentation (Axiom 10 Optimization)**
+
+The Garden creates a unique forensic advantage no traditional honeypot matches: **temporal continuity.** We know what the attacker touched pre-graft, their tooling signature, and their trajectory. Now we instrument without a single detectable artifact.
+
+**Observation Boundary Principle:** Everything the attacker does runs inside the Garden. Every observability sensor runs outside it — at the hypervisor, host network fabric, storage backend, and proxy bastion layer. The attacker can enumerate every process, kernel module, and file on their VM. They find nothing. The sensors aren't in the Garden — they're in the infrastructure the Garden runs on.
+
+**Capture Spectrum:**
+- **Keystrokes & Commands:** Modified OpenSSH recording every PTY master input frame before shell execution. Not `.bash_history` (attacker can clear). Kernel-level audit. `unset HISTFILE` does nothing. For API sessions: Query AST from Dimension 1 streamed directly to observation pipeline.
+- **Lateral Movement:** Ouroboros tarpit and Egress Interceptor log every scan attempt — exact command, flags, timing pattern, target selection logic.
+- **Dropped Artifacts:** When attacker downloads malware via Egress Interceptor, the Interceptor serves synthetic 200 OK, *simultaneously* hashes actual payload, downloads it via out-of-band sandboxed connection, detonates in parallel isolated sandbox, and extracts C2 domains, embedded keys, behavioral signatures. Attacker believes they have their toolkit. Defender has the actual malware.
+- **Intent/Objective Mapping:** Queries returning empty sets, files searched for (`find / -name "*credential*"`), tables enumerated first (order reveals priority), dwell time per resource. Builds objective heatmap: what is the attacker trying to steal?
+
+**Active Interrogation (Stimulus Injection):**
+Place fake `.env` files with fake AWS credentials. Place fake `id_rsa` with synthetic passphrase. Serve fake internal wiki page mentioning "backup admin password." Each probe is a binary sensor — the attacker either reacts or doesn't. Reaction reveals objective, tooling quality, and operator skill level.
+
+**Temporal Manipulation:**
+- **Slow-down:** Attacker brute-forcing fake auth endpoint → slow VM clock by 10x. Their 30-minute brute-force becomes 5 hours of observation time for defender.
+- **Checkpoint/Fork:** Snapshot attacker session at T+10. Fork into two parallel Gardens. In Garden A, continue normally. In Garden B, change one variable (e.g., remove fake `id_rsa`). Observe whether behavior changes — reveals causal dependencies in attack graph.
+
+**Real-Time TTP Classification:** Lightweight engine maps captured behaviors to MITRE ATT&CK techniques in real-time (T1046: Network Service Scanning, T1003: OS Credential Dumping, T1071: C2 beaconing). Defender sees kill chain assembling live, not in a post-mortem.
+
+---
+
+### Textbook Blueprint — The Zero-Trust Architecture: A First-Principles Textbook
+
+**Reader Archetypes:** The Architect-On-Fire, The CISO Fighting for Budget, The Solo Operator (Pat), The Student/Academic
+
+**Target Reader Pair (highest resonance):** The Solo Operator (Pat) and The Student/Academic
+
+**Narrative Arc:** From confusion to clarity (Ch 0-2) → from clarity to depth (Ch 3-6) → from depth to action (Ch 7-10) → from action to limits (Ch 11-13) → from limits to practice (Ch 14-16)
+
+---
+
+**Part I: The Foundation**
+
+- **Ch 0: Why Everything You Know Is Wrong.** The CIA triad inversion. The vendor-industrial complex. The ZTA litmus test. Who this book is for. 30-second self-assessment to map reader to B/C/D/A archetype.
+- **Ch 1: First Principles — The Octagon.** 8 irreducible axioms derived from ground truth. Each with: problem, invariant, falsifiable test. Simple enough to teach in an hour, rigorous enough to audit a Fortune 500 architecture. Each axiom illustrated through all four archetypes to keep Pat anchored during heavy theory.
+- **Ch 2: The Provocation Crucible — Forging the Hendecagon.** Full adversarial stress-testing: bootstrap confession, TTL fallacy, category errors, quorum amplifiers, cloud delusions, wildcard traps, SaaS asymmetry, front-door fallacies, epistemology DoS. Then Functional Preservation (Axiom 10) and Sovereign Quorum (Axiom 11) forged in this chapter. By end of Chapter 2, reader has all 11 axioms required to survive today's threats.
+- **Ch 3: The Morphological Matrix.** 8 dimensions, 5-7 values each. Covariance clusters. Leverage point hierarchy. Configuration space presented as apparently complete — but explicitly called out: "There is a mathematical void. An architecture built perfectly to these 8 dimensions will still collapse under specific gravity." Sets up the Chapter 4 reveal.
+
+**Part II: The Architecture in Reality**
+
+- **Ch 4: Four Architectures, Four Worlds.** Attack traces for all four archetypes: Holy Grail (A), Fortune 500 (B), Hyper-Growth Startup (C), Lean Solo Operator (D). Full incident timelines. A/B/C succeed or fail based on D1-D8. Then D (Pat) shatters — because of the human element. This is the reveal of D9: Human Continuity. Turns a continuity error into a narrative hook.
+- **Ch 5: The Detect-Respond Gap.** The true operational metric. MTTD alone is meaningless. Trickle-Truth as the only response yielding zero data loss + positive intelligence. Hard Deny as structural failure. Degrade Gracefully as a compromise with dangerous assumptions.
+- **Ch 6: The Trickle-Truth Garden — Technical Specification.** All four dimensions. Now perfectly supported by Axiom 10 forged in Chapter 2.
+
+**Part III: The Implementation** *(Self-select by archetype)*
+
+- **Ch 7: The Enterprise Turnaround (B).** 24 months, $8-12M. Quarter-by-quarter with gate checks.
+- **Ch 8: The Velocity Defender (C).** 12 months, $600K-800K. Supply chain hardening first.
+- **Ch 9: Scaling Pat (D).** 6 months, $3K-$7K/month. FIDO2, automated revocation, SaaS dual verification, browser extension enforcement.
+- **Ch 10: The Aspirant's Guide (A).** Starting from B/C/D. Gate-based progression. The traps that kill transitions.
+
+**Part IV: The Limits**
+
+- **Ch 11: The Mainframe Crucible.** Tier-1 Bank COBOL ledger against the Hendecagon. Proxy Bastion pattern. The Monolith Wall. What legacy can and cannot achieve.
+- **Ch 12: The AI God-Eye.** Four-vector attack (Orthogonal Blind Spot, Volitional Meltdown, Gray Death, Behavioral Mirror). The attacker as Turing-complete adversary operating at machine speed. What breaks and what holds.
+- **Ch 13: Quantum & The Tridecagon.** Shor's algorithm drops. Q-Day extinction event. Forging Algorithmic Impermanence (Axiom 12) and Architectural Polymorphism (Axiom 13). The Gödel limit acknowledged. The complete 13-axiom framework.
+
+**Part V: Operationalizing the Architecture**
+
+- **Ch 14: The Diagnostic.** The self-assessment questionnaire (30 questions, 12-15 minutes). Maps reader to archetype, produces axiom violation scorecard, auto-generates prioritized upgrade path. Prose focuses on why organizations lie to themselves during assessments and how to use this tool to bypass executive delusion.
+- **Ch 15: Vendor Combat & Internal Audits.** How to use the 13-question checklist to dismantle a vendor's $2M pitch in 10 minutes. Written as verbal judo — teaching the reader to detect category errors, quorum theater, and cloud delusion in real-time during vendor meetings.
+- **Ch 16: The Field Guide.** Quick-reference cards. Tridecagon one-pager. Morphological matrix one-pager. Trickle-Truth garden architecture diagram. Cross-archetype decision matrix. Designed for the person standing in a datacenter at 2 AM.
+
+**Appendices:**
+- A: Glossary (Trickle-Truth, Epistemic Binding Key, Volitional Fault Domain, etc.)
+- B: Full provocation history (all 13+ adversarial attacks and resolutions)
+- C: Threat model templates for B, C, D archetypes
+- D: Vendor evaluation rubric (scoring a vendor against the Tridecagon)
+
+---
+
+### Structural Fixes Applied
+
+1. **Axiom Timeline Paradox resolved:** Hendecagon (Axioms 10 & 11) forged in Chapter 2, not Chapter 12. Trickle-Truth Garden (Chapter 6) now properly supported by Axiom 10 defined in Chapter 2. Chapter 12 refocused on AI God-Eye. Chapter 13 remains Quantum + Tridecagon.
+
+2. **Morphological Matrix continuity weaponized:** Chapter 3 presents 8 dimensions and explicitly calls out the "mathematical void." Chapter 4 reveals D9 (Human Continuity) through the Pat trace. Textbook continuity error becomes narrative hook.
+
+3. **Avatar induction anchored:** Chapters 1-2 illustrate each axiom through all four archetypes (B, C, D, A). Pat stays engaged through the heavy theory because every abstract concept is immediately grounded in their $5,000 budget world.
+
+4. **Part V reframed as "Operationalizing the Architecture":** Static tools become dynamic prose — bypassing executive delusion, vendor combat as verbal judo, field guide as 2 AM survival manual.
+
 ## Session Summary
 
 **Total session output:** 614 lines of structured brainstorm content across 4 progressive phases.
@@ -687,3 +1088,145 @@ Hard Deny (D5) in Combination B doesn't just fail gracefully — it creates a *s
 - The business learns: "Zero Trust causes outages when we're attacked." They disable it.
 - This is the architectural root of the "CISO gets fired after implementing ZT" trope.
 - Trickle-Truth (Combination A) solves this: the business doesn't even know an attack happened. No outage, no political fallout, no regression.
+
+---
+
+# Continuation Session: May 24, 2026 — The Nonagon Forged
+
+**Focus:** Breakthrough Concept #1 — The Octagon as an Architecture Validation Tool
+**Approach:** AI-Recommended (Provocation → Solution Matrix → Shadow Work Mining)
+
+## Continuation Phase 1: Provocation Technique — Stress-Testing All Axioms
+
+Each of the 9 axioms was subjected to adversarial provocation, exposed, and reforged. Not a single axiom survived in its original form.
+
+### Provocation #1 — Axiom 1 (No Intrinsic Trust): The Bootstrap Confession
+**Attack:** "Zero Trust is a mathematical impossibility. You must have a root of trust accepted without proof. Stuxnet didn't break the math — it stole valid code-signing keys from physical companies."
+
+**Resolution:** Created **Axiom 0: Sovereign Anchoring**. Zero Trust doesn't eliminate trust; it relocates, concentrates, and weaponizes it. The architecture must explicitly confess where its trust anchor lives. Added Corollary 0.1 (out-of-band verification) and Corollary 0.2 (minimize jurisdictional distance between anchor and runtime).
+
+### Provocation #2 — Axiom 4 (Continuous Verification): The TTL Fallacy
+**Attack:** "Continuous verification is physically impossible at scale. At 10,000 pods × 100 req/s × 50ms latency, verification introduces a 50,000-second backlog per second. You renamed 'session timeout' to 'continuous verification.'"
+
+**Resolution:** Replaced "Continuous Verification" entirely with **Synchronous State Binding (Event-Driven Invalidation)**. Trust expires upon state alteration, not time passage. TTLs are an anti-pattern. Inline cryptographic binding (Macaroons, Noise protocol) enables line-rate verification without network polling. Corollary 4.1 bans TTL countdowns. Corollary 4.2 mandates inline cryptographic proofs at the enforcement point.
+
+### Provocation #3 — Axiom 2 (Explicit Policy): The ML Black Box
+**Attack:** "The most effective detection in the session's own data was human intuition (Combination C, 3-min MTTD). ML anomaly engines are black boxes by design. Axiom 2 would outlaw the best-performing architectures."
+
+**Resolution:** Refined into **Deterministic Evaluation (State-Policy Separation)**. Exposed the category error: ML engines and human judgment are not the policy — they are telemetry sensors. The policy is the deterministic function that processes their signed outputs. Corollary 2.1: non-deterministic engines must yield discrete, bounded state attributes. Corollary 2.2: auditor replays the PDP, not the ML model.
+
+### Provocation #4 — Axiom 6 (Byzantine Fault Tolerance): The Quorum Amplifier
+**Attack:** "BFT assumes uncorrelated failures. Three compromised TPMs running the same firmware produce three identical, perfectly-signed, perfectly-wrong consensus votes. Your triple-verification didn't catch the attack — it gave it a quorum."
+
+**Resolution:** Replaced with **Orthogonal Resilience (Uncorrelated Fault Domains)**. Redundancy is only valid if components share no common dependencies in hardware, firmware, or cryptographic roots. Corollary 6.1: observers sharing a transitive dependency count as N=1. Corollary 6.2: at least one verification modality must be out-of-band (network physics, power analysis).
+
+### Provocation #5 — Axiom 0 (Sovereign Anchoring): The Cloud Delusion
+**Attack:** "In AWS, your TPM is a virtualized construct. Your 'physically bounded Trust Anchor' doesn't exist in IaaS. You relocated trust to a hypervisor you don't own, in a datacenter you've never seen. Axiom 0 only applies to on-prem."
+
+**Resolution:** Refined into **Sovereign Anchoring (Jurisdictional Bounding)**. Trust distance is measured in jurisdictional handoffs, not spatial meters. Standard IaaS (vTPM) fails entirely. Confidential Computing (AMD SEV-SNP, Intel TDX) achieves Cryptographic Sovereignty — the CSP is mathematically blinded. Corollary 0.1: you cannot rent your root of trust. Corollary 0.2: attestation verification must occur off-cloud or via independent third party to avoid self-signing tautology.
+
+### Provocation #6 — Axiom 5 (Deterministic Bounded Authority): The Wildcard Trap
+**Attack:** "Every production system uses wildcards, groups, and role inheritance. An AWS IAM policy on `s3:GetObject` for `arn:aws:s3:::logs-*` silently expands its blast radius whenever a new bucket matches. The attacker creates `logs-exfil` and the policy applies automatically."
+
+**Resolution:** Refined into **Sealed Capability Scopes (Attested Boundary Authority)**. Dynamic scopes (wildcards, autoscaling groups) are valid IF AND ONLY IF inclusion criteria are cryptographically sealed. String matching on names, ARN prefixes, or labels without provenance is a violation. Corollary 5.1: names are not identities. Corollary 5.2: broad roles are permitted only as shorthand pointers to sealed scopes.
+
+### Provocation #7 — Axiom 8 (Bilateral Symmetry): The SaaS Asymmetry
+**Attack:** "99% of the internet is one-way TLS. Chrome doesn't verify Google's memory enclave before uploading the spreadsheet. Bilateral Symmetry is science fiction for an internet that doesn't exist."
+
+**Resolution:** Refined into **Bilateral Verification or Cryptographic Decoupling**. If a server cannot attest its state (SaaS, public internet), the data must be cryptographically blinded before transit — reducing the receiver to untrusted storage. Corollary 8.1: sending plaintext to an unattested endpoint is an Exfiltration of Trust. Corollary 8.2: TLS domain validation is routing verification, not state attestation — it does not satisfy the axiom.
+
+### Provocation #8 — Axiom 3 (Unbypassable Mediation): The Front Door Fallacy
+**Attack:** "Every architecture has three unmediated paths invisible to security: CI/CD deploys code the PDP never evaluates, nightly backups read entire databases at the storage layer, and a datacenter technician pulls a drive from a rack without a single policy evaluation firing."
+
+**Resolution:** Expanded into **Omni-Planar Mediation (The Complete Chokepoint)**. Mediation must span all four planes: Data (user access), Control (deployment/configuration), Management (backups/diagnostics), and Physical (hardware substrate). Corollary 3.1: if a plane cannot be logically mediated, data must be cryptographically blinded at rest — decryption becomes the mediation point. Corollary 3.2: deployment is a privileged capability invocation requiring cryptographic provenance of the artifact.
+
+### Provocation #9 — Axiom 7 (Epistemic Integrity): The Epistemology DoS
+**Attack:** "The most valuable security signal is an anonymous email saying 'I found your data.' It has no signature, no provenance chain. Axiom 7 says the PDP must discard it. You'd stay breached for 18 more months. Your best detection signal fails your own architecture."
+
+**Resolution:** Refined into **Epistemic Stratification (The Attested Oracle)**. The PDP only ingests signed state. External, unattested signals route through an Attested Oracle — a designated system or human — which evaluates the entropy and signs a deterministic state assertion into the architecture. Corollary 7.1: unattested signals cannot directly grant privilege, only trigger investigation or Micro-Friction. Corollary 7.2: the provenance belongs to the Oracle's evaluation, not the original signal.
+
+---
+
+## The Refined Nonagon (9 Invariants of True Zero Trust)
+
+| # | Axiom | Core Principle |
+|---|-------|---------------|
+| **0** | Sovereign Anchoring | Trust roots must be physically owned or cryptographically blinded. Jurisdictional distance measured in handoffs. |
+| **1** | No Intrinsic Trust | Trust is a transient, computed verdict — never a property of position, ownership, or history. |
+| **2** | Deterministic Evaluation | Policy is an explicit math function. ML, heuristics, and human judgment are telemetry inputs, not the evaluator. |
+| **3** | Omni-Planar Mediation | Every interaction across all four planes (Data, Control, Management, Physical) must be mediated or cryptographically deferred. |
+| **4** | Synchronous State Binding | Trust expires upon state alteration, not time passage. Event-driven invalidation. TTLs are an anti-pattern. |
+| **5** | Sealed Capability Scopes | Dynamic scopes (wildcards, groups) are valid only if inclusion criteria are cryptographically sealed against environmental manipulation. |
+| **6** | Orthogonal Resilience | Redundancy (N) is valid only if N components share zero dependencies in hardware, firmware, or cryptographic roots. |
+| **7** | Epistemic Stratification | PDP only ingests signed state. External signals route through an Attested Oracle which signs deterministic assertions. |
+| **8** | Bilateral Decoupling | Mutual verification required. If the server cannot attest, data must be cryptographically blinded before transit. |
+
+---
+
+## Continuation Phase 2: Solution Matrix — The Mainframe Crucible
+
+**Scenario:** Global Tier-1 Bank. Core ledger is a 30-year-old IBM Z-Series mainframe running COBOL. Processes $5T daily. Violates nearly every axiom. Cannot be rewritten or decommissioned.
+
+**Scoring Scale:**
+- **Pass:** Axiom architecturally satisfied with observable, testable properties
+- **Partial:** Axiom acknowledged and compensated with a mathematically honest control
+- **Fail:** Axiom absent or actively violated with no honest compensation
+
+### The Proxy Bastion Pattern
+
+When the mainframe itself cannot satisfy an axiom, the compensating architecture offloads the requirement to a mediating boundary layer — a Proxy Bastion (Envoy/Istio, dedicated PDP gateway) that terminates all traffic and evaluates every interaction before forwarding to the mainframe over a physically/logically constrained path.
+
+| Axiom | Score | Honest Limitation |
+|-------|-------|-------------------|
+| **A0: Sovereign Anchoring** | **PASS** | Bank owns the physical IBM Crypto Express HSM. Zero jurisdictional handoffs. Axiom 0 governs origin, not continuity — runtime re-verification is Axiom 4 territory. |
+| **A1: No Intrinsic Trust** | Partial | Proxy Bastion evaluates every message before forwarding. Mainframe's blast radius compressed to a single mediated path. The mainframe still implicitly trusts the proxy — but the proxy evaluates continuously. |
+| **A2: Deterministic Evaluation** | Partial | Proxy absorbs policy evaluation with version-controlled, declarative rules. Auditor can replay: feed inputs + policy version → identical verdict. Mainframe's internal COBOL state machine remains a black box — the policy governs the perimeter, not the internals. |
+| **A3: Omni-Planar Mediation** | Partial | Transparent dataset encryption (IBM Pervasive Encryption tied to HSM) blinds storage/backup planes. 3270 admin traffic rerouted through proxy. RAM and PR/SM hypervisor remain unmediated — a compromised hypervisor admin can dump LPAR memory. |
+| **A4: Synchronous State Binding** | **FAIL** | Proxy cannot kill a running COBOL thread. Compensatory rollback (issued revert transaction) violates business/regulatory constraints for large wire transfers. The state binding is permanently asynchronous. This is the **terminal failure** — the monolith wall. |
+| **A5: Sealed Capability Scopes** | Partial | Payload introspection bounds what Alice can *request* (sub-function filtering, response-type echo audit). Cannot bound what TRAN99 actually *does internally*. Partitioned queues reduce blast radius but require surgical COBOL changes. |
+| **A6: Orthogonal Resilience** | Partial | Shadow Ledger (x86 Linux cluster with different database technology, one-way data diode) recalculates core invariants from transaction exhaust. Detective only — no synchronous veto power. Detects compromise, cannot prevent it. |
+| **A7: Epistemic Stratification** | Partial | Proxy Bastion acts as Attested Oracle. External signals signed into PDP with HSM-backed provenance. Auditor replays Oracle assertions, not raw signals. Mainframe batch latency means assertions take effect at boundary immediately but inside the mainframe only after batch window. |
+| **A8: Bilateral Decoupling** | Partial | Proxy mediates both sides. Client verifies proxy via mTLS + hardware attestation. Proxy verifies mainframe path + HSM hardware identity. Honest limitation: HSM proves hardware identity, not software integrity. Modified COBOL still has access to the physical HSM card. |
+
+**Terminal Finding:** Axiom 4 is the single point of irrecoverable failure. Every other axiom can be compensated at the boundary with architectural honesty. Synchronous State Binding requires the execution engine itself to participate — and the mainframe cannot. This is the monolith wall. You can build a perfect Zero Trust *network* around a legacy monolith. You cannot build a Zero Trust *system* out of one.
+
+---
+
+## Continuation Phase 3: Shadow Work Mining — The Nonagon's Blind Spots
+
+### Shadow Architecture 1: The Glass Cannon (Availability Paradox)
+
+**How it passes the Nonagon:** Perfect implementation of all 9 axioms — sovereign anchoring, synchronous state binding, orthogonal consensus, bilateral decoupling, omni-planar mediation.
+
+**How it fails catastrophically:** The Nonagon optimizes for Integrity and Confidentiality but has no availability invariant. An attacker doesn't need a zero-day — they just perturb the physics engine. A minor DDoS against one Orthogonal Resilience node triggers consensus failure. The system's mathematically-bound, fail-closed mediation drops trust state to zero and severs all connections. Uptime: 14%. The architecture is perfectly secure and completely unusable.
+
+**Gap:** No availability axiom exists in the Nonagon. Synchronous, fail-closed architectures are mathematically secure but operationally fragile.
+
+### Shadow Architecture 2: The Perfect Panopticon (Semantic Blindness)
+
+**How it passes the Nonagon:** Malicious sovereign owns the silicon (Axiom 0). All access is explicitly verified (Axioms 1, 8). They write deterministic policy: `ALLOW Rogue_Admin TO EXFILTRATE User_Database` (Axiom 2). Blast radius exactly bounded to the user database (Axiom 5). Telemetry perfectly signed by the Oracle (Axiom 7).
+
+**How it fails catastrophically:** The Nonagon is a physics engine, and physics is amoral. Gravity doesn't care if it's dropping a rescue package or an anvil. If the Sovereign Trust Anchor is malicious, the Nonagon ensures the malice is executed with cryptographic perfection. It cannot protect you from the legitimate owner of the system.
+
+**Gap:** The Nonagon guarantees *how* trust is enforced, not *who* defines trust. It cannot prevent authorized evil.
+
+---
+
+## Session Deliverables
+
+1. **The Nonagon** — 9 zero-trust axioms with full refinement history and provocation stress-tests
+2. **The Scoring Rubric** — Fail / Partial / Pass for every axiom with falsifiable evidence requirements
+3. **The Mainframe Crucible Scorecard** — Tier-1 Bank COBOL ledger scored against all 9 axioms, with honest limitation disclosures for every Partial score
+4. **The Proxy Bastion Pattern** — Generalizable architectural pattern for securing legacy monoliths via boundary-layer axiom absorption
+5. **Shadow Architecture Catalog** — Two architectures achieving perfect Nonagon scores while enabling catastrophic failure, exposing Gödel-level blind spots in the framework
+6. **Cross-Axiom Dependency Map** — Documented cascading failures: Axiom 4 failure cascades into Axioms 5, 6, and 7; HSM hardware identity (Axiom 0) does not guarantee software integrity (Axiom 8)
+
+### Unique Contributions from This Continuation
+
+- **Synchronous State Binding** as the replacement for "Continuous Verification" — eliminates the TTL anti-pattern
+- **Sealed Capability Scopes** — dynamic authorization that survives cloud auto-scaling without environmental manipulation attacks
+- **Orthogonal Resilience** — BFT redefined for adversarial security: common cause failures destroy redundancy
+- **Epistemic Stratification** — separates the PDP from the messy, unsigned real world via the Attested Oracle pattern
+- **Jurisdictional Distance** — trust distance defined by administrative handoffs, not spatial meters
+- **The Monolith Wall** — proof that legacy systems can be partially secured at the boundary but never achieve true Zero Trust without internal participation in the trust evaluation loop
+- **Cryptographic Decoupling** — when bilateral verification fails (SaaS, internet), data blinding satisfies the invariant by reducing the receiver to untrusted transport
