@@ -10,6 +10,25 @@
 
 ---
 
+## Why This Assessment Matters: The Confidence/Reality Gap
+
+Before you answer the twelve questions, understand the data:
+
+- 57% of organizations believe they have reached "Advanced" zero-trust maturity (RSA ID IQ Report 2026, 2,120 respondents).
+- 69% of all respondents experienced an identity-related breach in the last three years, and 70% of those described the breach as severe.
+- 91% have not reached optimal CISA-defined zero-trust maturity for identity — the most mature pillar (separate CISA assessment, not the RSA survey).
+- 88% of all respondents experienced an identity-related breach at some point, a 27-percentage-point increase in breach prevalence from 2025. The RSA report does not publish the conditional breach rate for the Advanced self-assessment group specifically, but the magnitude of the overlap between the 57% and the 69% makes statistical independence implausible.
+
+This is the confidence/reality gap. Organizations overestimate their zero-trust maturity by a structurally significant margin, and the penalty for that overestimation is breach. The organizations with the highest self-assessed confidence — those most certain they are "doing zero trust" — are the ones most likely to be breached through the seams between their tools. The mechanism is worth understanding: the tools that measure maturity also generate a sense of progress, and that sense of progress masks the gaps between pillars. If you are reading this and thinking "but my organization is different," that impulse is the mechanism.
+
+This phenomenon is not a statistical anomaly. It is a structural feature of zero-trust assessment: the tools that measure maturity also generate a sense of progress, and that sense of progress masks the gaps between pillars. An organization with phishing-resistant MFA (Identity at Advanced) and comprehensive endpoint detection (Devices at Advanced) but no microsegmentation (Networks at Initial) and inconsistent data classification (Data at Traditional) is vulnerable to exactly the lateral movement that zero-trust is designed to prevent. But their self-assessment focuses on the pillars where they've invested — and the average across pillars obscures the attack surface in the weakest ones.
+
+This gap is not a measurement error — it is an incentivized outcome. The entities that measure maturity (vendors, consultants, frameworks) are the same entities that benefit from reporting it as high. Vendors sell tools and produce adoption reports. Consultants sell maturity assessments that benchmark against frameworks — and frameworks are political documents negotiated by committees whose participants each have a stake in the framework making their product or approach look sufficient. The assessment ecosystem is structurally rewarded for reporting progress, not precision. A framework that required integration verification — "does your MFA attestation chain survive a compromised identity provider?" — would declare most participants insufficient, so frameworks settle for adoption-level questions ("do you have phishing-resistant MFA?"). The entity that could credibly report "the tools you bought aren't connected and you're breachable through the seams" has no commercial incentive to do so.
+
+Do not be the 57%. Answer what is deployed today. The assessment should err toward the harder path, not the easier one.
+
+---
+
 ## How to Use This Assessment
 
 The twelve questions below diagnose your organization's current zero-trust configuration. Answer each question with the option that best describes your reality — not your aspiration, not your roadmap, not what you told the board. What is actually deployed and operational today.
@@ -190,6 +209,7 @@ The goal is not to become Archetype A tomorrow. The goal is to satisfy one more 
 1. **Answer the twelve questions based on what is deployed today, not what is on your roadmap. Self-assessment that flatters is worse than useless — it routes you to the wrong decision tree.**
 2. **Archetype A is not a possible diagnosis from this assessment unless you have hardware-attested provenance, bilateral enforcement, and Trickle-Truth in production. Scattered A answers among B/C/D answers do not make you an Aspirant.**
 3. **Tiebreakers prioritize deployment velocity (B vs. C) and budget (C vs. D) because those are the dimensions that most constrain viable upgrade paths.**
+4. **The confidence/reality gap is the structural risk that this assessment is designed to counter.** Organizations overestimate their maturity by a wide margin — 57% believe they are Advanced, 69% are breached — and the pillars where they are weakest (Networks at Initial, Data at Traditional) are the ones they are least aware of. This assessment measures all pillars equally and routes you to the implementation chapter for your weakest dimension, not your strongest.
 
 ---
 
