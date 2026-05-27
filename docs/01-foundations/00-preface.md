@@ -40,7 +40,7 @@ This book does not sell any product. It does not endorse any vendor. It names re
 
 Zero-trust is not something you buy. It is something you build. This book is the blueprint.
 
-This book exists because Executive Order 14028 (May 2021) mandated Zero Trust Architecture adoption across the U.S. Federal Government. That mandate created the regulatory and standards ecosystem this book navigates — from NIST SP 800-207 to CISA's Zero Trust Maturity Model to the DoD's Zero Trust Reference Architecture.
+This book exists because Executive Order 14028 §3(c) (May 2021) mandated cloud migration and zero-trust adoption across the U.S. Federal Government. That mandate created the regulatory and standards ecosystem this book navigates — from NIST SP 800-207 to CISA's Zero Trust Maturity Model to the DoD's Zero Trust Reference Architecture.
 
 ## Cross-References
 
