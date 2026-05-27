@@ -159,13 +159,13 @@ The eight axioms do not map one-to-one to architectural dimensions. Each axiom t
 | 1. No Intrinsic Trust | D2 (Identity Model) | D5 (Violation Response) |
 | 2. Verifiable Policy | D7 (Observability Trust) | D6 (Policy Distribution) |
 | 3. Unbypassable Mediation | D3 (Enforcement Layer) | D6 (Policy Distribution) |
-| 4. Continuous Verification | D4 (Attestation Modality) | D2 (Identity — Trust Decay) |
-| 5. Bounded Authority | D2 (Identity — ZSP, ABAC) | D3 (Data-level enforcement) |
+| 4. Continuous Verification | D4 (Attestation Modality) | D2 (Identity: Trust Decay — Continuous Auth) |
+| 5. Bounded Authority | D2 (Identity: Zero Standing Privileges) | D3 (Enforcement: Data — Cryptographic) |
 | 6. Byzantine Fault Tolerance | D5 (Violation Response) | D4 (Attestation), D7 (Observability) |
 | 7. Epistemic Integrity | D1 (Trust Anchor) | D4 (Attestation), D7 (Observability) |
-| 8. Bilateral Symmetry | D3 (Bilateral Enforcement) | D6 (Policy — Consensus) |
+| 8. Bilateral Symmetry | D3 (Enforcement: Bilateral — Mutual Enforcement) | D6 (Policy: Bilateral/Consensus) |
 
-**Pattern:** Axiom 7 (Epistemic Integrity) is the most dimensionally expensive — it requires D1 (Silicon), D4 (Continuous Attestation), *and* D7 (Independent Observability) all to reach a meaningful level. This explains the finding, explored in Chapter 12, that Epistemic Integrity is the single most universally violated axiom across real-world deployments.
+**Pattern:** Axiom 7 (Epistemic Integrity) is the most dimensionally expensive — it requires D1 (Silicon Root of Trust), D4 (Continuous/Real-Time), *and* D7 (Heterogeneous Observer Consensus) all to reach a meaningful level. This explains the finding, explored in Chapter 12, that Epistemic Integrity is the single most universally violated axiom across real-world deployments.
 
 ---
 
@@ -193,7 +193,7 @@ The Octagon's eight axioms are the stable, peer-reviewed foundation — individu
 
 > The system's structural and behavioral patterns must be non-static, presenting a continuously varying attack surface to adversaries operating at machine speed. An architecture whose topology, routing, and response behavior are predictable is an architecture that an AI-speed adversary can model faster than a human can defend.
 
-These five extensions — Hendecagon (11) and Tridecagon (13) — are the research frontier. The Octagon is the deployment mandate. The eight axioms that precede this section are what you must satisfy today. These five are what you must prepare for tomorrow.
+These five extensions form two progressive classifications: the **Hendecagon** (Axioms 1–11) adds Functional Preservation, Sovereign Quorum, and Temporal Epistemic Integrity to the Octagon's core — eleven axioms together. The **Tridecagon** (Axioms 1–13) adds Algorithmic Impermanence and Architectural Polymorphism — the full thirteen. The Octagon is the deployment mandate: what you must satisfy today. The Hendecagon and Tridecagon are the research frontier: what you must prepare for tomorrow.
 
 ---
 
