@@ -9,6 +9,7 @@ inputDocuments:
   - "_bmad-output/planning-artifacts/prds/prd-zero-trust-2026-05-24/addendum.md"
   - "_bmad-output/planning-artifacts/research/domain-cybersecurity-quantum-threats-ai-security-emerging-standards-2026-05-24.md"
   - "_bmad-output/planning-artifacts/research/technical-zero-trust-architectures-2025-2026-developments-research-2026-05-24.md"
+  - "_bmad-output/planning-artifacts/research/technical-markdown-wiki-publishing-research-2026-05-24.md"
   - "docs/00-preface.md"
   - "docs/01-the-case-for-zero-trust.md"
   - "docs/02-the-octagon.md"
@@ -61,7 +62,7 @@ _This document builds collaboratively through step-by-step discovery. Sections a
 
 **Non-Functional Requirements:**
 - Vendor-neutral — technologies named only in footnotes as points of reference
-- Not a compliance framework — no SOC 2, ISO 27001, HIPAA, or PCI DSS mapping
+- Not a compliance framework — no SOC 2, ISO 27001, HIPAA, or PCI DSS mapping. Appendix E provides a structured crosswalk to CISA ZTMM v2.0. Chapters cite the full federal ZT standards ecosystem (NIST SP 800-207A, DoD ZT Ref Arch, NIST FIPS 203-205, NIST CSF 2.0, NSA ZIG, DoD DTM-25-003, EO 14028) as validation and context, demonstrating measurement instrument vs. verification instrument complementarity.
 - Independently verifiable — every claim must be traceable to 2025-2026 research reports
 - Acyclic chapter dependency graph — no later chapter depends on a concept introduced later
 - Terminological consistency — all domain terms in FRs, axioms, and traces appear in glossary
@@ -286,29 +287,49 @@ New glossary entries must be added to Appendix C in the same change as the chapt
 
 ```
 docs/
-├── 00-preface.md                          # Layer 0: Foundation
-├── 01-the-case-for-zero-trust.md          # Layer 1: Theory
-├── 02-the-octagon.md                      # Layer 1: Theory
-├── 03-octagon-as-instrument.md            # Layer 1: Theory
-├── 04-the-morphological-matrix.md         # Layer 2: Architecture
-├── 05-dimensions-trust-to-attestation.md  # Layer 2: Architecture
-├── 06-dimensions-response-to-human.md     # Layer 2: Architecture
-├── 07-meta-patterns.md                    # Layer 2: Architecture
-├── 08-archetype-a-holy-grail.md           # Layer 3: Reality
-├── 09-archetype-b-fortune-500.md          # Layer 3: Reality
-├── 10-archetype-c-startup.md              # Layer 3: Reality
-├── 11-archetype-d-lean-defense.md         # Layer 3: Reality
-├── 12-cross-trace-synthesis.md            # Layer 3: Reality
-├── 13-self-assessment.md                  # Layer 4: Action
-├── 14-enterprise-turnaround.md            # Layer 4: Action
-├── 15-velocity-defender.md                # Layer 4: Action
-├── 16-scaling-pat.md                      # Layer 4: Action
-├── 17-the-aspirants-gate.md               # Layer 4: Action
-├── 18-decision-matrix-and-conclusion.md   # Layer 4: Action
-├── appendix-a-quantum-ai-threats.md       # Layer 5: Appendices
-├── appendix-b-validation-checklist.md     # Layer 5: Appendices
-├── appendix-c-glossary.md                 # Layer 5: Appendices
-└── appendix-d-quick-reference.md          # Layer 5: Appendices
+├── index.md                               # Home page (layout: home)
+├── 01-foundations/
+│   ├── index.md
+│   ├── 00-preface.md                      # Layer 0: Foundation
+│   ├── 01-the-case-for-zero-trust.md      # Layer 1: Theory
+│   ├── 02-the-octagon.md                  # Layer 1: Theory
+│   └── 03-octagon-as-instrument.md        # Layer 1: Theory
+├── 02-methodology/
+│   ├── index.md
+│   ├── 04-the-morphological-matrix.md     # Layer 2: Architecture
+│   ├── 05-dimensions-trust-to-attestation.md
+│   ├── 06-dimensions-response-to-human.md
+│   └── 07-meta-patterns.md                # Layer 2: Architecture
+├── 03-archetypes/
+│   ├── index.md
+│   ├── 08-archetype-a-holy-grail.md       # Layer 3: Reality
+│   ├── 09-archetype-b-fortune-500.md      # Layer 3: Reality
+│   ├── 10-archetype-c-startup.md          # Layer 3: Reality
+│   ├── 11-archetype-d-lean-defense.md     # Layer 3: Reality
+│   └── 12-cross-trace-synthesis.md        # Layer 3: Reality
+├── 04-synthesis/
+│   ├── index.md
+│   ├── 13-self-assessment.md              # Layer 4: Action
+│   ├── 14-enterprise-turnaround.md        # Layer 4: Action
+│   ├── 15-velocity-defender.md            # Layer 4: Action
+│   ├── 16-scaling-pat.md                  # Layer 4: Action
+│   ├── 17-the-aspirants-gate.md           # Layer 4: Action
+│   └── 18-decision-matrix-and-conclusion.md
+├── appendix/
+│   ├── index.md
+│   ├── appendix-a-quantum-ai-threats.md   # Layer 5: Appendices
+│   ├── appendix-b-validation-checklist.md # Layer 5: Appendices
+│   ├── appendix-c-glossary.md             # Layer 5: Appendices
+│   ├── appendix-d-quick-reference.md      # Layer 5: Appendices
+│   └── appendix-e-cisa-ztmm-crosswalk.md  # Layer 5: Appendices
+├── public/                                # Static assets
+├── .vitepress/
+│   ├── config.ts                          # VitePress + vitepress-sidebar
+│   └── theme/
+│       ├── index.ts                       # Theme entry point
+│       └── custom.css                     # Terminal dark theme
+├── .github/workflows/deploy.yml           # GitHub Pages deployment
+└── .nojekyll
 
 _bmad-output/
 └── planning-artifacts/
@@ -319,7 +340,8 @@ _bmad-output/
     │       └── addendum.md
     └── research/
         ├── domain-cybersecurity-*.md
-        └── technical-zero-trust-*.md
+        ├── technical-zero-trust-*.md
+        └── technical-markdown-wiki-publishing-research-2026-05-24.md
 ```
 
 ### Layer Boundaries (Decision 2)
@@ -394,6 +416,274 @@ Each layer has a validation gate before agents can work on the next layer:
 5. **Layer 4-5 gate**: All pathways have gate checks with escape hatches, decision matrix complete
 6. **Final gate**: Appendix B checklist validates all chapters
 
+## Wiki Publishing Infrastructure
+
+### Infrastructure Scope
+
+The 23-chapter textbook is delivered as a static documentation wiki — not as flat markdown files in a repository. The wiki infrastructure is the delivery mechanism for all content decisions made in Core Architectural Decisions and provides the rendered environment where cross-references resolve, search indexes content, and the terminal dark theme sets visual identity.
+
+### Core Infrastructure Decisions
+
+| # | Decision | Choice | Rationale |
+|---|----------|--------|-----------|
+| 11 | Static site generator | VitePress 1.6+ | <100ms HMR, Vue 3 + Vite, TypeScript-native config, built-in local search and dark mode, actively maintained by Vue.js core team. Jekyll (podman-arch-guide) was evaluated and rejected: 6-30s rebuilds, Liquid stack traces, Ruby toolchain requirement, and sunsetting trajectory |
+| 12 | Sidebar auto-generation | vitepress-sidebar (jooy2, 20.4K weekly downloads) | Filesystem-based sidebar with zero manual configuration. Adding a file or directory auto-appears in navigation. Matches skid-security-research's proven pattern. `generateSidebar()` with `documentRootPath`, `useTitleFromFrontmatter`, `capitalizeFirst`, `collapsed: false`, `includeRootIndexFile: true` |
+| 13 | Directory structure | Hybrid numbered + named (Option B from research) | Groups 23 files into 5 logical sections (01-foundations, 02-methodology, 03-archetypes, 04-synthesis, 05-advanced) + appendix/ directory. Directory prefixes enforce deterministic ordering; `vitepress-sidebar` respects lexicographic sort. Individual files drop numeric prefixes since directory ordering handles sequence |
+| 14 | Design system | CSS variable overrides on VitePress default theme | Port podman-arch-guide's terminal dark theme via `--vp-c-*` variable overrides. Deep black background (`#0a0a0f`), JetBrains Mono + IBM Plex Sans typography, `#00ff9f`/`#00d4ff`/`#b967ff` accent palette, scanline overlay via `::after` pseudo-element, glow effects, custom scrollbar |
+| 15 | Theme extension | Extend, don't fork | Use `extends: DefaultTheme` in `.vitepress/theme/index.ts`. Import `vitepress/theme-without-fonts` to avoid Inter font bundling. CSS variables for design tokens, layout slots for structural injection, Vue components only for interactive elements (terminal prompt, card grid, badges) |
+| 16 | Deployment architecture | GitHub Actions + GitHub Pages | Atomic deploys with `configure-pages`, `upload-pages-artifact`, `deploy-pages`. Path-filtered builds only trigger on `docs/**`, `.vitepress/**`, `package.json`. Zero-cost (free tier for public repos). `.nojekyll` file at repo root. `cleanUrls: true` + `base: '/zero-trust/'` |
+| 17 | Build pipeline | npm scripts in package.json | `"docs:dev": "vitepress dev docs"`, `"docs:build": "vitepress build docs"`, `"docs:preview": "vitepress preview docs"`. 2-3 second production builds for 23 pages. Local search provider builds index at build time |
+
+### Decision Dependency Graph (Infrastructure)
+
+```
+VitePress SSG (11) ── affects ──> Sidebar auto-generation (12)
+                                    Theme extension (15)
+                                    Build pipeline (17)
+
+Sidebar auto-generation (12) ── affects ──> Directory structure (13)
+                                              Frontmatter strategy
+
+Directory structure (13) ── affects ──> Cross-reference paths (Decision 7)
+                                        File organization (Architecture § Layer Boundaries)
+
+Design system (14) ── affects ──> Theme extension (15)
+                                   Custom CSS file
+
+Deployment architecture (16) ── affects ──> Build pipeline (17)
+                                             GitHub Pages configuration
+```
+
+### Directory Structure (Post-Restructuring)
+
+```
+docs/
+├── index.md                               # Home page with hero layout
+├── 01-foundations/
+│   ├── index.md                           # Section landing page
+│   ├── 00-preface.md
+│   ├── 01-the-case-for-zero-trust.md
+│   ├── 02-the-octagon.md
+│   └── 03-octagon-as-instrument.md
+├── 02-methodology/
+│   ├── index.md
+│   ├── 04-the-morphological-matrix.md
+│   ├── 05-dimensions-trust-to-attestation.md
+│   ├── 06-dimensions-response-to-human.md
+│   └── 07-meta-patterns.md
+├── 03-archetypes/
+│   ├── index.md
+│   ├── 08-archetype-a-holy-grail.md
+│   ├── 09-archetype-b-fortune-500.md
+│   ├── 10-archetype-c-startup.md
+│   ├── 11-archetype-d-lean-defense.md
+│   └── 12-cross-trace-synthesis.md
+├── 04-synthesis/
+│   ├── index.md
+│   ├── 13-self-assessment.md
+│   ├── 14-enterprise-turnaround.md
+│   ├── 15-velocity-defender.md
+│   ├── 16-scaling-pat.md
+│   ├── 17-the-aspirants-gate.md
+│   └── 18-decision-matrix-and-conclusion.md
+├── appendix/
+│   ├── index.md
+│   ├── appendix-a-quantum-ai-threats.md
+│   ├── appendix-b-validation-checklist.md
+│   ├── appendix-c-glossary.md
+│   ├── appendix-d-quick-reference.md
+│   └── appendix-e-cisa-ztmm-crosswalk.md
+├── public/
+│   └── (static assets)
+├── .vitepress/
+│   ├── config.ts                          # VitePress + vitepress-sidebar config
+│   └── theme/
+│       ├── index.ts                       # Theme entry (extends DefaultTheme)
+│       └── custom.css                     # Terminal dark theme overrides
+├── .github/
+│   └── workflows/
+│       └── deploy.yml                     # GitHub Pages deployment pipeline
+├── .nojekyll
+└── package.json
+```
+
+### Migration Strategy
+
+**Phase 1: Scaffold (15 minutes)**
+1. Initialize `package.json` with `npm init`
+2. Install dependencies: `npm install -D vitepress vitepress-sidebar`
+3. Add npm scripts for dev/build/preview
+4. Create `.vitepress/config.ts` with base path, sidebar auto-generation, and local search
+5. Create `.vitepress/theme/index.ts` extending default theme without fonts
+6. Create `.vitepress/theme/custom.css` with terminal dark theme variables
+7. Add `.nojekyll` at repo root
+
+**Phase 2: Restructure (15 minutes)**
+1. Create section directories: `01-foundations/` through `appendix/`
+2. Move existing `.md` files into appropriate directories
+3. Create section `index.md` landing pages
+4. Create `docs/index.md` with `layout: home` and hero section
+
+**Phase 3: Frontmatter (30 minutes)**
+1. Add `title` and `description` frontmatter to all 23+ `.md` files
+2. Add `outline: deep` for long-form chapters
+3. Verify all pages appear in auto-generated sidebar
+
+**Phase 4: Design (1-2 hours)**
+1. Port podman-arch-guide CSS tokens to `--vp-c-*` variables
+2. Add Google Fonts (JetBrains Mono + IBM Plex Sans) via `@import`
+3. Add scanline overlay effect via `::after` pseudo-element
+4. Add gradient background effects
+5. Register custom Vue components if needed (terminal prompt, card grid, badges)
+
+**Phase 5: Deploy (15 minutes)**
+1. Create `.github/workflows/deploy.yml` with Node 24, configure-pages, build, and deploy steps
+2. Configure GitHub Pages → Source: "GitHub Actions" in repository settings
+3. Push to main — verify deployment at `https://<user>.github.io/zero-trust/`
+
+**Total effort:** ~2-4 hours for complete, production-ready wiki with automated sidebar, terminal dark theme, and CI/CD deployment.
+
+### CSS Variable Mapping (podman-arch-guide → VitePress)
+
+| podman-arch-guide CSS | VitePress CSS Variable | Value |
+|----------------------|----------------------|-------|
+| `--bg-primary` | `--vp-c-bg` | `#0a0a0f` |
+| `--bg-secondary` | `--vp-c-bg-soft` | `#12121a` |
+| `--bg-tertiary` | `--vp-c-bg-alt` | `#1a1a24` |
+| `--text-primary` | `--vp-c-text-1` | `#e8e8ed` |
+| `--text-secondary` | `--vp-c-text-2` | `#9898a6` |
+| `--accent-green` | `--vp-c-brand-1` | `#00ff9f` |
+| `--accent-cyan` | `--vp-c-brand-2` | `#00d4ff` |
+| `--accent-purple` | `--vp-c-brand-3` | `#b967ff` |
+| `--font-display` | `--vp-font-family-mono` | `JetBrains Mono`, monospace |
+| `--font-body` | `--vp-font-family-base` | `IBM Plex Sans`, sans-serif |
+
+### Infrastructure-Specific Implementation Patterns
+
+**`.vitepress/config.ts` pattern:**
+```typescript
+import { defineConfig } from 'vitepress'
+import { generateSidebar } from 'vitepress-sidebar'
+
+export default defineConfig({
+  base: '/zero-trust/',
+  title: 'Zero Trust Architecture',
+  description: 'A reference architecture textbook for zero-trust deployment',
+  cleanUrls: true,
+  markdown: {
+    lineNumbers: true,
+    theme: { dark: 'github-dark' }
+  },
+  themeConfig: {
+    nav: [
+      { text: 'Home', link: '/' },
+    ],
+    sidebar: generateSidebar({
+      documentRootPath: '/docs',
+      collapsed: false,
+      capitalizeFirst: true,
+      useTitleFromFrontmatter: true,
+      includeRootIndexFile: true,
+    }),
+    search: { provider: 'local' },
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/...' }
+    ]
+  }
+})
+```
+
+**`.vitepress/theme/index.ts` pattern:**
+```typescript
+import DefaultTheme from 'vitepress/theme-without-fonts'
+import './custom.css'
+
+export default {
+  extends: DefaultTheme,
+}
+```
+
+**`.vitepress/theme/custom.css` pattern:**
+```css
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --vp-c-bg: #0a0a0f;
+  --vp-c-bg-soft: #12121a;
+  --vp-c-bg-alt: #1a1a24;
+  --vp-c-text-1: #e8e8ed;
+  --vp-c-text-2: #9898a6;
+  --vp-c-brand-1: #00ff9f;
+  --vp-c-brand-2: #00d4ff;
+  --vp-c-brand-3: #b967ff;
+  --vp-font-family-base: 'IBM Plex Sans', sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', monospace;
+}
+
+.VPDoc::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+```
+
+**`.github/workflows/deploy.yml` pattern:**
+```yaml
+name: Deploy Wiki to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.vitepress/**'
+      - 'package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/configure-pages@v4
+      - run: npm ci
+      - run: npm run docs:build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+```
+
+### Research Provenance
+
+All infrastructure decisions derived from `technical-markdown-wiki-publishing-research-2026-05-24.md`, which analyzed two reference implementations (podman-arch-guide: Jekyll + custom terminal theme; skid-security-research: VitePress + vitepress-sidebar) plus 40+ web sources including VitePress official documentation, DeepWiki architecture analysis, GitHub issues, and migration case studies.
+
 ## Architecture Validation Results
 
 ### Coherence Validation ✅
@@ -449,16 +739,27 @@ All 22 functional requirements (FR-1 through FR-22) and 7 non-functional require
 - [x] Prerequisite declaration pattern documented
 
 **Project Structure**
-- [x] Complete directory structure defined (23 files)
+- [x] Complete directory structure defined (23+ files)
 - [x] Layer boundaries established (6 layers)
 - [x] Integration points mapped
 - [x] Requirements to structure mapping complete
+
+**Wiki Publishing Infrastructure**
+- [x] SSG choice documented (VitePress + rationale)
+- [x] Sidebar auto-generation configured (vitepress-sidebar)
+- [x] Directory restructure plan defined (Option B — numbered sections)
+- [x] Design system specified (terminal dark theme via CSS variables)
+- [x] Deployment architecture designed (GitHub Actions + Pages)
+- [x] Build pipeline configured (package.json scripts)
+- [x] Migration strategy phased (5 phases, 2-4 hours)
+- [x] CSS variable mapping table provided (podman → VitePress)
+- [x] Config file patterns specified (config.ts, theme/index.ts, custom.css, deploy.yml)
 
 ### Architecture Readiness Assessment
 
 **Overall Status:** READY FOR IMPLEMENTATION
 
-**Confidence Level:** High — all 16 checklist items verified, all 22 FRs mapped, no critical gaps
+**Confidence Level:** High — all checklist items verified, all 22+ FRs mapped, no critical gaps
 
 **Key Strengths:**
 - Decisions form a coherent dependency graph — no contradictions
@@ -466,6 +767,8 @@ All 22 functional requirements (FR-1 through FR-22) and 7 non-functional require
 - 6 fidelity gates create layer-by-layer quality enforcement
 - Self-assessment → pathway routing → escape hatch → re-routing forms a closed loop
 - Research provenance chain (domain → technical → textbook) is bidirectionally traceable
+- Wiki publishing infrastructure fully specified with config patterns and CSS mapping
+- 17 architectural decisions documented (10 content + 7 infrastructure)
 
 **Areas for Future Enhancement:**
 - D9 measurement instrument design (PRD follow-up #3)
@@ -475,20 +778,29 @@ All 22 functional requirements (FR-1 through FR-22) and 7 non-functional require
 ### Implementation Handoff
 
 **AI Agent Guidelines:**
-- Follow all 10 architectural decisions exactly as documented
+- Follow all 17 architectural decisions exactly as documented (10 content + 7 infrastructure)
 - Apply 6 implementation patterns consistently across all chapters
 - Respect the 6-layer dependency graph — no forward references
 - Run Appendix B checklist on every chapter modification
 - Verify glossary consistency before committing any chapter change
+- Deploy wiki infrastructure before content editing begins (Epic 0 → Epic 1)
 
-**Implementation Sequence (from Decision Impact Analysis):**
-1. Validate chapter dependency graph (Decision 2)
-2. Verify axiom-to-dimension mapping table (Decision 1)
-3. Apply matrix-first archetype consistency (Decision 3)
-4. Implement inline citation markers (Decision 4)
-5. Add explicit prior art section to Chapter 6 (Decision 5)
-6. Implement cross-reference format across all chapters (Decision 7)
-7. Build self-assessment truth table (Decision 8)
-8. Structure pathway gates with escape hatches (Decision 9)
-9. Draft Chapter 18 peer-review narrative (Decision 10)
-10. Validate glossary consistency via Appendix B (Decision 6)
+**Implementation Sequence (from Decision Impact Analysis + Infrastructure):**
+
+*Infrastructure setup (prerequisite for all content work):*
+0. Scaffold VitePress + vitepress-sidebar + package.json (Decisions 11-12, 17)
+1. Restructure docs/ into numbered section directories (Decision 13)
+2. Port terminal dark theme CSS (Decision 14-15)
+3. Create GitHub Actions deploy pipeline (Decision 16)
+
+*Content implementation (requires working dev server for preview):*
+4. Validate chapter dependency graph (Decision 2)
+5. Verify axiom-to-dimension mapping table (Decision 1)
+6. Apply matrix-first archetype consistency (Decision 3)
+7. Implement inline citation markers (Decision 4)
+8. Add explicit prior art section to Chapter 6 (Decision 5)
+9. Implement cross-reference format across all chapters (Decision 7)
+10. Build self-assessment truth table (Decision 8)
+11. Structure pathway gates with escape hatches (Decision 9)
+12. Draft Chapter 18 peer-review narrative (Decision 10)
+13. Validate glossary consistency via Appendix B (Decision 6)

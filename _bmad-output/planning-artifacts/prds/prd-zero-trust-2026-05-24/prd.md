@@ -2,7 +2,7 @@
 title: "Zero-Trust Reference Architecture Textbook"
 status: final
 created: 2026-05-24
-updated: 2026-05-24
+updated: 2026-05-26
 ---
 
 # PRD: Zero-Trust Reference Architecture Textbook
@@ -330,6 +330,31 @@ The system provides a single-page reference card with all eight axioms, nine dim
 - All dimensions listed with value ranges
 - All archetypes summarized with starting configuration and primary threat
 
+#### FR-23: CISA ZTMM v2.0 Crosswalk (Appendix E)
+
+The system provides a systematic mapping table between the CISA Zero Trust Maturity Model v2.0 and the Octagon framework. Realizes UJ-2, UJ-3.
+
+**Consequences (testable):**
+- Every ZTMM pillar (Identity, Devices, Networks, Applications & Workloads, Data) maps to at least one Octagon axiom and one morphological dimension
+- Every ZTMM function has Traditional, Initial, Advanced, and Optimal descriptors in the table
+- Cross-cutting capabilities (Visibility & Analytics, Automation & Orchestration, Governance) have explicit axiom-to-dimension mappings
+- The appendix includes bidirectional explanation: ZTMM→Octagon and Octagon→ZTMM
+- The appendix validates the project's "orthogonal, not competing" claim by demonstrating both frameworks are useful for different purposes
+
+#### FR-24: Reference Library Integration
+
+The system integrates citations and architectural validation from the 11-document federal ZT standards reference library into its chapters, demonstrating the Octagon framework's grounding in federal standards and providing a bridge from compliance-oriented readers to the architectural framework.
+
+**Consequences (testable):**
+- EO 14028 (the policy genesis of the ZT ecosystem) is cited in Ch00 and Ch01
+- NIST SP 800-207A (cloud-native ZTA) is cited in Ch01 and Ch05
+- NIST FIPS 203/204/205 (post-quantum cryptography) are cited in Ch18 with standard nomenclature, operational impact analysis, and migration timeline
+- NIST CSF 2.0 Govern function is cited in Ch07 with a mapping to D8
+- DoD ZT Ref Arch v2.0 7-pillar model is presented as a sidebar mapping to Octagon dimensions in Ch04
+- DoD ZT Execution Roadmap COA 1 / FY 2027 is cited in Ch14
+- NSA ZIG 5-phase implementation model is cited in Ch13/Ch14
+- DoD DTM-25-003 (ZT PfMO) validates D8 as a security control in Ch04/Ch07
+
 ### 4.8 Cross-Chapter Navigation
 
 **Description:** Every chapter names its prerequisites explicitly. Cross-references use relative links. Appendices provide glossary and quick-reference support. The reader can follow linear progression or jump to self-assessment and receive a routed path.
@@ -344,12 +369,14 @@ The system declares explicit prerequisites in every chapter header and provides 
 - Every chapter header includes a "Prerequisites" section with chapter references
 - Every chapter end includes a "Cross-References" section with Next, Builds On, and Related links
 - A reader can navigate from self-assessment (Chapter 13) → archetype-specific implementation chapter without reading the entire book
+- Every implementation chapter (14, 15, 16) includes a "Coming From a Maturity Model" subsection mapping the reader's likely ZTMM maturity profile to the chapter's morphological pathway
+- Chapters 1, 4, 5, 7, and 18 cite relevant federal reference documents per FR-24
 
 ## 5. Non-Goals (Explicit)
 
 - **This is not a compliance framework.** It does not map to SOC 2, ISO 27001, HIPAA, or PCI DSS controls.
 - **This is not a product.** It does not endorse any vendor or recommend any specific tool.
-- **This is not a NIST replacement.** It references NIST SP 800-207 and CISA ZTMM but defines an orthogonal analysis framework.
+- **This is not a NIST replacement.** It references NIST SP 800-207 and CISA ZTMM but defines an orthogonal analysis framework. Provides a structured mapping to CISA ZTMM v2.0 as an appendix (Appendix E) and references the full federal ZT standards ecosystem — NIST SP 800-207A (cloud-native ZTA), DoD ZT Ref Arch v2.0, NIST FIPS 203-205 (post-quantum cryptography), NIST CSF 2.0 (governance), NSA ZIG Primer, DoD DTM-25-003, and EO 14028 — demonstrating orthogonal complementarity with all major frameworks. The ZTMM measures organizational progress; the Octagon verifies architectural integrity. Both are necessary. Neither is sufficient alone.
 - **This is not a deployment guide for any specific cloud provider.** Cloud-specific patterns are in footnotes only.
 - **This is not an introductory text.** It assumes working knowledge of cloud-native infrastructure, TLS, JWTs, and PKI.
 - **This is not a threat modeling guide for all possible adversaries.** It covers four archetypal attack scenarios validated against 2025-2026 data but does not enumerate every possible threat.
