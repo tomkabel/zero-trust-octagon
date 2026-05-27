@@ -2,6 +2,10 @@
 
 > **Zero-trust architecture from first principles — not products, not compliance checklists.**
 
+<img width="1408" height="768" alt="prompt-optimizer-20260527-064953-508" src="https://github.com/user-attachments/assets/10b3da67-59d9-4d89-a08c-36f010febb4e" />
+
+
+
 Zero-Trust Octagon is a comprehensive, vendor-neutral reference textbook that defines zero-trust through **eight irreducible axioms** (the Octagon), evaluates architectures through a **nine-dimension morphological matrix**, and provides **actionable implementation pathways** for organizations of every scale.
 
 ---
