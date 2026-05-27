@@ -4,7 +4,7 @@ import { withSidebar } from 'vitepress-sidebar'
 // IMPORTANT: all VitePress options go in this object — withSidebar merges sidebar into it.
 // Do NOT define sidebar inside themeConfig; withSidebar injects it.
 const vitePressOptions = {
-  base: '/zero-trust/',
+  base: '/zero-trust-octagon/',
   title: 'Zero Trust Architecture',
   cleanUrls: true,
   ignoreDeadLinks: true,
