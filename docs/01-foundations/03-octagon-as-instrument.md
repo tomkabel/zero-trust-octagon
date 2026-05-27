@@ -6,7 +6,7 @@
 > - Identify which axioms are universally violated across common deployment archetypes
 > - Explain why Hard Deny violates Byzantine Fault Tolerance and why that pattern causes business damage
 
-**Prerequisites:** [Chapter 2: The Octagon](./02-the-octagon.md)
+**Prerequisites:** Chapter 2 (The Octagon)
 
 ---
 
@@ -77,7 +77,7 @@ Probe deeper: "If the DevOps service account is compromised, what is the complet
 - 🟡 **Yellow:** Mostly. Critical paths use JIT access with explicit scoping. Legacy role-based access exists for non-critical systems. Broad roles are acknowledged as debt.
 - 🔴 **Red:** No. Role-based access with broad "DevOps," "Admin," or "ReadWrite" scopes. Credential compromise = "they can do anything the real user can."
 
-### Question 6 — Byzantine Fault Tolerance
+### Question 6 — Byzantine Fault Tolerance → [§2: Axiom 6 — Byzantine Fault Tolerance](./02-the-octagon.md#axiom-6-byzantine-fault-tolerance)
 
 **If a single component of your architecture is compromised — the SIEM agent, a user's session token, a single microservice — does the compromise cascade to the rest of the system?**
 
@@ -173,6 +173,20 @@ Run the audit annually. The Octagon does not change. But your architecture does 
 
 ---
 
+## The Confidence/Reality Gap
+
+The audit reveals a pattern that the data confirms [DR-§1]. Organizations self-assess their zero-trust maturity at rates that do not correlate with their breach history. The gap is not a measurement error. It is a structural feature of how architectures are evaluated.
+
+The probe-deeper questions in the eight-question audit are designed to expose this gap. When an architecture owner answers "I don't know" to a follow-up question, the gap becomes visible. The initial confident "yes, we do that" masks assumptions that have never been tested. The probe questions force the test.
+
+The Violation Matrix is the gap's visible output. It shows not just where violations occur but *which* violations persist across archetypes. Axiom 7 (Epistemic Integrity) and Axiom 4 (Continuous Verification) are violated by every non-Archetype-A deployment not because organizations lack tools but because their tools do not verify the inputs to their policy engines. The gap is between having controls and having verified controls.
+
+The detection mechanism is simple. Self-assessments ask whether a capability exists. The eight-question audit asks whether the capability produces a verifiable, bounded, continuous verdict. Most organizations discover that their policy engines are correct but their inputs are unverified. The policy is sound. The telemetry is assumed.
+
+This chapter gives you the instrument. [§13: Self-Assessment Diagnostic](../04-synthesis/13-self-assessment.md) gives you the full pathway to close the gap.
+
+---
+
 ## Key Takeaways
 
 1. **The eight-question architecture audit transforms the Octagon from theory into a practical diagnostic instrument applicable to any zero-trust deployment in under an hour.**
@@ -184,7 +198,5 @@ Run the audit annually. The Octagon does not change. But your architecture does 
 
 ## Cross-References
 
-- **Next:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md)
-- **Builds on:** [Chapter 2: The Octagon](./02-the-octagon.md)
-- **Related:** [Appendix B: Architecture Validation Checklist (Printable)](../appendix/appendix-b-validation-checklist.md)
-- **Related:** [Chapter 12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md)
+**Next:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md)
+**Builds On:** [§2: The Octagon](./02-the-octagon.md)
