@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'docs/**'
-      - '.vitepress/**'
+      - 'docs/.vitepress/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/deploy.yml'
