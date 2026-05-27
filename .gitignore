@@ -25,3 +25,7 @@ node_modules/
 
 .commandcode/
 .agents/
+_bmad/
+_bmad-output/
+markdown/
+skills-lock.json
