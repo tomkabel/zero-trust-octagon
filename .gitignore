@@ -16,3 +16,12 @@ __pycache__/
 .idea/
 *.swp
 *.swo
+
+# VitePress build artifacts
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+node_modules/
+
+.commandcode/
+.agents/
