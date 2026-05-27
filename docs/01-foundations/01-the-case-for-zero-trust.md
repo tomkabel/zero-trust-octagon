@@ -6,7 +6,7 @@
 > - Identify the three properties that distinguish meaningful zero-trust from performative zero-trust
 > - Recognize the four reader archetypes the rest of this book will address
 
-**Prerequisites:** None
+**Prerequisites:** Chapter 0 (Preface)
 
 ---
 
@@ -22,6 +22,8 @@ In a modern deployment, workloads are ephemeral — they spin up, serve traffic,
 
 The attack surface is no longer enumerable. It is infinite.
 
+The federal government recognized this in 2021. Executive Order 14028 §3(c) mandated cloud migration and zero-trust adoption across all federal agencies, creating the regulatory ecosystem that produced NIST SP 800-207A — the Zero Trust Architecture guidance written specifically for cloud-native, multi-location environments. The DoD's Zero Trust Reference Architecture went further, requiring VPN-less implementation: if a user can access a resource only after establishing a VPN tunnel, the architecture fails the mediation requirement. The DoD's explicit requirement for VPN-less access is a federal validation that the perimeter model is dead.
+
 Zero-trust is the architectural response to this reality. It is not a product. It is not a maturity model. It is a set of invariants — axioms — that, if satisfied, produce a system where trust is never assumed, always verified, and continuously re-evaluated. No entity gets trust by position, ownership, or past behavior. Every access decision is rendered independently, at the moment of access, against explicitly declared, auditable policy.
 
 ---
@@ -32,11 +34,21 @@ Before defining what zero-trust architecture *is*, it is necessary to clear away
 
 **Zero-trust is not ZTNA.** Zero-Trust Network Access products — the identity-aware proxies, the software-defined perimeters, the "next-gen VPN replacements" — are an enforcement mechanism, not an architecture. A ZTNA product mediates access to self-hosted applications. It does nothing for the SaaS platforms your users authenticate to via SSO. It does nothing for pod-to-pod communication inside your Kubernetes cluster. It does nothing to verify that the data your SIEM ingests is un-tampered. ZTNA is one value on one dimension of the morphological matrix. Calling it "zero-trust" is like calling a steering wheel a car.
 
-This category error has real consequences. Organizations purchase a ZTNA product, deploy it between their users and their self-hosted applications, declare "zero-trust complete," and then experience the SaaS Blind Spot (Chapter 11): the attacker who steals a valid Google Workspace session bypasses the IAP entirely because the SaaS platforms authenticate directly with the identity provider. The steering wheel does not make the car.
+This category error has real consequences. Organizations purchase a ZTNA product, deploy it between their users and their self-hosted applications, declare "zero-trust complete," and then experience the SaaS Blind Spot (Chapter 11): the attacker who steals a valid Google Workspace session bypasses the IAP entirely because the SaaS platforms authenticate directly with the identity provider. The ZTMM's Optimal stage for the Applications & Workloads pillar explicitly requires making mission-critical applications available over open public networks. That requirement creates the very SaaS Blind Spot the Octagon's Archetype D trace (Chapter 11) addresses: when your identity provider authenticates directly to SaaS platforms, your ZTNA enforcement layer has no mediation path. The steering wheel does not make the car.
 
 **Zero-trust is not a compliance framework.** NIST SP 800-207 provides an excellent conceptual model grounded in five assertions: the network is always assumed hostile, all communication is secured regardless of location, access is granted per-session and per-resource, policy is dynamic and informed by as many data sources as possible, and the enterprise monitors and measures the integrity of all assets. CISA's Zero Trust Maturity Model maps these assertions across identity, device, network, application, and data pillars.
 
 But compliance frameworks optimize for *auditability*, not *adversarial resilience*. A system that passes a SOC 2 audit may satisfy zero axioms of the Octagon. It may have perfectly documented policies that are nonetheless vendor black boxes (violating Axiom 2). It may have comprehensive logging that is implicitly trusted with no independent verification pipeline (violating Axiom 7). Compliance is a minimum floor — useful for contracts, necessary for regulation, but insufficient for security. Zero-trust is a maximum bar.
+
+### Why Not Just Use the ZTMM?
+
+The CISA Zero Trust Maturity Model v2.0 is the most widely adopted federal framework for measuring zero-trust adoption. It maps five pillars (Identity, Devices, Networks, Applications & Workloads, Data) across four maturity levels (Traditional, Initial, Advanced, Optimal), providing organizations with a structured way to measure their progress.
+
+The ZTMM measures how far you've come. The Octagon tells you whether you've arrived. Both are necessary.
+
+A ZTMM assessment produces a profile — Identity at Advanced, Devices at Traditional, Networks at Initial, and so on. But the ZTMM's pillar structure creates a blind spot: it can't tell you whether your Advanced identity pillar is architecturally compatible with your Traditional device pillar. The seams between pillars at different maturity levels are exactly where lateral movement attacks succeed — the CISA framework measures each pillar independently but cannot assess cross-pillar architectural coherence.
+
+The Octagon is the complement. It doesn't ask how mature your identity pillar is. It asks: does any entity receive trust by position? Is every data sender verifying the receiver? Are all state inputs cryptographically provenanced? These are Boolean questions — satisfied or violated — not maturity gradations. Together, the ZTMM shows you the path and the Octagon verifies you've walked it. (Appendix E provides a full ZTMM-to-Octagon crosswalk.)
 
 **Zero-trust is not a product suite.** No vendor — however comprehensive their platform — can deliver zero-trust architecture out of the box. Vendors provide tools that implement *values* on individual architectural *dimensions*. The architecture is the set of choices you make across all dimensions and how those choices interact. A vendor suite may simplify deployment but cannot eliminate the architectural decisions. And, as we will see, relying on a single vendor's implicit trust model often *violates* the core axioms — the vendor becomes the single component whose compromise would collapse the entire architecture, directly contradicting Axiom 6 (Byzantine Fault Tolerance).
 
@@ -104,5 +116,5 @@ Part III traces a realistic attack against each archetype. Part IV gives each ar
 
 ## Cross-References
 
-- **Next:** [Chapter 2: The Octagon — Eight Irreducible Axioms](./02-the-octagon.md)
-- **Related:** [Chapter 13: Self-Assessment — Mapping Your Organization to an Archetype](../04-synthesis/13-self-assessment.md)
+**Next:** [§2: The Octagon — Eight Irreducible Axioms](./02-the-octagon.md)
+**Builds On:** [§0: Preface](./00-preface.md)

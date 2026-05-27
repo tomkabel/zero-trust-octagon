@@ -6,7 +6,7 @@
 > - Trace the refinement history of Axioms 3, 5, and 6 from their original formulations
 > - Map each axiom to the morphological dimensions it governs
 
-**Prerequisites:** [Chapter 1: The Case for Zero Trust](./01-the-case-for-zero-trust.md)
+**Prerequisites:** Chapter 1 (The Case for Zero-Trust)
 
 ---
 
@@ -169,6 +169,34 @@ The eight axioms do not map one-to-one to architectural dimensions. Each axiom t
 
 ---
 
+## Beyond the Octagon: Hendecagon and Tridecagon
+
+The Octagon's eight axioms are the stable, peer-reviewed foundation — individually necessary and collectively sufficient for any architecture to be zero-trust. But the refinement process that produced Axioms 7 and 8 did not stop at eight. Adversarial stress-testing against quantum computing threats and AI-speed adversaries revealed additional invariants that an architecture must satisfy to survive the next decade of threat evolution. These are not yet formalized with corollaries — they are forward-looking extensions, acknowledged here and explored fully in [§18: Decision Matrix, Forward-Looking Axioms, and Conclusion](../04-synthesis/18-decision-matrix-and-conclusion.md).
+
+### Axiom 9 — Functional Preservation
+
+> The system must continue to perform its operational function even while under active attack, without degrading to denial-first responses. Business continuity and security are not a tradeoff — an architecture that preserves confidentiality by destroying availability has handed the attacker a denial-of-service victory.
+
+### Axiom 10 — Sovereign Quorum
+
+> No single organization may unilaterally declare an entity trusted. Trust verdicts that cross organizational boundaries require cryptographic attestation from a quorum of independent verifiers, preventing any one compromised authority from contaminating the trust fabric.
+
+### Axiom 11 — Temporal Epistemic Integrity
+
+> The trustworthiness of state evidence degrades with time. Provenance proofs have a shelf life determined by the cryptographic algorithms that secure them. An architecture that does not account for algorithmic obsolescence is building on a foundation with a known expiration date.
+
+### Axiom 12 — Algorithmic Impermanence
+
+> No cryptographic algorithm is permanent. The architecture must support algorithm migration as a continuous operation — not a one-time transition with a flag day. NIST's post-quantum cryptography migration timeline (RSA/ECC deprecation by 2030, disallowance by 2035) makes this an operational requirement within the architecture's design lifetime.
+
+### Axiom 13 — Architectural Polymorphism
+
+> The system's structural and behavioral patterns must be non-static, presenting a continuously varying attack surface to adversaries operating at machine speed. An architecture whose topology, routing, and response behavior are predictable is an architecture that an AI-speed adversary can model faster than a human can defend.
+
+These five extensions — Hendecagon (11) and Tridecagon (13) — are the research frontier. The Octagon is the deployment mandate. The eight axioms that precede this section are what you must satisfy today. These five are what you must prepare for tomorrow.
+
+---
+
 ## Key Takeaways
 
 1. **The Octagon defines eight axioms that are individually necessary and collectively sufficient for zero-trust architecture. Any system that fails one is not zero-trust.**
@@ -180,7 +208,5 @@ The eight axioms do not map one-to-one to architectural dimensions. Each axiom t
 
 ## Cross-References
 
-- **Next:** [Chapter 3: The Octagon as Validation Instrument](./03-octagon-as-instrument.md)
-- **Builds on:** [Chapter 1: The Case for Zero Trust](./01-the-case-for-zero-trust.md)
-- **Related:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md)
-- **Related:** [Appendix C: Glossary](../appendix/appendix-c-glossary.md)
+**Next:** [§3: The Octagon as Validation Instrument](./03-octagon-as-instrument.md)
+**Builds On:** [§1: The Case for Zero-Trust](./01-the-case-for-zero-trust.md)

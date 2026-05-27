@@ -1,5 +1,7 @@
 # Preface
 
+**Prerequisites:** None
+
 Zero-trust is the most overused and least understood phrase in modern cybersecurity. Every vendor has a "zero-trust solution." Every framework has a "zero-trust pillar." Every CISO claims their organization is "moving toward zero-trust." And yet, when you strip away the marketing, the compliance checklists, and the Visio diagrams, what actually remains? What does a real zero-trust architecture look like? Not a product suite. Not a maturity model. An *architecture*. A coherent, defensible, end-to-end design that you could build, test, and verify.
 
 This book is the answer to that question.
@@ -37,3 +39,9 @@ Every chapter names its prerequisites explicitly in the header. Cross-references
 This book does not sell any product. It does not endorse any vendor. It names real technologies only in footnotes, as points of reference for a snapshot in time. The architecture described here will outlast any individual implementation. The Octagon will still be true when today's hardware is obsolete and today's vendors have been acquired.
 
 Zero-trust is not something you buy. It is something you build. This book is the blueprint.
+
+This book exists because Executive Order 14028 (May 2021) mandated Zero Trust Architecture adoption across the U.S. Federal Government. That mandate created the regulatory and standards ecosystem this book navigates — from NIST SP 800-207 to CISA's Zero Trust Maturity Model to the DoD's Zero Trust Reference Architecture.
+
+## Cross-References
+
+**Next:** [§1: The Case for Zero Trust](./01-the-case-for-zero-trust.md)
