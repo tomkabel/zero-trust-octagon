@@ -1,0 +1,41 @@
+[{
+  "location": "Layout.vue:107-113",
+  "trigger_condition": "localStorage.getItem throws SecurityError in privacy mode",
+  "guard_snippet": "try { const stored = localStorage.getItem('sidebar-width'); ... } catch (e) { /* Private browsing */ }",
+  "potential_consequence": "Layout component crashes on mount in Safari private/iframe mode"
+},{
+  "location": "Layout.vue:131",
+  "trigger_condition": "localStorage.setItem throws QuotaExceededError",
+  "guard_snippet": "try { localStorage.setItem('sidebar-width', String(savedWidth.value)); } catch (e) { /* Storage full — silently discard */ }",
+  "potential_consequence": "Unhandled exception on unmount in storage-full scenario"
+},{
+  "location": "Layout.vue:107",
+  "trigger_condition": "parseInt on corrupted localStorage value",
+  "guard_snippet": "const parsed = parseInt(stored, 10); if (!isNaN(parsed) && parsed >= 160 && parsed <= 420) { sidebarWidth.value = parsed; }",
+  "potential_consequence": "NaN guard catches this currently (NaN >= 160 is false) — actually handled, discard"
+},{
+  "location": "Layout.vue:80-83",
+  "trigger_condition": "Escape-press during sidebar drag leaves isDragging=true",
+  "guard_snippet": "window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isDragging.value) onDragEnd(); })",
+  "potential_consequence": "pointer-events: none on layout makes all UI unclickable until mouseup"
+},{
+  "location": "Layout.vue:44-52 (ensureStartingSlash)",
+  "trigger_condition": "page.relativePath is empty string (root/index page)",
+  "guard_snippet": "ensureStartingSlash('') → '/', but no '/'-keyed sidebar entry exists from vitepress-sidebar — cfg['/'] is undefined",
+  "potential_consequence": "sidebar returns [] on root page, no nav shown despite content having headings"
+},{
+  "location": "Layout.vue:template (sidebar link anchor)",
+  "trigger_condition": "sub.link is undefined — vitepress-sidebar generates category items without links",
+  "guard_snippet": ":href=\"sub.link ? withBase(sub.link) : ''\" or use <span> when no link",
+  "potential_consequence": "href=\"undefined\" — broken link rendered for category-only sidebar items"
+},{
+  "location": "Layout.vue:onMounted/onUnmounted",
+  "trigger_condition": "Multiple tabs open — last-onUnmounted overwrites earlier tab's user-preferred width",
+  "guard_snippet": "Use BroadcastChannel or debounce writes per-tab independently",
+  "potential_consequence": "User prefers 260px in tab A, resizes to 180px in tab B — tab A's unmount restores 260px"
+},{
+  "location": "custom.css (VPDoc ::after background)",
+  "trigger_condition": "prefers-reduced-motion: reduce disables scanline but color reduction not handled",
+  "guard_snippet": "@media (prefers-contrast: more) { .VPDoc::after { opacity: 0.01; } }",
+  "potential_consequence": "Scanline remnants clipped but CSS gradient still composited — negligible perf, not actionable"
+}]
