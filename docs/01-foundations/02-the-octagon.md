@@ -165,7 +165,7 @@ The eight axioms do not map one-to-one to architectural dimensions. Each axiom t
 | 7. Epistemic Integrity | D1 (Trust Anchor) | D4 (Attestation), D7 (Observability) |
 | 8. Bilateral Symmetry | D3 (Enforcement: Bilateral — Mutual Enforcement) | D6 (Policy: Bilateral/Consensus) |
 
-**Pattern:** Axiom 7 (Epistemic Integrity) is the most dimensionally expensive — it requires D1 (Silicon Root of Trust), D4 (Continuous/Real-Time), *and* D7 (Heterogeneous Observer Consensus) all to reach a meaningful level. This explains the finding, explored in Chapter 12, that Epistemic Integrity is the single most universally violated axiom across real-world deployments.
+**Pattern:** Axiom 7 (Epistemic Integrity) is the most dimensionally expensive — it requires D1 (Silicon Root of Trust), D4 (**Heterogeneous Triple**[↗](../appendix/appendix-c-glossary.md#heterogeneous-triple)), *and* D7 (**Merkle-Attested Telemetry**[↗](../appendix/appendix-c-glossary.md#merkle-attested-telemetry)) all to reach a meaningful level. This explains the finding, explored in Chapter 12, that Epistemic Integrity is the single most universally violated axiom across real-world deployments.
 
 ---
 

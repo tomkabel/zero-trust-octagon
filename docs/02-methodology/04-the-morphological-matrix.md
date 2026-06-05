@@ -6,17 +6,17 @@
 > - Recognize that dimensions are not independent — choices on one dimension constrain viable choices on others
 > - Use the matrix to map any real-world deployment to a specific combination of values
 
-**Prerequisites:** [Chapter 2: The Octagon](../01-foundations/02-the-octagon.md), [Chapter 3: The Octagon as Validation Instrument](../01-foundations/03-octagon-as-instrument.md)
+**Prerequisites:** Chapter 2 (The Octagon), Chapter 3 (The Octagon as Validation Instrument)
 
 ---
 
 ## Beyond the Maturity Model
 
-Most zero-trust guidance presents a maturity model: Stage 1, Stage 2, Stage 3. Move from "traditional" to "advanced" to "optimal." This framing is appealing to program managers and compliance auditors, but it is architecturally misleading.
+Most zero-trust guidance — including CISA's Zero Trust Maturity Model v2.0, the most widely adopted federal framework — presents a maturity model: Stage 1, Stage 2, Stage 3. Move from "traditional" to "advanced" to "optimal." This framing is appealing to program managers and compliance auditors, but it is architecturally misleading.
 
 A maturity model assumes one path. But real organizations face different threat models, operate with different budgets, and inherit different architectural legacies. A solo operator with $5K/month and a Fortune 500 enterprise with $10M/year cannot and should not follow the same path. More importantly, the "optimal" configuration for one threat model may be inappropriate for another.
 
-The morphological matrix replaces the maturity model with a *configuration space*. Each of the nine dimensions represents an independent architectural choice. The combination of values across all nine dimensions defines a specific zero-trust deployment. The space contains thousands of possible configurations — and about a dozen that are coherent, self-reinforcing, and defensible.
+The **morphological matrix**[↗](../appendix/appendix-c-glossary.md#morphological-matrix) replaces the maturity model with a *configuration space*. Each of the nine dimensions represents an independent architectural choice. The combination of values across all nine dimensions defines a specific zero-trust deployment. The space contains thousands of possible configurations — and about a dozen that are coherent, self-reinforcing, and defensible.
 
 ---
 
@@ -149,6 +149,10 @@ That string is a precise architectural fingerprint — Archetype D, the "SaaS-Gl
 
 *How is the human response layer staffed? What happens when the responder is unavailable?*
 
+D9 was discovered during the Archetype D (solo operator) analysis, not conceived as part of the original eight-dimension framework. The "Pat Problem" — one person running an entire zero-trust deployment on a lean budget — exposed a dimension that the other three archetypes had masked. Archetype B has a 24/7 SOC by default. Archetype C has a small on-call rotation. Archetype A has full automation. But Archetype D has a bus factor of 1. When Pat is asleep, on a flight, or burnt out by alert fatigue, the entire detection-response capability is offline. This is not a technology failure — it is a structural failure of the human response layer.
+
+The discovery of D9 paralleled the D4/D5 dependency deadlock: both emerged from the same analytical pass in which the four archetypes were mapped against the matrix and gaps surfaced. With eight dimensions, Archetype D's scoring was bimodal — green on several dimensions, red on others — but the bimodal MTTR (3 minutes when present, 25+ minutes when not) had no dimension to capture it. D9 closes that gap.
+
 | Value | Description |
 |-------|-------------|
 | **Single Point of Failure** | One person. If they are asleep, on a flight, or burnt out by alert fatigue, the entire response capability is offline. The "Pat Problem." |
@@ -157,6 +161,47 @@ That string is a precise architectural fingerprint — Archetype D, the "SaaS-Gl
 | **Fully Automated** | No human in the loop for initial response. Automated revocation, quarantine, or deception deployment. Humans handle ambiguous cases only. |
 
 > **🔴 Violation:** A system with D9 = Single Point of Failure and D5 = Auto-Escalate to Human violates Axiom 6 (Byzantine Fault Tolerance) because the entire response capability is a single component whose unavailability cascades to total detection-response failure.
+
+### Where Devices Fit in the Matrix
+
+The CISA ZTMM defines a Devices pillar with four functions: Policy Enforcement & Compliance Monitoring, Asset & Supply Chain Risk Management, Resource Access, and Device Threat Protection. In the Octagon, devices are not a standalone dimension. Device trust is decomposed across three dimensions:
+
+- **D1 (Trust Anchor):** Hardware Root of Trust — the device's silicon attestation anchor (TPM, Secure Enclave) — determines whether the device can prove its identity cryptographically. This maps to ZTMM "Device Threat Protection" and "Policy Enforcement & Compliance Monitoring."
+- **D4 (Attestation Modality):** Device attestation — whether the device's posture is verified once (Single Source), continuously (**Continuous / Real-Time**), or by independent observers (Heterogeneous Triple) — maps to ZTMM "Resource Access" decisions.
+- **D7 (Observability Trust):** Endpoint telemetry — whether device logs, sensor data, and posture reports are trusted implicitly or independently verified — maps to ZTMM "Asset & Supply Chain Risk Management."
+
+This decomposition matters because a ZTMM assessment can report "Advanced" for the Devices pillar (all four functions at high maturity) while the underlying D1 anchor is a software CA, D4 attestation is Single Source, and D7 telemetry is implicitly trusted — a configuration that violates Axiom 7 (Epistemic Integrity). The ZTMM measures organizational process maturity. The Octagon measures whether the device is actually trustworthy.
+
+> **DoD Zero Trust Pillar Mapping**
+>
+> Each of the DoD's seven zero-trust pillars maps to components of the Octagon's dimension-axiom framework:
+>
+> | DoD Pillar | Primary Dimension(s) | Primary Axiom(s) |
+> |-----------|---------------------|-----------------|
+> | User | D2 (Identity Model) | Axiom 1, Axiom 4 |
+> | Device | D1 (Trust Anchor), D4 (Attestation), D7 (Observability) | Axiom 7, Axiom 4 |
+> | Network/Environment | D3 (Enforcement Layer) | Axiom 3 |
+> | Application & Workload | D2 (Identity Model), D4 (Attestation) | Axiom 4, Axiom 5 |
+> | Data | D3 (Enforcement: Cryptographic) | Axiom 3, Axiom 8 |
+> | Visibility & Analytics | D7 (Observability Trust) | Axiom 7 |
+> | Automation & Orchestration | D5 (Violation Response), D6 (Policy Distribution) | Axiom 4, Axiom 6 |
+>
+> The DoD pillars define *what* to secure. The Octagon defines *how* to verify that the security is architecturally sound. Both frameworks are necessary; neither replaces the other.
+
+> **CSF Profiles and Morphological Dimensions**
+>
+> The NIST Cybersecurity Framework 2.0 introduces the concept of a CSF Profile — an organization's specific arrangement of outcomes from the CSF Core that aligns to its mission, priorities, and risk appetite. A CSF Profile is the governance-level equivalent of this chapter's dimensional self-assessment: both ask the organization to map its current state to a structured framework and to identify target states.
+>
+> CSF 2.0 Tiers (Partial, Risk Informed, Repeatable, Adaptive) describe organizational governance maturity. They map approximately to the dimension cluster progression:
+>
+> | CSF Tier | Dimensional Cluster | Characteristics |
+> |----------|-------------------|----------------|
+> | Partial | Low-Maturity Cluster fragments | Informal, reactive, no integration |
+> | Risk Informed | Low-Maturity Cluster (coherent) | Risk awareness exists, but governance is not organization-wide |
+> | Repeatable | Transition zone | Organizational processes defined, covariance constraints becoming visible |
+> | Adaptive | High-Maturity Cluster | Organization learns and adapts; Presumptively Wrong posture active |
+>
+> The key insight: CSF Tiers measure governance process maturity separately from technical controls. An organization can be CSF Tier 4 (Adaptive) in governance while still operating at the Low-Maturity technical cluster — because the governance *process* is adaptive even while the architecture is being rebuilt. This is the intended state: adaptive governance driving a phased technical migration.
 
 ---
 
@@ -185,7 +230,5 @@ The transition between clusters is the subject of Part IV (implementation decisi
 
 ## Cross-References
 
-- **Next:** [Chapter 5: Dimensions 1-4 — Trust, Identity, Enforcement, Attestation](./05-dimensions-trust-to-attestation.md)
-- **Builds on:** [Chapter 2: The Octagon](../01-foundations/02-the-octagon.md)
-- **Related:** [Chapter 7: Meta-Patterns — Covariance, Leverage, and the Capability Surface](./07-meta-patterns.md)
-- **Related:** [Appendix D: Dimensions + Axioms Quick-Reference Card](../appendix/appendix-d-quick-reference.md)
+**Next:** [§5: Dimensions 1-4 — Trust, Identity, Enforcement, Attestation](./05-dimensions-trust-to-attestation.md)
+**Builds On:** [§2: The Octagon](../01-foundations/02-the-octagon.md), [§3: The Octagon as Validation Instrument](../01-foundations/03-octagon-as-instrument.md)
