@@ -41,7 +41,7 @@ The developer opens a PR. GitHub Actions runs the test suite. All tests pass —
 
 ArgoCD (D6: GitOps) detects the state change and deploys the new containers to the production Kubernetes cluster. Because D4 = Trust on First Use, the cluster performs no runtime attestation of the container image. The fact that GitHub Actions built it is the only verification. The malicious code is now running in production.
 
-**Axiom violation:** Axiom 4 (Continuous Verification). Verification occurred once — in CI/CD. There is no runtime re-verification. Axiom 7 (Epistemic Integrity). The container's provenance is the CI/CD log, which the malicious package did not trigger.
+**Axiom violation:** Axiom 4 (Continuous Verification). Verification occurred once — in CI/CD. There is no runtime re-verification. **Axiom 7 (Epistemic Integrity)**[↗](../appendix/appendix-c-glossary.md#epistemic-integrity). The container's provenance is the CI/CD log, which the malicious package did not trigger.
 
 ---
 
@@ -136,7 +136,7 @@ The hardening path (Chapter 15) breaks this loop by adding runtime attestation w
 
 ## The Supply Chain Attack Landscape
 
-The typosquatted dependency attack traced above is not a hypothetical. It is the most common and fastest-growing attack vector against cloud-native organizations. The regulatory landscape now reflects this: **NIST CSF 2.0 elevated supply chain risk management (SCRM) to a first-class security function** (Govern Function, GV.SC) — it is no longer a procurement concern but a core zero-trust architectural requirement [TR-§Section 3.2]. Similarly, **Executive Order 14028 §4 mandates software supply chain security** for all software sold to the federal government, with explicit SBOM (Software Bill of Materials) requirements [TR-§1.4]. The CI/CD attestation patterns traced in Archetype C are the architectural implementation of what EO 14028 requires at the procurement level — the same dependency verification, provenance attestation, and build pipeline hardening.
+The typosquatted dependency attack traced above is not a hypothetical. It is the most common and fastest-growing attack vector against cloud-native organizations. The regulatory landscape now reflects this: **NIST CSF 2.0 elevated supply chain risk management (SCRM) to a first-class security function** (Govern Function, GV.SC) — it is no longer a procurement concern but a core zero-trust architectural requirement [TR-§Section-3.2]. Similarly, **Executive Order 14028 §4 mandates software supply chain security** for all software sold to the federal government, with explicit SBOM (Software Bill of Materials) requirements [TR-§Section-1.4]. The CI/CD attestation patterns traced in Archetype C are the architectural implementation of what EO 14028 requires at the procurement level — the same dependency verification, provenance attestation, and build pipeline hardening.
 
 **The dependency tree problem:** A typical Node.js or Python microservice pulls in 200-500 transitive dependencies — packages it never explicitly declared but that its declared dependencies depend on, and their dependencies depend on, forming a tree where the developer can only realistically audit the first 2-3 levels. A malicious package at depth 4 of the dependency tree is functionally invisible to human review. The developer runs `npm install` or `pip install` and trusts the output. That trust is the TOFU vulnerability.
 
