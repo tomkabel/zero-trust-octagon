@@ -50,6 +50,7 @@
 
 **Envy trap** — A pattern where one archetype covets properties of another that are structurally incompatible with its own configuration. B envies C's velocity; C envies A's prevention; A envies C's MTTD.
 
+<a id="epistemic-integrity"></a>
 **Epistemic Integrity** — Axiom 7 of the Octagon. State inputs to the evaluation function must carry cryptographic proof of provenance. Unattested data is treated as hostile input and may be used only to deny access.
 
 **Event-stream regress** — The infinite regress problem: the event stream distributing policy changes must itself be secured by zero-trust. Resolved by hardware-attested producers, signed events, and independent observation of the stream itself.
@@ -64,6 +65,7 @@
 
 ## H
 
+<a id="hard-deny"></a>
 **Hard Deny** — Violation response strategy. Request denied, connection terminated, account locked, node isolated. Violates Axiom 6 because the defensive response cascades into business damage.
 
 **Heterogeneous Triple** — The strongest practical attestation modality. Three independent observation types (kernel eBPF, hypervisor, hardware performance counters) produce independently signed observations, reconciled by Byzantine consensus.
@@ -146,6 +148,11 @@
 
 ## Z
 
+<a id="zero-standing-privileges-zsp"></a>
 **Zero Standing Privileges (ZSP)** — D2 value. No persistent accounts. All access is JIT-minted, time-bounded, and scope-bounded. Credentials self-destruct on expiry.
 
 **ZTA Litmus Test** — "When your policy engine fails, who pays — the attacker or the business?"
+s?"
+ the business?"
+?"
+ness?"
