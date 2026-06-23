@@ -7,7 +7,7 @@
 > - Assess observability trust levels and design an independent verification path
 > - Recognize that organizational posture (D8) is the only zero-cost dimension upgrade and human continuity (D9) is the dimension most universally overlooked
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](./05-dimensions-trust-to-attestation.md)
+**Prerequisites:** [Chapter 4 (The Morphological Matrix)](./04-the-morphological-matrix.md), [Chapter 5 (Dimensions: Trust to Attestation)](./05-dimensions-trust-to-attestation.md)
 
 ---
 
@@ -17,13 +17,13 @@ This chapter covers the five dimensions that determine what happens when trust b
 
 ## D5: Violation Response — The Leverage Dimension
 
-D5 is the single highest-leverage dimension in the entire matrix. It determines what a "successful defense" produces: a business outage, a data leak, or an intelligence win. The choice of violation response cascades through Axiom 6 (Byzantine Fault Tolerance), Axiom 1 (No Intrinsic Trust — the response must not create new trust assumptions), and the entire economics of the defender-attacker relationship.
+D5 is the single highest-leverage dimension in the entire matrix. It determines what a "successful defense" produces: a business outage, a data leak, or an intelligence win. The choice of violation response cascades through Axiom 6 (**Byzantine Fault Tolerance (BFT)**[↗](../appendix/appendix-c-glossary.md#byzantine-fault-tolerance-bft)), Axiom 1 (No Intrinsic Trust — the response must not create new trust assumptions), and the entire economics of the defender-attacker relationship.
 
 ### Hard Deny / Quarantine
 
 The default. It is the simplest, cheapest, and most dangerous response. When the system detects an anomaly — a policy violation, a behavioral mismatch, a credential from an unexpected location — it denies the request and quarantines the entity. Account locked. Connection terminated. Node isolated.
 
-The problem is not that Hard Deny fails to stop the attacker. It is that Hard Deny does not distinguish between attacker and legitimate user. When the system locks the compromised account, it simultaneously locks the real employee who needs to do their job and the administrator who needs to investigate. The business experiences an outage. The next morning, the CISO faces a choice: maintain zero-trust controls that "caused an outage," or quietly relax them.
+The problem is not that **Hard Deny**[↗](../appendix/appendix-c-glossary.md#hard-deny) fails to stop the attacker. It is that Hard Deny does not distinguish between attacker and legitimate user. When the system locks the compromised account, it simultaneously locks the real employee who needs to do their job and the administrator who needs to investigate. The business experiences an outage. The next morning, the CISO faces a choice: maintain zero-trust controls that "caused an outage," or quietly relax them.
 
 **Violates Axiom 6 (Byzantine Fault Tolerance).** The defensive action cascades into a system-wide fault.
 
@@ -47,7 +47,7 @@ The classic honeypot: a decoy environment with fake data, isolated from producti
 
 ### Trickle-Truth — Full Specification
 
-Trickle-Truth is the most sophisticated violation response in the matrix. It eliminates the attacker's ability to determine whether they have been detected, transforms the attack into an intelligence-gathering operation, and reduces data loss to zero. It is described here as a formal architectural specification.
+**Trickle-Truth**[↗](../appendix/appendix-c-glossary.md#trickle-truth) is the most sophisticated violation response in the matrix. It eliminates the attacker's ability to determine whether they have been detected, transforms the attack into an intelligence-gathering operation, and reduces data loss to zero. It is described here as a formal architectural specification.
 
 **Name origin:** From behavioral economics — revealing truth in small, misleading doses rather than all at once. The attacker receives a stream of data that looks truthful but is entirely synthetic.
 
@@ -128,7 +128,7 @@ At $R > 1.0$, the system *overproduces* fake data — the attacker receives more
 
 **4. Event-Stream Integration**
 
-Trickle-Truth depends on D6 = Event-Streamed policy distribution. The transition from real-data to garden must be globally consistent across all enforcement points in under the inter-request latency window for the attacker's session.
+Trickle-Truth depends on D6 = **Event-Streamed (Pub/Sub) policy**[↗](../appendix/appendix-c-glossary.md#event-streamed-pub-sub-policy) distribution. The transition from real-data to garden must be globally consistent across all enforcement points in under the inter-request latency window for the attacker's session.
 
 If the attacker's requests arrive with 50ms gaps, the `transition:trickle-truth` event must propagate to every sidecar, API gateway, and load balancer in under 50ms. At typical event-stream latencies (Kafka with local consumers: sub-10ms; NATS JetStream: sub-5ms), this is achievable. At push-model latencies (30-second to 5-minute sync intervals), it is not — the attacker would see a glitch.
 
@@ -207,6 +207,38 @@ The EBK concept extends these foundations from *object provenance* (this contain
 | Resource cost to attacker | Negligible (they move to next target) | High (they spend time/tools analyzing fake data) |
 | Satisfies Axiom 6? | ❌ (Hard Deny is itself a Byzantine fault) | ✅ (response does not cascade) |
 
+#### The Leverage Point Hierarchy
+
+D5 is not just the first of the five dimensions in this chapter. It is the single highest-leverage dimension in the entire matrix, and the hierarchy of leverage across dimensions follows directly from the dimensional analysis in Chapter 4:
+
+**D5 > D4 > D8 > D2 > D7**
+
+**D5 (Violation Response) is highest leverage** because it determines whether a detection produces business damage or intelligence gain — regardless of how good the other dimensions are. An organization with world-class attestation (D4) and observability (D7) that responds to every detection with Hard Deny is producing business outages, not security. D5 gates the outcome of the entire architecture.
+
+**D4 (Attestation Modality) is second** because attestation quality determines what the system can detect at all. Without attestation fidelity, the policy engine is making decisions on noise — and no response mechanism, however sophisticated, can compensate for unreliable inputs.
+
+**D8 (Organizational Posture) is third** because organizational structure gates every other dimension's operational effectiveness at zero cost. A siloed organization with world-class technology has seams between teams that attackers exploit. D8 is the dimension that determines whether the human organization enables or undermines the architecture.
+
+**D2 (Identity Model) and D7 (Observability Trust) follow.** Identity precision determines scope-of-access decisions. Observability trust determines whether the dashboards the SOC watches represent reality. Both amplify the preceding dimensions — better identity feeds better detection (D4), and better observability feeds better response (D5) — but they are not independent levers: their value is realized through the dimensions they feed.
+
+The covariance clusters established in Chapter 4 provide the analytical foundation. The low-maturity and high-maturity cluster analysis demonstrates that D5, D4, and D8 are the dimensions where cluster membership first diverges. Organizations in the low-maturity cluster uniformly have D5 = Hard Deny, D4 = Single Source, and D8 = Siloed — regardless of where they sit on other dimensions. The transition to the high-maturity cluster begins when these three dimensions change.
+
+This hierarchy is justified within the morphological method itself. It does not depend on the archetype analysis in Chapters 8-11 — the leverage ordering emerges from the covariance structure of the matrix, not from the specific breach patterns of any single archetype.
+
+#### The D4/D5 Dependency Deadlock
+
+D4 and D5 must be upgraded together. Attempting to upgrade either in isolation produces diminishing returns — and in the worst case, makes the architecture worse.
+
+**D4 without D5:** Upgrading attestation quality alone produces more accurate, higher-confidence detections — and then feeds those detections into a Hard Deny response. The result is better detection quality triggering more frequent business outages. The security team can see the attack with greater precision; the business cannot survive the response.
+
+**D5 without D4:** Upgrading response quality alone deploys sophisticated response mechanisms (deception, micro-friction, Trickle-Truth) that react to low-fidelity detection signals. The result is high-cost deception based on unreliable attestation — Trickle-Truth serving garden data for false positives, or micro-friction applied to legitimate user sessions. The response is sophisticated but blind.
+
+The deadlock follows from the Octagon's own architectural logic: detection-response coupling is structural — the time between detection and response is itself an attack surface, and every dimension upgrade that increases detection fidelity without proportional response sophistication widens that surface.
+
+**Why D5 and D4 are adjacent in the hierarchy:** The hierarchy places D5 above D4, but the deadlock makes them effectively co-dependent. D5 is higher leverage because it determines the outcome of the entire architecture, but D5's effectiveness is bounded by D4's precision. The practical implication is straightforward: when upgrading from the low-maturity cluster, D4 and D5 must move together. A transition plan that budgets for better attestation without better response — or vice versa — is architecturally incomplete.
+
+The deadlock emerges directly from the dimensional analysis: it is a discoverable property of the dimension structure — visible in the covariance analysis performed in Chapter 4 — which constitutes the architectural proof that it is not a forward-dependent insight but a dimension-inherent constraint.
+
 ---
 
 ## D6: Policy Distribution — The Speed of Consistency
@@ -252,9 +284,40 @@ Every non-Holy-Grail architecture fails Axiom 7 (Epistemic Integrity) at the obs
 
 ### Independent Verification Paths
 
-**Dual Pipeline (Primary + Silent):** The simplest independent path. The primary observability pipeline (SIEM, APM) operates normally. A second, write-only pipeline — air-gapped via data diode, not reachable from the production network — collects the same telemetry independently. The two pipelines are compared offline. Divergence = tamper detection.
+**Dual Pipeline (Primary + Silent):** The simplest independent path. The primary observability pipeline (SIEM, APM) operates normally. A second, write-only pipeline — air-gapped via **data diode**[↗](../appendix/appendix-c-glossary.md#data-diode), not reachable from the production network — collects the same telemetry independently. The two pipelines are compared offline. Divergence = tamper detection.
 
-**Merkle-Attested Telemetry:** Each observability agent hashes its output into a Merkle tree in memory. The root hash is signed by the agent's hardware enclave at fixed intervals (e.g., every 5 seconds). A verifier can request the Merkle proof for any individual observation. Tampering any observation — inserting, deleting, or modifying a log entry — breaks the cryptographic chain. The SIEM may be blind, but the verifier can prove the SIEM is blind.
+**Merkle-Attested Telemetry**[↗](../appendix/appendix-c-glossary.md#merkle-attested-telemetry): Each observability agent hashes its output into a Merkle tree in memory. The root hash is signed by the agent's hardware enclave at fixed intervals (e.g., every 5 seconds). A verifier can request the Merkle proof for any individual observation. Tampering any observation — inserting, deleting, or modifying a log entry — breaks the cryptographic chain. The SIEM may be blind, but the verifier can prove the SIEM is blind.
+
+#### Metric Selection Framework
+
+D7 addresses whether you can trust what your dashboards show. But equally important is *which metrics you choose to track*. The ISMS analysis establishes the principle that metrics must drive decisions, not decorate dashboards [see ISMS analysis, §2.1]. Metrics without decision utility are noise at best and false confidence at worst. The metric selection framework bridges D7 (technical observability) and Axiom 2 (verifiable policy): a metric untethered to a decision is an unverifiable claim about security posture.
+
+**Three KPI Types:**
+
+| KPI Type | Definition | Examples | Maps to Axiom |
+|----------|-----------|----------|---------------|
+| **Incident Velocity KPIs** | Metrics that measure how fast the system detects and responds to security events | MTTD (Mean Time to Detect), MTTR (Mean Time to Respond), dwell time, false positive rate | Axiom 4 (Continuous Verification) — because the re-verification cadence determines the upper bound on detection speed |
+| **Control Health KPIs** | Metrics that measure whether controls are working as designed | Coverage ratio (percentage of assets under control), decay rate (percentage of controls failing in the last period), attestation freshness (age of the oldest successful attestation) | Axiom 2 (Explicit Verifiable Policy) — because control health is the operational evidence that policy is being enforced, not just declared |
+| **Culture / Training KPIs** | Metrics that measure whether humans are maintaining the architecture | Drill completion rate, phishing click-through rate, policy acknowledgment rate | Axiom 7 (Epistemic Integrity) — because untrained humans are an unattested input to the architecture; their decisions carry no cryptographic provenance but they operate controls that do |
+
+**KPI Lifecycle Rule:**
+
+Every metric must satisfy three conditions:
+
+1. **Tied to a risk domain.** The metric must answer a specific question about a specific risk. "What is our MTTD for credential theft?" is valid. "What is our MTTD?" without risk domain context is not — different threat vectors have different detection timelines.
+2. **Justified by decision utility.** The metric must inform a decision the organization actually makes. If no decision changes when the metric moves from green to red, the metric is dashboard noise.
+3. **Retired when no longer decision-useful.** Metrics are not permanent fixtures. When a risk domain is mitigated, its associated metrics should be retired — not kept on the dashboard because "we've always tracked it." The retirement criterion is: does this metric still inform a decision we make at least quarterly?
+
+**Vanity Metrics vs. Leadership-Read Metrics:**
+
+The distinction between what security teams track and what leadership can evaluate determines whether metrics drive organizational change or decorate quarterly reports.
+
+- **Vanity metric:** "Number of firewall rules deployed" — counts configuration artifacts, not protection. An organization with 10,000 firewall rules is not necessarily more secure than one with 500; it may simply have more undocumented, unmaintained, and conflicting rules.
+- **Leadership-read metric:** "Percentage of privileged accounts with MFA + hardware attestation" — measures actual coverage of the highest-risk accounts. A board member can evaluate this: "We protect 94% of our privileged accounts with the strongest available controls. The remaining 6% are legacy systems with a documented migration timeline."
+
+A vanity metric counts administrative activity. A leadership-read metric answers "are we protected?" in terms the board can evaluate. The transformation from vanity to leadership-read involves three steps: identify the risk domain the metric claims to measure, identify the decision the metric should inform, and verify that the metric's movement correlates with actual changes in the risk it measures.
+
+These metrics are not alternatives to D7's independent verification paths. They are the *selection layer* above them: independent verification ensures the metrics are trustworthy; the framework ensures the metrics are worth verifying.
 
 ---
 
@@ -336,6 +399,27 @@ The four variables that determine burnout severity are: alert volume (events per
 - **Stable ($B_{D9}$ moderate):** Rotation sized to the alert volume. Automation handles routine events. False positives managed through policy tuning.
 - **Sustainable ($B_{D9}$ low):** Automation handles the majority of events. Humans handle only ambiguous cases. False positives tracked as a system quality metric.
 
+#### Accountability Gap Taxonomy
+
+The D9 sub-dimensions measure human continuity from the architecture side — automation coverage, response depth, time variance, burnout risk. But measurement requires knowing *what to look for*. The ISMS analysis identifies accountability gaps as a distinct failure vector — patterns where governance structures appear intact from the outside but produce no actual accountability in operation [see ISMS analysis, §2.1]. Five failure modes recur across organizations:
+
+| Failure Mode | Manifestation | Diagnostic Question | Remediation Pattern |
+|-------------|---------------|---------------------|---------------------|
+| **Ghost Ownership** | A control is assigned to a role that no current person fills. The organizational chart says "Security Architect owns firewall policy." The Security Architect position has been vacant for 8 months. The firewall policy has not been reviewed. | "Is every control owner a named, employed person whose role explicitly includes this responsibility?" | Assign every control to a named individual, not a role title. Automate vacancy alerts: when the person's HR record shows departure or role change, the control's ownership is flagged as orphaned within 24 hours. |
+| **Backup Absence** | Documented incident response procedures require a human responder who has no designated backup. The runbook says "Escalate to Alice." Alice is on vacation. There is no backup. The escalation dead-ends. | "If your primary responder cannot be reached, who opens the alert? Name them. Now call their phone at 3 AM." | Every documented responder must have a named backup with the same access, the same training, and the same alert delivery path. Backup coverage must be verified quarterly with an unannounced drill. |
+| **Siloed Reviews** | Each team reviews its own controls with no cross-team visibility. The infrastructure team reviews infrastructure controls. The application team reviews application controls. Neither team reviews the seams between them — the IAM policy that governs application access to infrastructure. | "When was the last time a team reviewed another team's controls? Has a control owner ever been questioned by someone outside their reporting chain?" | Implement cross-team control review as a scheduled process. Every quarter, one team reviews another team's controls. The reviewing team cannot be in the same reporting chain. Findings go to a shared risk register visible to all teams. |
+| **Template Decay** | Documented processes are copy-pasted from certification templates and never updated for operational reality. The incident response plan from three years ago lists a decommissioned ticketing system and a reorganized team. The plan passed the last audit because auditors check existence, not accuracy. | "When was your incident response plan last tested against a live incident — not a tabletop exercise, but an actual security event? Did the plan match what actually happened?" | Require a post-incident plan review for every incident. The review must compare documented process against actual execution and flag every divergence. Divergences are either plan updates (reality was better) or process failures (plan would have been better). Both are actionable. |
+| **Tool Fragmentation** | Incident response spans 3+ disconnected tools with no unified timeline. Alerts arrive in PagerDuty, investigation happens in Splunk, containment in the cloud console, coordination in Slack. There is no single source of truth for what happened when and who did what. | "Reconstruct the last incident's timeline. How many different tools did you query? How long did it take? Was any tool's data inconsistent with another's?" | Deploy a centralized incident timeline that ingests from all tools and presents a unified, time-ordered view. The timeline must be available during the incident (not reconstructed afterward). |
+
+These five failure modes connect to the D9 sub-dimensions:
+
+- **Ghost Ownership** and **Backup Absence** amplify $D_{D9}$ (Response Depth). A nominally staffed rotation of 3 with one ghost owner is operationally a rotation of 2. The metric says $D_{D9}=3$; the operational reality is $D_{D9}=2$.
+- **Siloed Reviews** are the organizational mechanism that produces D8 = Siloed. Each team's review is adequate in isolation and collectively blind. The seam between teams is where attackers operate.
+- **Template Decay** correlates with $B_{D9}$ (Burnout Risk). Teams update templates when they have time, attention, and organizational support. When burnout is high, template updates are the first maintenance activity dropped — and the decay becomes self-reinforcing.
+- **Tool Fragmentation** can be masked by $A_{D9}$ (Automation Coverage). Automation that auto-acknowledges alerts and auto-closes tickets without resolving incidents produces a dashboard that looks responsive ($A_{D9}$ appears high) while fragmentation persists unaddressed.
+
+The accountability gap taxonomy reveals why D9 is not just a staffing metric. It is a structural property of how the human organization distributes responsibility, maintains procedural accuracy, and coordinates across team boundaries — and these properties are invisible to the sub-dimension metrics alone.
+
 **Diagnostic for Practitioners:**
 
 To assess your D9 posture, ask:
@@ -371,5 +455,4 @@ To assess your D9 posture, ask:
 
 - **Next:** [Chapter 7: Meta-Patterns — Covariance, Leverage, and the Capability Surface](./07-meta-patterns.md)
 - **Builds on:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](./05-dimensions-trust-to-attestation.md)
-- **Related:** [Chapter 8: Archetype A — The Holy Grail (Full Attack Trace)](../03-archetypes/08-archetype-a-holy-grail.md)
 - **Related:** [Appendix D: Quick-Reference Card](../appendix/appendix-d-quick-reference.md)
