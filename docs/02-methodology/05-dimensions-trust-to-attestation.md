@@ -6,7 +6,7 @@
 > - Assess enforcement layers from network perimeter to bilateral mutual enforcement
 > - Compare attestation modalities and explain why single-source attestation is the root cause of the "stolen token = total breach" pattern
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md)
+**Prerequisites:** [Chapter 4 (The Morphological Matrix)](./04-the-morphological-matrix.md)
 
 ---
 
@@ -38,7 +38,7 @@ No static root. Trust is a function of observed behavior over time. A workload o
 
 Trust is anchored in hardware: the TPM built into the CPU, the cryptographic fuses burned at the foundry, the measured boot chain that extends from firmware through kernel into runtime. Each layer of the software stack attests to the integrity of the layer above it, and the attestation report is signed by a key that never leaves the silicon.
 
-**This is the minimum requirement for satisfying Axiom 7 (Epistemic Integrity).** Without hardware-attested provenance, the policy engine is evaluating state claims that could have been fabricated by compromised software.
+**This is the minimum requirement for satisfying Axiom 7 (Epistemic Integrity)[↗](../appendix/appendix-c-glossary.md#epistemic-integrity).** Without hardware-attested provenance, the policy engine is evaluating state claims that could have been fabricated by compromised software.
 
 > **📋 Technical Primer: TPM and Measured Boot**
 >
@@ -64,7 +64,7 @@ Identity management is the dimension most vulnerable to category errors. The pat
 
 Humans authenticate infrequently, behave in messy but patterned ways, and are vulnerable to credential theft, MFA fatigue, and social engineering. The patterns that work for human identity:
 
-**Zero Standing Privileges (ZSP):** No persistent accounts. No "admin" role that sits waiting to be used. When a human needs access, they request it. The system mints a time-bounded, scope-bounded credential. When the task completes — or the TTL expires — the credential self-destructs. A stolen credential has a blast radius of minutes, not years.
+**Zero Standing Privileges (ZSP)[↗](../appendix/appendix-c-glossary.md#zero-standing-privileges-zsp):** No persistent accounts. No "admin" role that sits waiting to be used. When a human needs access, they request it. The system mints a time-bounded, scope-bounded credential. When the task completes — or the TTL expires — the credential self-destructs. A stolen credential has a blast radius of minutes, not years.
 
 **Trust Decay:** The moment a session is established, its trust score begins to degrade. After 30 minutes, the score has dropped below the threshold for sensitive actions, and the user is seamlessly re-verified through behavioral signals — typing cadence, mouse movement patterns, application interaction sequences — without an interruption. By the 8-hour mark, the session would require explicit re-authentication for any action, but behavioral decay ensures the session was never "trusted" for long.
 
@@ -96,25 +96,38 @@ The enforcement layer is where Axiom 3 (Unbypassable Mediation) materializes. Ev
 
 Still present in most architectures as a defense-in-depth layer. Firewalls and NACLs block bulk scanning and known-bad IPs. But as a *zero-trust enforcement layer*, the perimeter is insufficient: once an attacker is inside — a compromised VPN endpoint, a phished credential, a rogue container — the perimeter offers no further mediation.
 
-### Service Mesh (Sidecar Proxy)
+### Service Mesh (Sidecar)
 
-Deploying a service mesh (Istio, Linkerd, Cilium) extends enforcement to the pod level. Every inter-service communication passes through a sidecar proxy that evaluates policy before forwarding the request. The mesh provides:
+Deploying a service mesh (Istio, Linkerd, Cilium) extends enforcement to the pod level. Every inter-service communication passes through a sidecar proxy that evaluates policy before forwarding the request — implementing the PEP model established in NIST SP 800-207 §3.3. The mesh provides:
 
 - **Pod-level mediation:** Pod A cannot reach Pod B unless policy explicitly allows it. Lateral movement requires a policy decision at every hop.
 - **Mutual TLS by default:** Every inter-pod connection is encrypted and mutually authenticated, satisfying the minimum form of Axiom 8 (Bilateral Symmetry) at the transport layer.
 - **Policy as configuration:** Mesh policies are declarative and version-controlled — satisfying Axiom 2 for the network layer.
 
-### Application / API Gateway
+### Application / Gateway
 
-Enforcement embedded in the application or at the API gateway provides the richest context: the gateway sees the full HTTP request, understands the application-level semantics, and can evaluate policy against specific API paths, methods, and payloads. Identity-aware proxies extend this model to user-facing access.
+Enforcement embedded in the application or at the API gateway provides the richest context: the gateway sees the full HTTP request, understands the application-level semantics, and can evaluate policy against specific API paths, methods, and payloads. This is the PEP model from NIST SP 800-207 §3.3 applied at the application layer. Identity-aware proxies extend this model to user-facing access.
 
-### Data-Level (Cryptographic)
+### Data (Cryptographic)
 
-The payload itself carries its policy. The storage and transport layers are "dumb" — they hold encrypted blobs they cannot decrypt. Access requires the requesting entity to satisfy the policy conditions embedded in the data envelope. This is the enforcement layer that survives a fully compromised storage infrastructure.
+The payload itself carries its policy. The storage and transport layers are "dumb" — they hold encrypted blobs they cannot decrypt. Access requires the requesting entity to satisfy the policy conditions embedded in the data envelope. This is the enforcement layer that survives a fully compromised storage infrastructure. As the DoD Zero Trust Reference Architecture establishes, the data-carries-its-own-policy-envelope concept operationalizes the principle of "protect the data, not the network" — the enforcement follows the data regardless of where it resides, rather than trusting the infrastructure that holds it.
 
 ### Bilateral (Mutual Enforcement)
 
 Axiom 8 elevates bilateral enforcement from an option to a requirement. The client must evaluate policy before sending data — "Is it safe for me to transmit this to that destination?" — and refuse to send if the destination fails verification. The server's enforcement is the ultimate gatekeeper, but the client's enforcement is the data sovereignty layer.
+
+#### NIST SP 800-207 Deployment Variations → D3 Mapping
+
+NIST SP 800-207 defines four named deployment variations for zero-trust architecture. Each variation places the Policy Enforcement Point (PEP) at a different architectural layer. The Octagon's D3 values span these variations, showing which enforcement layers satisfy which NIST deployment models:
+
+| NIST SP 800-207 Variation | Description | D3 Values That Satisfy | Mapping Logic |
+|---------------------------|-------------|----------------------|---------------|
+| **Device-Agent/Gateway** | Software agent on the client device mediates access; a gateway at the network edge provides secondary enforcement | D3: Network (Perimeter), D3: Service Mesh (Sidecar) | The agent extends enforcement to the endpoint; the gateway provides network-level mediation. Service mesh sidecars are the cloud-native equivalent of device agents — they enforce policy at the workload boundary rather than the device boundary |
+| **Enclave Gateway** | A gateway at the enclave boundary mediates access to resources within a segmented environment | D3: Network (Perimeter), D3: Application / Gateway | The enclave gateway acts as a perimeter enforcement point. This variation is the closest to traditional DMZ architecture and the least zero-trust — resources *within* the enclave are trusted by default, violating Axiom 1 |
+| **Resource Portal** | A single portal mediates access to multiple resources; the portal acts as the PEP for all resource interactions | D3: Application / Gateway | The portal is an application-layer PEP. All resource access flows through it. This is the most common cloud-native ZT pattern (Identity-Aware Proxy model) |
+| **Application Sandbox** | Each application or workload runs in an isolated environment; the sandbox itself enforces policy at the application or hypervisor boundary | D3: Application / Gateway, D3: Silicon / Hypervisor | The sandbox is the enforcement boundary. Application-level sandboxes (gVisor, Firecracker) enforce at the syscall boundary. Hypervisor-level enforcement (confidential containers, TEEs) extends the sandbox concept to hardware — the closest NIST analog, though hardware-enforced isolation exceeds the original SP 800-207 sandboxing definition |
+
+The Octagon extends beyond NIST SP 800-207 by adding D3 values that have no corresponding deployment variation: D3: Data (Cryptographic), where the data itself carries its policy envelope, and D3: Bilateral (Mutual Enforcement), where both client and server independently evaluate policy before data is transmitted. These represent enforcement models that NIST's 2020 framework did not anticipate but that the Octagon's axioms require.
 
 ---
 
@@ -132,15 +145,19 @@ One attestation signal — typically the IDP's token validity. If the token is c
 
 ### Behavioral / Heuristic
 
-Pattern-matching attestation. "This user normally accesses JIRA first, then email, then git." "This microservice normally makes 200 requests per minute to the database with a 50ms average latency." Deviations from baseline trigger investigation. Behavioral attestation is weaker than cryptographic attestation (it can be learned and spoofed by a patient adversary) but stronger than nothing — it catches the 90% of attackers who do not have weeks to profile a victim's behavior.
+Pattern-matching **behavioral attestation**[↗](../appendix/appendix-c-glossary.md#behavioral-attestation). "This user normally accesses JIRA first, then email, then git." "This microservice normally makes 200 requests per minute to the database with a 50ms average latency." Deviations from baseline trigger investigation. Behavioral attestation is weaker than cryptographic attestation (it can be learned and spoofed by a patient adversary) but stronger than nothing — it catches the 90% of attackers who do not have weeks to profile a victim's behavior.
 
 ### Cascading / Layered
 
 The boot chain model. Each layer measures the next and extends the attestation chain: UEFI firmware measures the bootloader, the bootloader measures the kernel, the kernel measures the container runtime, the container runtime measures the workload image. If any measurement differs from the expected golden value, the chain breaks. This is how you detect a kernel rootkit, a compromised hypervisor, or a tampered bootloader — each breaks the layer above it.
 
+### Continuous / Real-Time
+
+Attestation is not a one-time event. It is a continuous stream of measurements. The system does not ask "was this workload clean at deploy time?" — it asks "is this workload clean *right now*?" Every new measurement extends the attestation chain. Any deviation — a memory page modified, a syscall pattern shifted, a process spawned from an unexpected parent — triggers immediate investigation. Continuous / Real-Time attestation closes the temporal gap between a "trust on first use" assumption and the moment of compromise — the attacker who subverts a workload at runtime is detected within the measurement interval, not the next deployment cycle.
+
 ### Heterogeneous Triple
 
-The strongest practical attestation. Three independent observation modalities monitor the same entity from different vantage points:
+**Heterogeneous Triple**[↗](../appendix/appendix-c-glossary.md#heterogeneous-triple) is the strongest practical attestation modality. Three independent observation modalities monitor the same entity from different vantage points:
 
 - **Observer A (eBPF kernel agent):** Watches syscalls, network flows, file access patterns from inside the kernel.
 - **Observer B (Hypervisor monitor):** Watches memory access, CPU state, and I/O from outside the VM or container.
@@ -163,5 +180,4 @@ The three observers emit independently signed observations. A Byzantine consensu
 
 - **Next:** [Chapter 6: Dimensions 5-9 — Response, Distribution, Observability, Posture, Continuity](./06-dimensions-response-to-human.md)
 - **Builds on:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md)
-- **Related:** [Chapter 7: Meta-Patterns](./07-meta-patterns.md)
 - **Related:** [Appendix D: Quick-Reference Card](../appendix/appendix-d-quick-reference.md)
