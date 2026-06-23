@@ -6,7 +6,7 @@
 > - Explain why Hard Deny causes business damage exceeding the breach
 > - Recognize the "CISO gets fired after implementing ZT" pattern as an architectural failure, not a personnel failure
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
+**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
 
 ---
 
@@ -15,7 +15,7 @@ Archetype B is the most common "zero-trust" deployment in the Fortune 500. The o
 **Configuration:**
 - D1: Software CA (PKI-based) — Microsoft/Okta/Entra, Kubernetes CA
 - D2: Attribute-Based Access Control (ABAC) — role, time, location, clearance
-- D3: Network (Perimeter) — enforcement at the firewall and VPN boundary
+- D3: Network Perimeter — enforcement at the firewall and VPN boundary
 - D4: Single Source — IDP token validity is the only attestation
 - D5: Hard Deny / Quarantine — lock, block, terminate
 - D6: Push — control plane pushes policy bundles every 30 minutes
@@ -116,7 +116,19 @@ By the time the incident is fully understood — the phishing attack, the token 
 
 ---
 
-## Root Cause Analysis
+## Incident Metrics
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| **MTTD** | ~22 minutes | Tripwire detection at T+20m; system recognition of incident at T+22m when outage cascades |
+| **MTTR** | ~4 hours (est.) | Lockout cascade requires cross-team coordination. Mean time to restore database access: ~3h. Mean time to fully understand attacker's scope: ~6h |
+| **Data Exfiltrated** | Full (multiple database dumps) | The attacker had ~20 minutes of unfettered database access before the tripwire. TLS-encrypted egress traffic was not inspected at the perimeter — a configuration limitation of the vendor suite |
+| **Business Impact** | Severe | Multi-hour production outage (database quarantined). Pager cascade across 3 teams. CISO-level regulatory reporting required. Estimated direct cost: $500K-$2M (incident response, downtime, regulatory fines) |
+| **Intelligence Yield** | Minimal | The tripwire stopped the attack but did not observe the attacker's full TTPs. The attacker learned of detection (lockout signal) and will modify methods. |
+
+These metrics are consistent with 2025-2026 enterprise breach data: the Verizon DBIR and Mandiant M-Trends reports confirm credential theft as the leading initial access vector (45-55% of breaches), median dwell time of 10-22 days for Fortune 500 organizations, and infostealer-driven token theft as a rapidly growing attack surface [TR-§Section 2.4]. The Storm-2949 campaign specifically demonstrated cloud-native lateral movement from stolen session tokens within minutes of authentication [TR-§Section 3.1].
+
+---
 
 The attack succeeded not because of a single failure but because six axioms were simultaneously violated, and each violation enabled the next:
 
@@ -181,6 +193,5 @@ This is not an argument against integrated platforms. It is a recognition that t
 ## Cross-References
 
 - **Next:** [Chapter 10: Archetype C — Move Fast, Fix It In Prod](./10-archetype-c-startup.md)
-- **Builds on:** [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
-- **Related:** [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
-- **Related:** [Chapter 14: The Enterprise Turnaround (B → A Path)](../04-synthesis/14-enterprise-turnaround.md)
+- **Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
+- **Related:** [Chapter 14: Enterprise Turnaround (B → A Path)](../04-synthesis/14-enterprise-turnaround.md)

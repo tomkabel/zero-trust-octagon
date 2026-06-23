@@ -6,7 +6,7 @@
 > - Explain the Degrade Gracefully trade-off: uptime preservation vs. exfiltration window
 > - Recognize that GitOps and fused teams provide excellent MTTD/MTTR but cannot prevent attacks that bypass pre-runtime verification
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
+**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
 
 ---
 
@@ -136,7 +136,7 @@ The hardening path (Chapter 15) breaks this loop by adding runtime attestation w
 
 ## The Supply Chain Attack Landscape
 
-The typosquatted dependency attack traced above is not a hypothetical. It is the most common and fastest-growing attack vector against cloud-native organizations.
+The typosquatted dependency attack traced above is not a hypothetical. It is the most common and fastest-growing attack vector against cloud-native organizations. The regulatory landscape now reflects this: **NIST CSF 2.0 elevated supply chain risk management (SCRM) to a first-class security function** (Govern Function, GV.SC) — it is no longer a procurement concern but a core zero-trust architectural requirement [TR-§Section 3.2]. Similarly, **Executive Order 14028 §4 mandates software supply chain security** for all software sold to the federal government, with explicit SBOM (Software Bill of Materials) requirements [TR-§1.4]. The CI/CD attestation patterns traced in Archetype C are the architectural implementation of what EO 14028 requires at the procurement level — the same dependency verification, provenance attestation, and build pipeline hardening.
 
 **The dependency tree problem:** A typical Node.js or Python microservice pulls in 200-500 transitive dependencies — packages it never explicitly declared but that its declared dependencies depend on, and their dependencies depend on, forming a tree where the developer can only realistically audit the first 2-3 levels. A malicious package at depth 4 of the dependency tree is functionally invisible to human review. The developer runs `npm install` or `pip install` and trusts the output. That trust is the TOFU vulnerability.
 
@@ -208,6 +208,5 @@ The CI/CD pipeline is simultaneously the most powerful piece of infrastructure i
 ## Cross-References
 
 - **Next:** [Chapter 11: Archetype D — SaaS-Glued Lean Defense](./11-archetype-d-lean-defense.md)
-- **Builds on:** [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
-- **Related:** [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
-- **Related:** [Chapter 15: The Velocity Defender (C Hardening Path)](../04-synthesis/15-velocity-defender.md)
+- **Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
+
