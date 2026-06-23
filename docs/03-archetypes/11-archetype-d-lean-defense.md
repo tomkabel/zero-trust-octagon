@@ -176,4 +176,3 @@ This is a hard boundary on the Trickle-Truth pattern. It applies only where the 
 - **Next:** [Chapter 12: Cross-Trace Synthesis — What the Four Breaches Teach](./12-cross-trace-synthesis.md)
 - **Builds on:** [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
 - **Related:** [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
-- **Related:** [Chapter 16: Scaling Pat (D Hardening Path)](../04-synthesis/16-scaling-pat.md)

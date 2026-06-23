@@ -183,4 +183,3 @@ This quad-layered integrity model breaks the infinite regress. The event stream 
 - **Next:** [Chapter 9: Archetype B — Fortune 500 Illusion of Control](./09-archetype-b-fortune-500.md)
 - **Builds on:** [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
 - **Related:** [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
-- **Related:** [Chapter 14: The Enterprise Turnaround (B → A Path)](../04-synthesis/14-enterprise-turnaround.md)
