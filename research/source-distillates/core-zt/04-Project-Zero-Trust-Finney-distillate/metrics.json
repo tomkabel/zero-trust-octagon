@@ -1,0 +1,89 @@
+{
+  "status": "ok",
+  "files": [
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/_index.md",
+      "filename": "_index.md",
+      "size_bytes": 1519,
+      "estimated_tokens": 379,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/01-framework.md",
+      "filename": "01-framework.md",
+      "size_bytes": 4779,
+      "estimated_tokens": 1194,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/02-scenarios.md",
+      "filename": "02-scenarios.md",
+      "size_bytes": 8557,
+      "estimated_tokens": 2139,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/03-glossary.md",
+      "filename": "03-glossary.md",
+      "size_bytes": 5530,
+      "estimated_tokens": 1382,
+      "doc_type": "unknown"
+    }
+  ],
+  "summary": {
+    "total_files": 4,
+    "total_size_bytes": 20385,
+    "total_estimated_tokens": 5096
+  },
+  "groups": [
+    {
+      "group_key": "_index.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/_index.md",
+          "filename": "_index.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "01-framework.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/01-framework.md",
+          "filename": "01-framework.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "02-scenarios.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/02-scenarios.md",
+          "filename": "02-scenarios.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "03-glossary.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/03-glossary.md",
+          "filename": "03-glossary.md",
+          "role": "standalone"
+        }
+      ]
+    }
+  ],
+  "routing": {
+    "recommendation": "fan-out",
+    "reason": "4 file(s), ~5,096 estimated tokens \u2014 exceeds single compressor threshold (> 3 files)"
+  },
+  "split_prediction": {
+    "prediction": "unlikely",
+    "reason": "Estimated distillate ~1,698 tokens within 5,000 threshold",
+    "estimated_distillate_tokens": 1698
+  }
+}

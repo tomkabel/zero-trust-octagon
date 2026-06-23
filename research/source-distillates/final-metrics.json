@@ -1,0 +1,208 @@
+{
+  "status": "ok",
+  "files": [
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/01-Zero-Trust-Architecture-Green-Ortiz-distillate.md",
+      "filename": "01-Zero-Trust-Architecture-Green-Ortiz-distillate.md",
+      "size_bytes": 6325,
+      "estimated_tokens": 1581,
+      "doc_type": "architecture-doc"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/02-Zero-Trust-Networks-2Ed-Rais-distillate.md",
+      "filename": "02-Zero-Trust-Networks-2Ed-Rais-distillate.md",
+      "size_bytes": 6462,
+      "estimated_tokens": 1615,
+      "doc_type": "distillate"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/03-Zero-Trust-Security-Enterprise-Guide-Garbis-distillate.md",
+      "filename": "03-Zero-Trust-Security-Enterprise-Guide-Garbis-distillate.md",
+      "size_bytes": 6772,
+      "estimated_tokens": 1693,
+      "doc_type": "distillate"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/05-Zero-Trust-Resilient-Cloud-Halley-distillate.md",
+      "filename": "05-Zero-Trust-Resilient-Cloud-Halley-distillate.md",
+      "size_bytes": 6218,
+      "estimated_tokens": 1554,
+      "doc_type": "distillate"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/01-framework.md",
+      "filename": "01-framework.md",
+      "size_bytes": 4779,
+      "estimated_tokens": 1194,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/02-scenarios.md",
+      "filename": "02-scenarios.md",
+      "size_bytes": 8557,
+      "estimated_tokens": 2139,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/03-glossary.md",
+      "filename": "03-glossary.md",
+      "size_bytes": 5530,
+      "estimated_tokens": 1382,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/_index.md",
+      "filename": "_index.md",
+      "size_bytes": 1519,
+      "estimated_tokens": 379,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/k8s-security-distillate.md",
+      "filename": "k8s-security-distillate.md",
+      "size_bytes": 8208,
+      "estimated_tokens": 2052,
+      "doc_type": "distillate"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/threat-crypto-distilled.md",
+      "filename": "threat-crypto-distilled.md",
+      "size_bytes": 6560,
+      "estimated_tokens": 1640,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/zero-trust/research/source-distillates/arch-devsecops-distilled.md",
+      "filename": "arch-devsecops-distilled.md",
+      "size_bytes": 4102,
+      "estimated_tokens": 1025,
+      "doc_type": "unknown"
+    }
+  ],
+  "summary": {
+    "total_files": 11,
+    "total_size_bytes": 65032,
+    "total_estimated_tokens": 16258
+  },
+  "groups": [
+    {
+      "group_key": "01-Zero-Trust-Architecture-Green-Ortiz-distillate.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/01-Zero-Trust-Architecture-Green-Ortiz-distillate.md",
+          "filename": "01-Zero-Trust-Architecture-Green-Ortiz-distillate.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "02-Zero-Trust-Networks-2Ed-Rais-distillate.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/02-Zero-Trust-Networks-2Ed-Rais-distillate.md",
+          "filename": "02-Zero-Trust-Networks-2Ed-Rais-distillate.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "03-Zero-Trust-Security-Enterprise-Guide-Garbis-distillate.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/03-Zero-Trust-Security-Enterprise-Guide-Garbis-distillate.md",
+          "filename": "03-Zero-Trust-Security-Enterprise-Guide-Garbis-distillate.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "05-Zero-Trust-Resilient-Cloud-Halley-distillate.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/05-Zero-Trust-Resilient-Cloud-Halley-distillate.md",
+          "filename": "05-Zero-Trust-Resilient-Cloud-Halley-distillate.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "01-framework.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/01-framework.md",
+          "filename": "01-framework.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "02-scenarios.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/02-scenarios.md",
+          "filename": "02-scenarios.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "03-glossary.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/03-glossary.md",
+          "filename": "03-glossary.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "_index.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/core-zt/04-Project-Zero-Trust-Finney-distillate/_index.md",
+          "filename": "_index.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "k8s-security-distillate.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/k8s-security-distillate.md",
+          "filename": "k8s-security-distillate.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "threat-crypto-distilled.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/threat-crypto-distilled.md",
+          "filename": "threat-crypto-distilled.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "arch-devsecops-distilled.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/zero-trust/research/source-distillates/arch-devsecops-distilled.md",
+          "filename": "arch-devsecops-distilled.md",
+          "role": "standalone"
+        }
+      ]
+    }
+  ],
+  "routing": {
+    "recommendation": "fan-out",
+    "reason": "11 file(s), ~16,258 estimated tokens \u2014 exceeds single compressor threshold (>15000 tokens)"
+  },
+  "split_prediction": {
+    "prediction": "likely",
+    "reason": "Estimated distillate ~5,419 tokens exceeds 5,000 threshold",
+    "estimated_distillate_tokens": 5419
+  }
+}

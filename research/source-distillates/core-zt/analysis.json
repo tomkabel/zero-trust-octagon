@@ -1,0 +1,106 @@
+{
+  "status": "ok",
+  "files": [
+    {
+      "path": "/home/notroot/Documents/books/sources/zt-downloads/01-Zero-Trust-Architecture-Green-Ortiz.md",
+      "filename": "01-Zero-Trust-Architecture-Green-Ortiz.md",
+      "size_bytes": 881750,
+      "estimated_tokens": 220437,
+      "doc_type": "architecture-doc"
+    },
+    {
+      "path": "/home/notroot/Documents/books/sources/zt-downloads/02-Zero-Trust-Networks-2Ed-Rais.md",
+      "filename": "02-Zero-Trust-Networks-2Ed-Rais.md",
+      "size_bytes": 730275,
+      "estimated_tokens": 182568,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/books/sources/zt-downloads/03-Zero-Trust-Security-Enterprise-Guide-Garbis.md",
+      "filename": "03-Zero-Trust-Security-Enterprise-Guide-Garbis.md",
+      "size_bytes": 700096,
+      "estimated_tokens": 175024,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/books/sources/zt-downloads/04-Project-Zero-Trust-Finney.md",
+      "filename": "04-Project-Zero-Trust-Finney.md",
+      "size_bytes": 466966,
+      "estimated_tokens": 116741,
+      "doc_type": "unknown"
+    },
+    {
+      "path": "/home/notroot/Documents/books/sources/zt-downloads/05-Zero-Trust-Resilient-Cloud-Halley.md",
+      "filename": "05-Zero-Trust-Resilient-Cloud-Halley.md",
+      "size_bytes": 1755742,
+      "estimated_tokens": 438935,
+      "doc_type": "unknown"
+    }
+  ],
+  "summary": {
+    "total_files": 5,
+    "total_size_bytes": 4534829,
+    "total_estimated_tokens": 1133707
+  },
+  "groups": [
+    {
+      "group_key": "01-Zero-Trust-Architecture-Green-Ortiz.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/books/sources/zt-downloads/01-Zero-Trust-Architecture-Green-Ortiz.md",
+          "filename": "01-Zero-Trust-Architecture-Green-Ortiz.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "02-Zero-Trust-Networks-2Ed-Rais.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/books/sources/zt-downloads/02-Zero-Trust-Networks-2Ed-Rais.md",
+          "filename": "02-Zero-Trust-Networks-2Ed-Rais.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "03-Zero-Trust-Security-Enterprise-Guide-Garbis.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/books/sources/zt-downloads/03-Zero-Trust-Security-Enterprise-Guide-Garbis.md",
+          "filename": "03-Zero-Trust-Security-Enterprise-Guide-Garbis.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "04-Project-Zero-Trust-Finney.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/books/sources/zt-downloads/04-Project-Zero-Trust-Finney.md",
+          "filename": "04-Project-Zero-Trust-Finney.md",
+          "role": "standalone"
+        }
+      ]
+    },
+    {
+      "group_key": "05-Zero-Trust-Resilient-Cloud-Halley.md",
+      "files": [
+        {
+          "path": "/home/notroot/Documents/books/sources/zt-downloads/05-Zero-Trust-Resilient-Cloud-Halley.md",
+          "filename": "05-Zero-Trust-Resilient-Cloud-Halley.md",
+          "role": "standalone"
+        }
+      ]
+    }
+  ],
+  "routing": {
+    "recommendation": "fan-out",
+    "reason": "5 file(s), ~1,133,707 estimated tokens \u2014 exceeds single compressor threshold (>15000 tokens)"
+  },
+  "split_prediction": {
+    "prediction": "likely",
+    "reason": "Estimated distillate ~377,902 tokens exceeds 5,000 threshold",
+    "estimated_distillate_tokens": 377902
+  }
+}
