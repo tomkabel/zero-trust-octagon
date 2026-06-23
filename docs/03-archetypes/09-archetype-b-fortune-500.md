@@ -74,7 +74,7 @@ The database generates massive export logs. They are shipped to the central SIEM
 
 The attacker — possessing DevOps-level credentials — connects to the database server and pauses the logging agent. The SIEM sees a drop in log volume for that host. This happens occasionally — a maintenance window, a configuration change, an agent restart. The SOC does not treat it as a P1. The system implicitly trusts that silence means normality.
 
-**Axiom violation:** Axiom 7 (Epistemic Integrity). The SIEM's silence is trusted as evidence of normality. No independent verification pipeline exists to detect the gap.
+**Axiom violation:** **Axiom 7 (Epistemic Integrity)**[↗](../appendix/appendix-c-glossary.md#epistemic-integrity). The SIEM's silence is trusted as evidence of normality. No independent verification pipeline exists to detect the gap.
 
 ---
 
@@ -126,7 +126,7 @@ By the time the incident is fully understood — the phishing attack, the token 
 | **Business Impact** | Severe | Multi-hour production outage (database quarantined). Pager cascade across 3 teams. CISO-level regulatory reporting required. Estimated direct cost: $500K-$2M (incident response, downtime, regulatory fines) |
 | **Intelligence Yield** | Minimal | The tripwire stopped the attack but did not observe the attacker's full TTPs. The attacker learned of detection (lockout signal) and will modify methods. |
 
-These metrics are consistent with 2025-2026 enterprise breach data: the Verizon DBIR and Mandiant M-Trends reports confirm credential theft as the leading initial access vector (45-55% of breaches), median dwell time of 10-22 days for Fortune 500 organizations, and infostealer-driven token theft as a rapidly growing attack surface [TR-§Section 2.4]. The Storm-2949 campaign specifically demonstrated cloud-native lateral movement from stolen session tokens within minutes of authentication [TR-§Section 3.1].
+These metrics are consistent with 2025-2026 enterprise breach data: the Verizon DBIR and Mandiant M-Trends reports confirm credential theft as the leading initial access vector (45-55% of breaches), median dwell time of 10-22 days for Fortune 500 organizations, and infostealer-driven token theft as a rapidly growing attack surface [TR-§Section 2.4]. The Storm-2949 campaign specifically demonstrated cloud-native lateral movement from stolen session tokens within minutes of authentication [TR-§Section-3.1].
 
 ---
 
@@ -194,4 +194,4 @@ This is not an argument against integrated platforms. It is a recognition that t
 
 - **Next:** [Chapter 10: Archetype C — Move Fast, Fix It In Prod](./10-archetype-c-startup.md)
 - **Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
-- **Related:** [Chapter 14: Enterprise Turnaround (B → A Path)](../04-synthesis/14-enterprise-turnaround.md)
+
