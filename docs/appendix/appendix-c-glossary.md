@@ -20,6 +20,12 @@
 
 ## C
 
+<a id="cae-continuous-access-evaluation"></a>
+**CAE (Continuous Access Evaluation)** — A mechanism that enables real-time session state updates. When context changes (device health degrades, risk spikes, session revoked), CAE propagates the change to enforcement points without waiting for token expiry. _See also: [runtime signal](#runtime-signal), [sender-constrained token](#sender-constrained-token)._
+
+<a id="caep-continuous-access-evaluation-protocol"></a>
+**CAEP (Continuous Access Evaluation Protocol)** — An IETF draft standard that defines a shared protocol for continuous access evaluation across identity providers, device management platforms, and enforcement points. As of 2026, still in draft phase and not widely deployed in production. _See also: [SSF](#ssf-shared-signals-framework)._
+
 **Capability surface** — The topography formed by interaction of morphological dimensions. Different combinations optimize for different threat models. The maturity vector is a surface, not a line.
 
 **CBOM (Cryptographic Bill of Materials)** — Expected golden measurements for every hardware and software component in a node's boot chain, used for silicon attestation verification.
@@ -36,11 +42,15 @@
 
 **Data diode** — A unidirectional network gateway that allows telemetry to flow from the production network into an observability pipeline but physically prevents any data from flowing back. Used to air-gap the truth pipeline.
 
+**DPoP (Demonstration of Proof-of-Possession)** — An OAuth extension that cryptographically binds an access token to the client that requested it. The client proves possession of a private key with each request, preventing token replay by an attacker who captures the token. _See also: [sender-constrained token](#sender-constrained-token)._
+
 **D9 (Human Continuity)** — The ninth morphological dimension. How the human response layer is staffed. Values: Single Point of Failure, Small Rotation, 24/7 SOC, Fully Automated.
 
 **Decision gate** — A quantitative threshold in an implementation decision tree that signals whether the primary path is working or requires a pivot.
 
 **Degrade Gracefully** — Violation response strategy. Instead of denying access, degrade service quality: throttle bandwidth, reduce response priority, serve stale but safe data.
+
+**Delegable proof** — A proof token that carries a flag authorizing the presenter to delegate a scoped-down version of its permissions to a sub-agent or downstream service. Delegation creates a linked chain of proof IDs for audit traceability. _See also: [proof token](#proof-object-proof-token)._
 
 **Detect-respond gap** — The interval between detection and effective response during which the attacker can still inflict damage. The true operational metric for zero-trust effectiveness, superseding MTTD alone.
 
@@ -110,6 +120,23 @@
 
 **Probationary Identity** — D2 value. Identity is not granted fully at authentication. The entity operates in a limited, monitored state until its behavior matches the expected archetype baseline, at which point full identity is released.
 
+<a id="proof-before-action"></a>
+**Proof before action** — An architectural pattern where per-operation authorization is verified before each sensitive action. Extends proof-before-connect to operation-level granularity. Maps to D3 (Enforcement) and D5 (Violation Response) at high maturity. _See also: [proof before connect](#proof-before-connect), [proof token](#proof-object-proof-token)._
+
+<a id="proof-before-connect"></a>
+**Proof before connect** — An architectural pattern where authorization must be demonstrated before network connectivity is established. Replaces VPN-style network reachability with service-specific token-based authorization. _See also: [proof before action](#proof-before-action), [proof token](#proof-object-proof-token)._
+
+<a id="proof-issuer"></a>
+**Proof issuer** — The authorization server that evaluates identity, device health, risk level, and scope appropriateness, then issues a scoped, short-lived proof token. The proof issuer is the central decision point in the three-layer model. _See also: [proof token](#proof-object-proof-token)._
+
+<a id="proof-object-proof-token"></a>
+**Proof object (proof token)** — A verifiable, scoped, short-lived assertion that a subject was authenticated by a specific issuer and granted a specific permission for a specific audience for a specific time window. Carries issuer, audience, scope, and expiry claims. Must be cryptographically verifiable. _See also: [sender-constrained token](#sender-constrained-token), [proof issuer](#proof-issuer)._
+
+## R
+
+<a id="runtime-signal"></a>
+**Runtime signal** — A continuous stream of security-relevant events — device health changes, risk score updates, anomaly detections, session revocations — that inform ongoing access decisions. Runtime signals are the third layer of the identity-proof-runtime model. _See also: [CAE](#cae-continuous-access-evaluation), [SSF](#ssf-shared-signals-framework)._
+
 ## S
 
 **SaaS Blind Spot** — The gap between what an identity-aware proxy protects (self-hosted resources) and what the SaaS layer exposes (Google Drive, Slack, Notion, etc.) using the same identity token. A zero-trust architecture must account for both.
@@ -118,11 +145,23 @@
 
 **Self-quarantine rate** — The percentage of nodes that are automatically isolated due to attestation mismatches from benign causes (cosmic ray bit-flips, thermal degradation, firmware update drift). In high-maturity architectures, a 10% rate is considered normal.
 
+<a id="sender-constrained-token"></a>
+**Sender-constrained token** — A token cryptographically bound to its intended presenter, preventing token replay by an attacker who captures the token. Implemented via DPoP (OAuth extension) or mTLS (binding the token to the client certificate). _See also: [DPoP](#dpop-demonstration-of-proof-of-possession), [proof token](#proof-object-proof-token)._
+
 **Session graft** — The atomic transition of an attacker's session from real data to the garden environment. The authentication token, cookies, and headers remain valid but now authenticate to the synthetic environment.
 
 **Silicon Root of Trust** — D1 value. Trust anchored in cryptographic keys embedded in CPU hardware, burned at the foundry. The foundation for Epistemic Integrity (Axiom 7).
 
 **Software CA (PKI-based)** — D1 value. Trust anchored in a certificate authority hierarchy. Flexible but software-compromiseable.
+
+<a id="spiffe"></a>
+**SPIFFE (Secure Production Identity Framework for Everyone)** — An open standard for workload identity that issues cryptographically verifiable identity documents to services without requiring API keys or shared secrets. Integrates with the SPIRE implementation to automate identity issuance and rotation.
+
+<a id="split-brain-authorization"></a>
+**Split-brain (authorization)** — A condition where two independent authorization paths produce conflicting verdicts for the same request. Occurs when runtime signals bypass the proof layer and talk directly to enforcement points, creating dual enforcement paths. Must be resolved by routing all authorization signals through a single decision point. _See also: [proof issuer](#proof-issuer), [runtime signal](#runtime-signal)._
+
+<a id="ssf-shared-signals-framework"></a>
+**SSF (Shared Signals Framework)** — An OpenID Foundation standard for broadcasting security events between identity providers, device management platforms, and enforcement points using a common event format. Enables cross-platform runtime signal propagation. As of 2026, limited production adoption. _See also: [CAEP](#caep-continuous-access-evaluation-protocol), [runtime signal](#runtime-signal)._
 
 **Static JIT** — D2 value. Identity minted Just-In-Time with an explicit TTL. Standard OIDC/JWT flows. Trusted until expiry.
 
@@ -152,7 +191,3 @@
 **Zero Standing Privileges (ZSP)** — D2 value. No persistent accounts. All access is JIT-minted, time-bounded, and scope-bounded. Credentials self-destruct on expiry.
 
 **ZTA Litmus Test** — "When your policy engine fails, who pays — the attacker or the business?"
-s?"
- the business?"
-?"
-ness?"
