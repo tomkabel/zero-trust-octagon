@@ -118,6 +118,20 @@ This is a business decision, not a security decision. Pat must present to the CE
 
 ---
 
+## Other Failure: The Escape Hatch
+
+Not every gate failure fits the three patterns above. An organization diagnosed as Archetype B may discover during Q1 behavioral tuning that its telemetry quality is insufficient for any behavioral analysis. An Archetype C startup may realize its deployment velocity makes even admission control unacceptable. An Archetype D solo operator may find that the recommended automation platform conflicts with an existing workflow that cannot be changed.
+
+When a gate failure does not match any of the three documented patterns, the escape hatch is:
+
+1. **Return to [Chapter 13: Self-Assessment](./13-self-assessment.md).** Re-answer the twelve diagnostic questions. Your circumstances may have changed — a new platform, a reorg, a budget change, or simply a better understanding of your actual deployment.
+2. **Re-check your archetype diagnosis.** A different set of answers may route you to a different implementation pathway. The most common re-diagnosis is B → D (the organization realizes its "enterprise security program" is actually Pat-plus-a-SIEM).
+3. **If the diagnosis is unchanged, escalate.** The gate failure means the pathway's assumptions do not match your reality. Document what failed, why, and what constraint blocked the pivot. This becomes input for Appendix D (Quick-Reference Card) maintenance or, at scale, a new archetype pathway.
+
+The escape hatch is not failure. It is the system working as designed. The gate checks and pivots are not there because every organization will follow the same path. They are there because every organization will diverge — and the divergence is where the next breach would otherwise originate.
+
+---
+
 ## Key Takeaways
 
 1. **The most common implementation failure across all archetypes is the same mistake: upgrading detection before response. Detection upgrades without response upgrades produce worse outcomes.**
@@ -129,6 +143,5 @@ This is a business decision, not a security decision. Pat must present to the CE
 
 ## Cross-References
 
-- **Next:** [Chapter 18: The Decision Matrix in Practice + Conclusion](./18-decision-matrix-and-conclusion.md)
-- **Builds on:** [Chapter 14: Enterprise Turnaround](./14-enterprise-turnaround.md), [Chapter 15: Velocity Defender](./15-velocity-defender.md), [Chapter 16: Scaling Pat](./16-scaling-pat.md)
-- **Related:** [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Next:** [Chapter 18: The Decision Matrix in Practice + Conclusion](./18-decision-matrix-and-conclusion.md)
+**Builds on:** [Chapter 14: Enterprise Turnaround](./14-enterprise-turnaround.md), [Chapter 15: Velocity Defender](./15-velocity-defender.md), [Chapter 16: Scaling Pat](./16-scaling-pat.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
