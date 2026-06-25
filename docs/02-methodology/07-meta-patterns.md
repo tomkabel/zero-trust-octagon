@@ -243,6 +243,6 @@ This is not a theoretical concern. NIST's PQC migration timeline (RSA/ECC deprec
 
 ## Cross-References
 
-**Next:** [§8: Archetype A — The Holy Grail](../03-archetypes/08-archetype-a-holy-grail.md)
-**Builds on:** [§4: The Morphological Matrix](./04-the-morphological-matrix.md), [§5: Dimensions: Trust to Attestation](./05-dimensions-trust-to-attestation.md), [§6: Dimensions: Response to Human](./06-dimensions-response-to-human.md)
-**Related:** [§2: The Octagon](../01-foundations/02-the-octagon.md)
+- **Next:** [§8: Archetype A — The Holy Grail](../03-archetypes/08-archetype-a-holy-grail.md)
+- **Builds On:** [§4: The Morphological Matrix](./04-the-morphological-matrix.md), [§5: Dimensions: Trust to Attestation](./05-dimensions-trust-to-attestation.md), [§6: Dimensions: Response to Human](./06-dimensions-response-to-human.md)
+- **Related:** [§2: The Octagon](../01-foundations/02-the-octagon.md)

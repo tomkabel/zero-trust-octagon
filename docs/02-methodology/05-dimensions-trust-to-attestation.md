@@ -178,6 +178,6 @@ The three observers emit independently signed observations. A Byzantine consensu
 
 ## Cross-References
 
-- **Next:** [Chapter 6: Dimensions 5-9 — Response, Distribution, Observability, Posture, Continuity](./06-dimensions-response-to-human.md)
-- **Builds on:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md)
+- **Next:** [§6: Dimensions 5-9 — Response, Distribution, Observability, Posture, Continuity](./06-dimensions-response-to-human.md)
+- **Builds On:** [§4: The Morphological Matrix](./04-the-morphological-matrix.md)
 - **Related:** [Appendix D: Quick-Reference Card](../appendix/appendix-d-quick-reference.md)

@@ -453,6 +453,6 @@ To assess your D9 posture, ask:
 
 ## Cross-References
 
-- **Next:** [Chapter 7: Meta-Patterns — Covariance, Leverage, and the Capability Surface](./07-meta-patterns.md)
-- **Builds on:** [Chapter 4: The Morphological Matrix](./04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](./05-dimensions-trust-to-attestation.md)
+- **Next:** [§7: Meta-Patterns — Covariance, Leverage, and the Capability Surface](./07-meta-patterns.md)
+- **Builds On:** [§4: The Morphological Matrix](./04-the-morphological-matrix.md), [§5: Dimensions 1-4 — Trust, Identity, Enforcement, Attestation](./05-dimensions-trust-to-attestation.md)
 - **Related:** [Appendix D: Quick-Reference Card](../appendix/appendix-d-quick-reference.md)
