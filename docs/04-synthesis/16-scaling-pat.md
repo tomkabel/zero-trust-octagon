@@ -6,7 +6,7 @@
 > - Expand the IAP's mediation to the SaaS layer using browser-level enforcement
 > - Build a realistic hardening plan that fits within a solo operator's budget and time
 
-**Prerequisites:** [Chapter 11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [Chapter 12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
 
 ---
 
@@ -15,6 +15,22 @@
 **Octagon violations:** 5 of 8 (+ partial on 8). **Budget:** Minimum. **Constraint:** Pat's time and attention — not money.
 
 This chapter is written differently from Chapters 14 and 15. The other archetypes have dedicated teams and controlled rollouts. Pat has a phone, a Slack channel, and a budget that counts in hundreds, not millions. Every recommendation must be actionable within a week and cost less than a monthly SaaS subscription.
+
+---
+
+## Coming From a Maturity Model
+
+If you have completed a CISA Zero Trust Maturity Model (ZTMM) assessment, the table below maps your ZTMM pillar scores to the morphological matrix configuration, helping you translate a familiar framework into the implementation pathway below.
+
+| ZTMM Pillar | Likely Level (Archetype D) | Morphological Mapping | Your Configuration |
+|-------------|---------------------------|-----------------------|-------------------|
+| **Identity** | Advanced | D1 (Trust Anchor): Software CA | D1: __ |
+| **Devices** | Traditional | D4 (Attestation): Single | D4: __ |
+| **Networks** | Traditional | D3 (Enforcement): IAP | D3: __ |
+| **Apps** | Initial | D3 (Enforcement): IAP | D3: __ |
+| **Data** | Traditional | D5 (Response): Auto-Escalate | D5: __ |
+
+The implementation pathway below addresses the integration gaps your ZTMM assessment does not measure — specifically, the seams between Identity (Advanced, meaning Pat supports phishing-resistant MFA for all users) and Data (Traditional, meaning no classification or access controls on stored data). Your ZTMM assessment gives Identity: Advanced and Data: Traditional. This pathway tells you how to close that gap — by adding automated response for clear-cut cases, browser-level SaaS enforcement, and audit logging on the data surface. The seam is the attack vector. The pathway closes it.
 
 ---
 
@@ -180,7 +196,5 @@ Archetype D can reach C-level maturity (~6/8 Octagon) on $3K-$7K/month. But D ca
 
 ## Cross-References
 
-- **Next:** [Chapter 17: The Aspirant's Gate — When the Path Breaks](./17-the-aspirants-gate.md)
-- **Builds on:** [Chapter 11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md)
-- **Related:** [Chapter 13: Self-Assessment](./13-self-assessment.md)
-- **Related:** [Chapter 18: Decision Matrix and Conclusion](./18-decision-matrix-and-conclusion.md)
+**Next:** [Chapter 17: The Aspirant's Gate — When the Path Breaks](./17-the-aspirants-gate.md)
+**Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)

@@ -6,7 +6,7 @@
 > - Deploy cryptographic workload identity (SPIFFE/SPIRE) to bound machine authority
 > - Implement selective quarantine — kill pods on confirmed runtime anomalies while preserving Degrade for ambiguous cases
 
-**Prerequisites:** [Chapter 10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [Chapter 12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
 
 ---
 
@@ -15,6 +15,22 @@
 **Octagon violations:** 4 of 8 (+ partial on 3, 8). **Budget:** $500K-$1M. **Constraint:** Deployment velocity — nothing can slow the pipeline.
 
 This chapter is not about adding security at the cost of speed. It is about adding security *without subtracting speed*. Every upgrade is measured against a single metric: does it add more than 60 seconds to the CI/CD pipeline or require application code changes?
+
+---
+
+## Coming From a Maturity Model
+
+If you have completed a CISA Zero Trust Maturity Model (ZTMM) assessment, the table below maps your ZTMM pillar scores to the morphological matrix configuration, helping you translate a familiar framework into the implementation pathway below.
+
+| ZTMM Pillar | Likely Level (Archetype C) | Morphological Mapping | Your Configuration |
+|-------------|---------------------------|-----------------------|-------------------|
+| **Identity** | Initial/Advanced | D1 (Trust Anchor): Software CA | D1: __ |
+| **Devices** | Initial | D4 (Attestation): TOFU | D4: __ |
+| **Networks** | Initial | D3 (Enforcement): Gateway | D3: __ |
+| **Apps** | Advanced | D3 (Enforcement): Gateway | D3: __ |
+| **Data** | Traditional | D5 (Response): Degrade | D5: __ |
+
+The implementation pathway below addresses the integration gaps your ZTMM assessment does not measure — specifically, the seams between Applications (Advanced, meaning API gateways and ingress controllers enforce policy) and Networks (Initial, meaning pods can talk to each other without mediation). That seam — an advanced application layer with no internal traffic security — is exactly the lateral movement path a supply chain attacker exploits after injection. Your ZTMM assessment gives App: Advanced and Net: Initial. This pathway tells you how to close the gap between them.
 
 ---
 
@@ -141,7 +157,5 @@ A verifier — a lightweight service running in the cluster — periodically req
 
 ## Cross-References
 
-- **Next:** [Chapter 17: The Aspirant's Gate — When the Path Breaks](./17-the-aspirants-gate.md)
-- **Builds on:** [Chapter 10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md)
-- **Related:** [Chapter 13: Self-Assessment](./13-self-assessment.md)
-- **Related:** [Chapter 18: Decision Matrix and Conclusion](./18-decision-matrix-and-conclusion.md)
+**Next:** [Chapter 16: Scaling Pat](./16-scaling-pat.md)
+**Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)

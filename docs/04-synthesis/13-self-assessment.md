@@ -6,7 +6,7 @@
 > - Receive a clear archetype diagnosis with the appropriate implementation chapter
 > - Understand the limitations and edge cases of archetype mapping
 
-**Prerequisites:** [Chapters 8-11: Full Attack Traces](../03-archetypes/08-archetype-a-holy-grail.md), [Chapter 12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md)
+**Prerequisites:** [Chapter 2: The Octagon](../01-foundations/02-the-octagon.md), [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md)
 
 ---
 
@@ -177,7 +177,24 @@ How frequently do you deploy to production?
 
 ## Scoring
 
-Tally your answers. Count each letter:
+For each question, record your answer choice (A, B, C, or D). The table below maps every question to its archetype scoring — each A answer scores toward Archetype A, each B toward Archetype B, and so on.
+
+| Question | Dimension | Your Answer | Archetype Scoring |
+|----------|-----------|-------------|-------------------|
+| **Q1** — Trust Anchor | D4 Attestation | __ | A → Archetype A, B → B, C → C, D → D |
+| **Q2** — Identity Model | D1 Identity | __ | A → A, B → B, C → C, D → D |
+| **Q3** — Enforcement Layer | D3 Enforcement | __ | A → A, B → B, C → C, D → D |
+| **Q4** — Attestation Modality | D4 Attestation | __ | A → A, B → B, C → C, D → D |
+| **Q5** — Violation Response | D5 Response | __ | A → A, B → B, C → C, D → D |
+| **Q6** — Policy Distribution | D6 Policy | __ | A → A, B → B, C → C, D → D |
+| **Q7** — Observability Trust | D7 Observability | __ | A → A, B → B, C → C, D → D |
+| **Q8** — Organizational Posture | D8 Org Posture | __ | A → A, B → B, C → C, D → D |
+| **Q9** — Human Continuity | D9 Continuity | __ | A → A, B → B, C → C, D → D |
+| **Q10** — Budget Bracket | Budget | __ | A → A, B → B, C → C, D → D |
+| **Q11** — Primary Threat | Threat | __ | A → A, B → B, C → C, D → D |
+| **Q12** — Deployment Velocity | Velocity | __ | A → A, B → B, C → C, D → D |
+
+After filling in all twelve, tally each letter:
 
 - **Mostly A:** You are Archetype A — The Holy Grail. You have satisfied most or all Octagon axioms. Jump to [Chapter 18: Decision Matrix and Conclusion](./18-decision-matrix-and-conclusion.md) for forward-looking synthesis.
 - **Mostly B:** You are **Archetype B — Fortune 500 Illusion of Control**. Your primary threat is credential theft and lateral movement. Jump to [Chapter 14: The Enterprise Turnaround](./14-enterprise-turnaround.md).
@@ -196,7 +213,35 @@ Tally your answers. Count each letter:
 
 ---
 
-## After Diagnosis
+## ZTMM Maturity Mapping
+
+The table below shows the likely CISA Zero Trust Maturity Model (ZTMM) pillar profile corresponding to each archetype diagnosis. Use this to cross-check your self-assessment against an existing ZTMM evaluation if your organization has completed one.
+
+| Your Self-Assessment Result | Likely ZTMM Maturity Profile |
+|----------------------------|------------------------------|
+| **Mostly B answers** | **Identity:** Advanced, **Devices:** Advanced, **Networks:** Initial/Advanced, **Apps:** Initial/Advanced, **Data:** Initial |
+| **Mostly C answers** | **Identity:** Initial/Advanced, **Devices:** Initial, **Networks:** Initial, **Apps:** Advanced, **Data:** Traditional |
+| **Mostly D answers** | **Identity:** Advanced, **Devices:** Traditional, **Networks:** Traditional, **Apps:** Initial, **Data:** Traditional |
+
+> **Pillar-Average Masking.** A single ZTMM assessment averages pillar scores into a single maturity level (Initial, Traditional, Advanced, or Optimal). An organization with three Advanced pillars and two Initial pillars receives "Advanced" — the same label as an organization with all five at Advanced. The difference is the attack surface in the Initial pillars, which the average obscures. The twelve-question assessment above is designed to surface these masked gaps by measuring every dimension independently. If your ZTMM assessment says "Advanced" but your self-assessment returned mostly B answers, the discrepancy is the gap — your Advanced pillars are real, but your Initial pillars are where the next breach will originate.
+
+---
+
+## NSA's Phased Model
+
+The National Security Agency's Zero Trust Implementation (NSA ZIG) Guide defines five implementation phases. The table below maps each NSA phase to the corresponding project archetype pathway, showing how the NSA's government-focused sequencing relates to the private-sector archetype paths in this document.
+
+| NSA ZIG Phase | NSA Focus | Project Archetype Equivalent | Timeline |
+|---------------|-----------|------------------------------|----------|
+| **Discovery** | Asset inventory, user mapping, traffic baselining | **Chapter 13 Self-Assessment** — diagnostic questions and archetype identification | Before implementation begins |
+| **Phase One:** Identity, Devices, Apps | Phishing-resistant MFA, device compliance, application access controls | **Archetype D — Months 1-6 (Chapter 16):** Hardware keys, SaaS hardening, automated response. **Archetype B — Months 1-6 (Chapter 14):** SIEM modernization, attestation upgrade | First two quarters |
+| **Phase Two:** Network, Data | Microsegmentation, data classification, encryption policy | **Archetype C — Months 1-6 (Chapter 15):** Image signing, admission control, eBPF. **Archetype B — Months 6-16 (Chapter 14):** Service mesh, enforcement modernization | Quarters 2-4 |
+| **Phase Three:** Advanced | Automation, orchestration, cross-pillar integration | **Archetype A target state:** Integrated detection and response across all dimensions | Year 2+ |
+| **Phase Four:** Advanced (Deferred) | Remaining automation for complex, high-cost use cases | **Archetype A + Appendix A stress tests:** Quantum and AI adversary preparation | Year 2+ |
+
+> **NSA-to-Archetype Note.** The NSA ZIG phases assume a large enterprise with dedicated security teams — the closest fit is Archetype B (Fortune 500). If your organization is Archetype C (high-velocity startup) or Archetype D (solo operator), your phase sequence will be reordered: you will likely implement Phase One and Phase Two elements in parallel, and your Phase Three automation will arrive earlier relative to the NSA timeline because your deployment velocity is higher. Use the NSA model as a completeness checklist, not a sequencing mandate.
+
+---
 
 Your archetype is not your destiny. It is your starting point. The implementation chapters (14-17) are designed to move you from your current archetype toward increasing Octagon satisfaction. The paths are practical, costed, and include gate checks to detect when the primary route breaks.
 
@@ -215,8 +260,5 @@ The goal is not to become Archetype A tomorrow. The goal is to satisfy one more 
 
 ## Cross-References
 
-- **If diagnosed B:** [Chapter 14: The Enterprise Turnaround](./14-enterprise-turnaround.md)
-- **If diagnosed C:** [Chapter 15: The Velocity Defender](./15-velocity-defender.md)
-- **If diagnosed D:** [Chapter 16: Scaling Pat](./16-scaling-pat.md)
-- **If diagnosed A:** [Chapter 18: Decision Matrix and Conclusion](./18-decision-matrix-and-conclusion.md)
-- **Builds on:** [Chapters 8-11: Full Attack Traces](../03-archetypes/08-archetype-a-holy-grail.md), [Chapter 12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md)
+**Next:** [Chapter 14: The Enterprise Turnaround](./14-enterprise-turnaround.md)
+**Builds on:** [Chapter 2: The Octagon](../01-foundations/02-the-octagon.md), [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md)

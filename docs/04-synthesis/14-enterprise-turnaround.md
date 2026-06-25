@@ -6,7 +6,7 @@
 > - Apply gate checks to detect when the primary path breaks and pivot to a fallback
 > - Budget the transformation with realistic cost estimates
 
-**Prerequisites:** [Chapter 9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [Chapter 12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
 
 ---
 
@@ -28,6 +28,54 @@ The highest-leverage first upgrades for Archetype B are D4 (Attestation) and D5 
 **Resolution:** Fund D4 and D5 as a single initiative — "Detection Modernization." The same budget cycle. The same project team. The same deployment timeline. Phase them so that D5 upgrades deploy *before* D4 begins generating more detections.
 
 ---
+
+## Coming From a Maturity Model
+
+If you have completed a CISA Zero Trust Maturity Model (ZTMM) assessment, the table below maps your ZTMM pillar scores to the morphological matrix configuration in this project. This helps you translate a familiar framework into the implementation pathway below.
+
+*Estimated ZTMM levels assume this is your actual self-assessment result. If your ZTMM assessment returned different pillar levels, the matrix column labeled "Your Configuration" is what you should enter into your implementation plan.*
+
+| ZTMM Pillar | Likely Level (Archetype B) | Morphological Mapping | Your Configuration |
+|-------------|---------------------------|-----------------------|-------------------|
+| **Identity** | Advanced | D1 (Trust Anchor): Software CA, D2 (Identity Model): ABAC | D1: __, D2: __ |
+| **Devices** | Advanced | D4 (Attestation): Single | D4: __ |
+| **Networks** | Initial/Advanced | D3 (Enforcement): Network firewall | D3: __ |
+| **Apps** | Initial/Advanced | D3 (Enforcement): Network  | D3: __ |
+| **Data** | Initial | D5 (Response): Hard Deny | D5: __ |
+
+The implementation pathway below addresses the integration gaps your ZTMM assessment does not measure — specifically, the seams between high-rated pillars (Identity: Advanced, Devices: Advanced) and low-rated pillars (Data: Initial, Networks: Initial) that create the lateral movement surface. A CISA ZTMM assessment rates each pillar independently and then averages them. The average masks the seam. This pathway does not average — it measures interactions.
+
+---
+
+## The DoD's COA 1: The Military Equivalent
+
+The Department of Defense (DoD) is executing a department-wide zero-trust implementation under its Zero Trust Strategy and Roadmap, targeting full Zero Trust Architecture (ZTA) framework implementation by FY 2027. The DoD's approach is Course of Action (COA) 1: "Enterprise-wide ZTA implementation across all components."
+
+If the DoD, with its $10B+ budget and statutory authority, is still struggling with the same architectural transition you are attempting — migrating from perimeter-based defense to microsegmented, attestation-based zero-trust — that is not discouraging. It is validating. The problem is hard. The DoD is not doing it faster because it is easy. It is doing it because the alternative — continued breach of an unsegmented, implicitly trusted network — is more expensive.
+
+**What the DoD's timeline validates for your 24-month plan:**
+
+- The DoD's FY 2027 target means they budget approximately 3 years for full implementation from roadmap publication. Your 24-month pathway is aggressive but credible given your smaller attack surface.
+- The DoD invests in multiple concurrent workstreams (identity, devices, networks, data) because sequential implementation takes too long. Your pathway does the same — D4/D5 together in Q1-2, D6 bubble upgrade in parallel, D1 health audit in Q4 alongside D7 pilot.
+- The DoD's primary reported challenge is not technology — it is organizational alignment across components. Your D8 (Siloed Org) is the same constraint at a smaller scale.
+
+---
+
+## NSA Phase Comparison
+
+The National Security Agency's Zero Trust Implementation Guide defines five maturity phases. The table below maps each NSA phase to your enterprise implementation timeline, showing how the government's sequencing aligns with your 24-month pathway.
+
+| NSA ZIG Phase | NSA Focus | Enterprise Timeline | Equivalent Activity |
+|---------------|-----------|-------------------|-------------------|
+| **Discovery** | Asset inventory, traffic baselining | **Chapter 13 (Self-Assessment)** | Diagnostic questions, archetype identification |
+| **Phase One:** Identity, Devices, Apps | Phishing-resistant MFA, device compliance, app access | **Months 1-8 (Q1-Q3)** | D4+D5 detection modernization, D1 PKI audit, D8 fusion pilot |
+| **Phase Two:** Network, Data | Microsegmentation, data classification, encryption | **Months 8-16 (Q3-Y2Q1)** | D3 service mesh (monitoring → enforcement), D7 dual pipeline |
+| **Phase Three:** Advanced | Automation, orchestration, cross-pillar integration | **Months 16-20 (Y2Q1-Q2)** | D4 Triple attestation, D6 Event-Streamed |
+| **Phase Four:** Advanced (Deferred) | Remaining complex use cases | **Months 20-24 (Y2Q3-Q4)** | D5 Trickle-Truth, D1 hardware roots, full Axiom satisfaction |
+
+---
+
+## Quarter 1-2: Detection Modernization
 
 ## Quarter 1-2: Detection Modernization
 
@@ -170,7 +218,5 @@ Deploy Kafka or NATS as the policy distribution backbone. PEPs subscribe and mai
 
 ## Cross-References
 
-- **Next:** [Chapter 17: The Aspirant's Gate — When the Path Breaks](./17-the-aspirants-gate.md)
-- **Builds on:** [Chapter 9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md)
-- **Related:** [Chapter 13: Self-Assessment](./13-self-assessment.md)
-- **Related:** [Chapter 18: Decision Matrix and Conclusion](./18-decision-matrix-and-conclusion.md)
+**Next:** [Chapter 15: The Velocity Defender](./15-velocity-defender.md)
+**Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
