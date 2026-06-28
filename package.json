@@ -9,6 +9,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "test": "vitest run",
     "test:redis": "vitest run src/zta-redis",
     "test:siem": "vitest run src/zta-siem",
     "test:webauthn-server": "vitest run src/webauthn-server",
