@@ -21,6 +21,12 @@ export interface AuthenticationResult {
   counter: number;
 }
 
+export interface StoredCredential {
+  publicKey: string;
+  counter: number;
+  transports?: string[];
+}
+
 export interface RegistrationPayload {
   id: string;
   rawId: string;
@@ -112,7 +118,7 @@ export class EnterpriseWebAuthnServerValidator {
   async verifyAuthentication(
     payload: AuthenticationPayload,
     expectedChallenge: string,
-    storedCredentialPublicKey: string
+    storedCredential: StoredCredential
   ): Promise<AuthenticationResult> {
     const isValid = await this.redisPipeline.verifyChallenge(expectedChallenge);
     if (!isValid) {
@@ -128,9 +134,9 @@ export class EnterpriseWebAuthnServerValidator {
         expectedRPID: EnterpriseWebAuthnServerValidator.EXPECTED_RP_ID,
         credential: {
           id: payload.id,
-          publicKey: Buffer.from(storedCredentialPublicKey, 'base64url'),
-          counter: 0,
-          transports: payload.response.transports || [],
+          publicKey: Buffer.from(storedCredential.publicKey, 'base64url'),
+          counter: storedCredential.counter,
+          transports: storedCredential.transports || [],
         },
         requireUserVerification: true,
       });
@@ -147,7 +153,9 @@ export class EnterpriseWebAuthnServerValidator {
 
     return {
       verified: true,
-      credentialId: authenticationInfo.credentialID,
+      credentialId: EnterpriseWebAuthnServerValidator.normalizeCredentialId(
+        authenticationInfo.credentialID
+      ),
       counter: authenticationInfo.newCounter,
     };
   }
@@ -164,5 +172,12 @@ export class EnterpriseWebAuthnServerValidator {
       hex.slice(16, 20),
       hex.slice(20),
     ].join('-');
+  }
+
+  private static normalizeCredentialId(credentialId: string | Uint8Array): string {
+    if (typeof credentialId === 'string') {
+      return credentialId.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+    }
+    return Buffer.from(credentialId).toString('base64url');
   }
 }

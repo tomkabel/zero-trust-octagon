@@ -129,7 +129,10 @@ describe('EnterpriseWebAuthnServerValidator', () => {
       mockVerifyChallenge.mockResolvedValue(false);
       const validator = new EnterpriseWebAuthnServerValidator(mockRedis);
       await expect(
-        validator.verifyAuthentication(authPayload, 'replayed-challenge', 'stored-pubkey')
+        validator.verifyAuthentication(authPayload, 'replayed-challenge', {
+          publicKey: 'stored-pubkey',
+          counter: 0,
+        })
       ).rejects.toThrow('Security Violation: Challenge invalid or replayed.');
     });
 
@@ -138,7 +141,7 @@ describe('EnterpriseWebAuthnServerValidator', () => {
       mockVerifyAuthenticationResponse.mockResolvedValue({
         verified: true,
         authenticationInfo: {
-          credentialID: 'cred-id',
+          credentialID: Buffer.from('cred-id'),
           newCounter: 5,
         },
       });
@@ -147,12 +150,24 @@ describe('EnterpriseWebAuthnServerValidator', () => {
       const result = await validator.verifyAuthentication(
         authPayload,
         'valid-challenge',
-        'stored-pubkey'
+        {
+          publicKey: 'stored-pubkey',
+          counter: 4,
+          transports: ['usb'],
+        }
       );
 
       expect(result.verified).toBe(true);
       expect(result.counter).toBe(5);
-      expect(result.credentialId).toBe('cred-id');
+      expect(result.credentialId).toBe(Buffer.from('cred-id').toString('base64url'));
+      expect(mockVerifyAuthenticationResponse).toHaveBeenCalledWith(
+        expect.objectContaining({
+          credential: expect.objectContaining({
+            counter: 4,
+            transports: ['usb'],
+          }),
+        })
+      );
     });
   });
 });
