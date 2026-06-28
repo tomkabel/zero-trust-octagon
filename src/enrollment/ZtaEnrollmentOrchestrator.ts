@@ -65,33 +65,35 @@ export class ZtaEnrollmentOrchestrator {
       assuranceLevel: verifiedPid.assuranceLevel,
     });
 
-    const secureChallenge = crypto.randomUUID().replace(/-/g, '');
     const internalUserId = `usr_${verifiedPid.nationalIdentifier}`;
 
     await this.redisManager.connect();
-    await this.redisManager.issueChallenge(120);
+    try {
+      const secureChallenge = await this.redisManager.issueChallenge(120);
 
-    const onboardingOptions: EnrollmentInitResponse = {
-      challenge: secureChallenge,
-      rp: { name: 'Enterprise EU Secure Hub', id: 'internal.enterprise.eu' },
-      user: {
-        id: Buffer.from(internalUserId).toString('base64url'),
-        name: req.userEmail,
-        displayName: `${verifiedPid.givenName} ${verifiedPid.familyName}`,
-      },
-      pubKeyCredParams: [
-        { type: 'public-key', alg: -7 },
-        { type: 'public-key', alg: -37 },
-      ],
-    };
+      const onboardingOptions: EnrollmentInitResponse = {
+        challenge: secureChallenge,
+        rp: { name: 'Enterprise EU Secure Hub', id: 'internal.enterprise.eu' },
+        user: {
+          id: Buffer.from(internalUserId).toString('base64url'),
+          name: req.userEmail,
+          displayName: `${verifiedPid.givenName} ${verifiedPid.familyName}`,
+        },
+        pubKeyCredParams: [
+          { type: 'public-key', alg: -7 },
+          { type: 'public-key', alg: -37 },
+        ],
+      };
 
-    ztaLogger.info('Enrollment session initialized', {
-      action: 'ENROLLMENT_INITIATED',
-      userId: internalUserId,
-    });
+      ztaLogger.info('Enrollment session initialized', {
+        action: 'ENROLLMENT_INITIATED',
+        userId: internalUserId,
+      });
 
-    await this.redisManager.disconnect();
-    return onboardingOptions;
+      return onboardingOptions;
+    } finally {
+      await this.redisManager.disconnect();
+    }
   }
 
   async finalizeEnrollment(
@@ -99,44 +101,45 @@ export class ZtaEnrollmentOrchestrator {
     validator?: DeviceValidator
   ): Promise<EnrollmentFinalizeResponse> {
     await this.redisManager.connect();
+    try {
+      const verifier = validator || this.deviceValidator;
+      if (!verifier) {
+        const { EnterpriseWebAuthnServerValidator } = await import('../webauthn-server/EnterpriseWebAuthnServerValidator');
+        const realValidator = new EnterpriseWebAuthnServerValidator(this.redisManager);
+        const result = await realValidator.verifyRegistration(
+          req.clientPayload,
+          req.challenge,
+          ZtaEnrollmentOrchestrator.APPROVED_AAGUIDS
+        );
+        this.ensureVerificationPassed(result.verified);
+        return { success: true, credentialId: result.credentialId };
+      }
 
-    const isChallengeValid = await this.redisManager.verifyChallenge(req.challenge);
-    if (!isChallengeValid) {
-      await this.redisManager.disconnect();
-      throw new Error('Security Violation: Challenge invalid or replayed.');
-    }
+      const isChallengeValid = await this.redisManager.verifyChallenge(req.challenge);
+      if (!isChallengeValid) {
+        throw new Error('Security Violation: Challenge invalid or replayed.');
+      }
 
-    const verifier = validator || this.deviceValidator;
-    if (!verifier) {
-      const { EnterpriseWebAuthnServerValidator } = await import('../webauthn-server/EnterpriseWebAuthnServerValidator');
-      const realValidator = new EnterpriseWebAuthnServerValidator(this.redisManager);
-      const result = await realValidator.verifyRegistration(
+      const verificationResult = await verifier.verifyRegistration(
         req.clientPayload,
         req.challenge,
         ZtaEnrollmentOrchestrator.APPROVED_AAGUIDS
       );
+      this.ensureVerificationPassed(verificationResult.verified);
+
+      ztaLogger.info('Phishing-resistant credential bound to hardware enclave', {
+        action: 'CREDENTIAL_BOUND',
+        regulatory_tags: ['NIS2_DEVICE_REGISTRATION', 'GDPR_DATA_MINIMIZATION'],
+        hardwareProfile: verificationResult.aaguid,
+      });
+
+      return {
+        success: true,
+        credentialId: verificationResult.credentialId,
+      };
+    } finally {
       await this.redisManager.disconnect();
-      return { success: true, credentialId: result.credentialId };
     }
-
-    const verificationResult = await verifier.verifyRegistration(
-      req.clientPayload,
-      req.challenge,
-      ZtaEnrollmentOrchestrator.APPROVED_AAGUIDS
-    );
-
-    ztaLogger.info('Phishing-resistant credential bound to hardware enclave', {
-      action: 'CREDENTIAL_BOUND',
-      regulatory_tags: ['NIS2_DEVICE_REGISTRATION', 'GDPR_DATA_MINIMIZATION'],
-      hardwareProfile: verificationResult.aaguid,
-    });
-
-    await this.redisManager.disconnect();
-
-    return {
-      success: true,
-      credentialId: verificationResult.credentialId,
-    };
   }
 
   private async verifyEidasIdentityToken(token: string): Promise<EidasIdentityResult> {
@@ -151,6 +154,12 @@ export class ZtaEnrollmentOrchestrator {
       };
     } catch {
       throw new Error('Security Violation: OID4VP token validation failed.');
+    }
+  }
+
+  private ensureVerificationPassed(isVerified: boolean): void {
+    if (!isVerified) {
+      throw new Error('Security Violation: Device registration verification failed.');
     }
   }
 }

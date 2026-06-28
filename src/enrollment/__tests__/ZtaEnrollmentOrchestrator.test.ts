@@ -37,6 +37,9 @@ const mockDeviceValidator = {
 describe('ZtaEnrollmentOrchestrator', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockRedis.connect.mockResolvedValue(undefined);
+    mockRedis.disconnect.mockResolvedValue(undefined);
+    mockRedis.issueChallenge.mockResolvedValue('issued-challenge-token');
   });
 
   describe('initializeEnrollment', () => {
@@ -47,7 +50,8 @@ describe('ZtaEnrollmentOrchestrator', () => {
         userEmail: 'mari.tamm@enterprise.eu',
       });
 
-      expect(result.challenge).toBeDefined();
+      expect(result.challenge).toBe('issued-challenge-token');
+      expect(mockRedis.issueChallenge).toHaveBeenCalledWith(120);
       expect(result.rp.id).toBe('internal.enterprise.eu');
       expect(result.user.name).toBe('mari.tamm@enterprise.eu');
       expect(result.user.displayName).toBe('Mari Tamm');
@@ -145,6 +149,23 @@ describe('ZtaEnrollmentOrchestrator', () => {
           challenge: 'valid-challenge',
         })
       ).rejects.toThrow('Hardware authenticator not in enterprise whitelist');
+    });
+
+    it('rejects enrollment when validator returns verified=false', async () => {
+      mockRedis.verifyChallenge.mockResolvedValue(true);
+      mockDeviceValidator.verifyRegistration.mockResolvedValue({
+        verified: false,
+        aaguid: 'adce0002-35bc-c60a-2b7b-40b2fed21711',
+        credentialId: 'cred-final-123',
+      });
+
+      const orchestrator = new ZtaEnrollmentOrchestrator(mockRedis, mockDeviceValidator);
+      await expect(
+        orchestrator.finalizeEnrollment({
+          clientPayload: { id: 'test-payload' },
+          challenge: 'valid-challenge',
+        })
+      ).rejects.toThrow('Security Violation: Device registration verification failed.');
     });
   });
 });
