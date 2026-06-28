@@ -47,10 +47,11 @@ export class ZtaAutomatedResponsePlaybook {
    * Main orchestrator executed immediately when SIEM pushes an alert webhook
    */
   public async executeIncidentContainment(alert: SiemAlertPayload): Promise<void> {
-    ztaLogger.warn(
-      { alert_id: alert.alert_id, user_id: alert.target_user_id, session_id: alert.target_session_id },
-      'SOAR: Initiating automated containment playbook.'
-    );
+    ztaLogger.warn('SOAR: Initiating automated containment playbook.', {
+      alert_id: alert.alert_id,
+      user_id: alert.target_user_id,
+      session_id: alert.target_session_id
+    });
 
     try {
       await this.redisPipeline.connect();
@@ -58,15 +59,15 @@ export class ZtaAutomatedResponsePlaybook {
       // --- TIER 1: EVICT SESSIONS (Gateway Enforcement) ---
       // Invalidate the session instantly in the Redis layer read by the Envoy gRPC auth service
       // Set TTL to 1 hour (3600s) to completely outlast any active access tokens
-      await this.redisPipeline.revokeSession(alert.target_session_id);
+      await this.redisPipeline.revokeSession(alert.target_session_id, 3600);
 
       // Blacklist the compromised FIDO2 hardware authenticator device ID across the fabric
       await this.redisPipeline.revokeDevice(alert.target_device_id, 86400); // 24-hour quarantine
 
-      ztaLogger.info(
-        { user_id: alert.target_user_id, device_id: alert.target_device_id },
-        'SOAR Tier 1: Distributed Redis revocation vectors written.'
-      );
+      ztaLogger.info('SOAR Tier 1: Distributed Redis revocation vectors written.', {
+        user_id: alert.target_user_id,
+        device_id: alert.target_device_id
+      });
 
       // --- TIER 2: SUSPEND IDENTITY ANCHOR (Smart-ID / eIDAS Layer) ---
       await this.lockSmartIdAccount(alert.target_user_id, alert.alert_id);
@@ -75,10 +76,10 @@ export class ZtaAutomatedResponsePlaybook {
       this.emitNis2ComplianceLog(alert);
 
     } catch (criticalError: any) {
-      ztaLogger.error(
-        { error: criticalError.message, alert },
-        'SOAR CRITICAL: Automated playbook execution failed or partially executed.'
-      );
+      ztaLogger.error('SOAR CRITICAL: Automated playbook execution failed or partially executed.', {
+        error: criticalError.message,
+        alert
+      });
       // In production, route to on-call engineer paging system (PagerDuty/Opsgenie API) here
     } finally {
       await this.redisPipeline.disconnect();
@@ -114,16 +115,13 @@ export class ZtaAutomatedResponsePlaybook {
       );
 
       if (response.status === 200 || response.status === 204) {
-        ztaLogger.info(
-          { user_id: userId },
-          'SOAR Tier 2: Smart-ID/eIDAS authentication profile locked successfully.'
-        );
+        ztaLogger.info('SOAR Tier 2: Smart-ID/eIDAS authentication profile locked successfully.', { user_id: userId });
       }
     } catch (apiError: any) {
-      ztaLogger.error(
-        { error: apiError.message, user_id: userId },
-        'SOAR Tier 2 Error: Smart-ID administrative lock call failed.'
-      );
+      ztaLogger.error('SOAR Tier 2 Error: Smart-ID administrative lock call failed.', {
+        error: apiError.message,
+        user_id: userId
+      });
       throw apiError; // Escalate up to primary handling layer
     }
   }
@@ -132,7 +130,7 @@ export class ZtaAutomatedResponsePlaybook {
    * Outputs the immutable, structured telemetry trace needed for NIS2 post-incident investigations
    */
   private emitNis2ComplianceLog(alert: SiemAlertPayload): void {
-    ztaLogger.info({
+    ztaLogger.info('SOAR Containment logging complete. Mitigated attack vectors preserved for forensic analysis.', {
       regulatory_tags: ['NIS2_ART_21_INCIDENT_RESPONSE', 'EU_AI_ACT_CONTAINMENT'],
       event_type: 'AUTOMATED_MITIGATION_COMPLETED',
       remediation_actions: [
@@ -148,7 +146,7 @@ export class ZtaAutomatedResponsePlaybook {
         consumed_challenge: alert.associated_challenge
       },
       audit_status: 'READY_FOR_NATIONAL_COMPETENT_AUTHORITY_REVIEW'
-    }, 'SOAR Containment logging complete. Mitigated attack vectors preserved for forensic analysis.');
+    });
   }
 }
 ```

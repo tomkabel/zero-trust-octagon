@@ -101,24 +101,27 @@ export class SoTAAntiRelayValidator {
       activeSession.expectedClientDataHash
     );
 
-    // 4. Audit hardware latency using trusted, server-side timing metadata from mTLS gateway
-    const serverMeasuredRttMs = Number.parseInt(
-      (req.header('x-zta-rtt-ms') || '').trim(),
-      10
-    );
-
-    if (!Number.isFinite(serverMeasuredRttMs)) {
+    // 4. Audit hardware latency using trusted telemetry injected by an internal mTLS gateway
+    // Gateway must strip any inbound x-zta-rtt-ms header from untrusted clients and overwrite it.
+    const rawRttHeader = (req.header('x-zta-rtt-ms') || '').trim();
+    if (!/^\d+$/.test(rawRttHeader)) {
       return res.status(400).json({
-        error: 'Missing trusted RTT telemetry from gateway.'
+        error: 'Missing or malformed trusted RTT telemetry from gateway.'
+      });
+    }
+    const serverMeasuredRttMs = Number(rawRttHeader);
+    if (!Number.isInteger(serverMeasuredRttMs) || serverMeasuredRttMs <= 0) {
+      return res.status(400).json({
+        error: 'Trusted RTT telemetry must be a positive integer.'
       });
     }
 
     if (serverMeasuredRttMs > SoTAAntiRelayValidator.MAX_PHYSICAL_RTT_MS) {
-      ztaLogger.error({
+      ztaLogger.error('CRITICAL ALERT: Secure handshake telemetry exceeded physical constraints. Drop execution due to active WAN proxy relay.', {
         regulatory_tags: ['NIS2_CRITICAL_VECTOR'],
         server_measured_rtt_ms: serverMeasuredRttMs,
         user: activeSession.userId
-      }, 'CRITICAL ALERT: Secure handshake telemetry exceeded physical constraints. Drop execution due to active WAN proxy relay.');
+      });
 
       return res.status(403).json({
         error: 'Hardware Environment Anomaly: Request rejected due to trusted transit latency telemetry.'
@@ -126,19 +129,13 @@ export class SoTAAntiRelayValidator {
     }
 
     if (!isChannelBound || computedClientDataHash !== activeSession.expectedClientDataHash) {
-      ztaLogger.warn(
-        { user: activeSession.userId },
-        'SECURITY ALERT: Fraudulent credential substitution intercepted.'
-      );
+      ztaLogger.warn('SECURITY ALERT: Fraudulent credential substitution intercepted.', { user: activeSession.userId });
       return res.status(401).json({
         error: 'Cryptographic Channel Error: Structural credential binding validation failed.'
       });
     }
 
-    ztaLogger.info(
-      { user: activeSession.userId },
-      'Onboarding session cleared: Cryptographic channel binding verified.'
-    );
+    ztaLogger.info('Onboarding session cleared: Cryptographic channel binding verified.', { user: activeSession.userId });
     return res.status(200).json({ success: true });
   }
 

@@ -77,7 +77,7 @@ func (s *AuthServer) Check(ctx context.Context, req *authv3.CheckRequest) (*auth
     if err != nil || !parsedToken.Valid {
         return unauthenticatedResponse("Invalid token"), nil
     }
-    if claims.ID == "" || claims.Subject == "" || claims.DeviceID == "" {
+    if claims.ID == "" || claims.Subject == "" || claims.DeviceID == "" || claims.TenantID == "" {
         return unauthenticatedResponse("Token missing required claims"), nil
     }
 
