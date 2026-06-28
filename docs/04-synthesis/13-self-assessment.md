@@ -1,5 +1,10 @@
-# 13. Self-Assessment: Mapping Your Organization to an Archetype
+---
+title: "Self-Assessment: Mapping Your Organization to an Archetype"
+description: "Twelve diagnostic questions to identify your zero-trust archetype and route to the correct implementation pathway."
+outline: deep
+---
 
+# 13. Self-Assessment: Mapping Your Organization to an Archetype
 > **Learning Objectives**
 > - Answer twelve diagnostic questions to identify which archetype (B, C, or D) your organization most closely matches
 > - Calibrate your primary threat model and budget bracket
@@ -196,7 +201,7 @@ For each question, record your answer choice (A, B, C, or D). The table below ma
 
 After filling in all twelve, tally each letter:
 
-- **Mostly A:** You are Archetype A — The Holy Grail. You have satisfied most or all Octagon axioms. Jump to [Chapter 18: Decision Matrix and Conclusion](./18-decision-matrix-and-conclusion.md) for forward-looking synthesis.
+- **Mostly A:** You are Archetype A — The Holy Grail. You have satisfied most or all Octagon axioms. You are operating at the high-maturity cluster. Jump to [Chapter 14: The Enterprise Turnaround](./14-enterprise-turnaround.md) for target-state acknowledgment and the forward-looking synthesis in Chapter 18.
 - **Mostly B:** You are **Archetype B — Fortune 500 Illusion of Control**. Your primary threat is credential theft and lateral movement. Jump to [Chapter 14: The Enterprise Turnaround](./14-enterprise-turnaround.md).
 - **Mostly C:** You are **Archetype C — Move Fast, Fix It In Prod**. Your primary threat is supply chain injection. Jump to [Chapter 15: The Velocity Defender](./15-velocity-defender.md).
 - **Mostly D:** You are **Archetype D — SaaS-Glued Lean Defense**. Your primary threat is MFA fatigue and SaaS session hijack. Jump to [Chapter 16: Scaling Pat](./16-scaling-pat.md).

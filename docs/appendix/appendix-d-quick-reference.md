@@ -1,5 +1,9 @@
 # Appendix D: Dimensions + Axioms Quick-Reference Card
 
+> **Prerequisites:** All chapters and appendices
+
+---
+
 ## The Eight Axioms (The Octagon)
 
 | # | Axiom | Core Statement |
@@ -48,12 +52,20 @@
 
 ## Archetype Reference
 
-| Archetype | Typical Diameter | Primary Threat | Cost Profile | Octagon Score |
-|-----------|-----------------|----------------|-------------|:---:|
-| A. Holy Grail | Critical infrastructure, high-security | Silicon supply chain | Extremely high | 8/8 |
-| B. Fortune 500 | Enterprises with vendor suites | Stolen token, lateral movement | $2-10M/year | 2/6 |
-| C. Cloud Startup | High-velocity engineering orgs | CI/CD supply chain injection | $500K-1M | 3.5/8 |
-| D. Lean Defense | Solo operator (30-100 person) | MFA fatigue, SaaS hijack | $10/user/month | 3/8 |
+| Archetype | Typical Diameter | Primary Threat | Cost Profile | Octagon Score | Implementation |
+|-----------|-----------------|----------------|-------------|:---:|----------------|
+| A. Holy Grail | Critical infrastructure, high-security | Silicon supply chain | Extremely high | 8/8 | None (aspirational) |
+| B. Fortune 500 | Enterprises with vendor suites | Stolen token, lateral movement | $2-10M/year | 2/6 | [§14: 24-Month Turnaround](../04-synthesis/14-enterprise-turnaround.md) |
+| C. Cloud Startup | High-velocity engineering orgs | CI/CD supply chain injection | $500K-1M | 3.5/8 | [§15: 12-Month Velocity Defender](../04-synthesis/15-velocity-defender.md) |
+| D. Lean Defense | Solo operator (30-100 person) | MFA fatigue, SaaS hijack | $10/user/month | 3/8 | [§16: 6-Month Scaling](../04-synthesis/16-scaling-pat.md) |
+
+---
+
+## Leverage Point Hierarchy
+
+D5 (Violation Response) > D4 (Attestation Modality) > D8 (Organizational Posture) > D2 (Identity Model) > D7 (Observability Trust)
+
+Upgrade D4 and D5 together — they form a dependency pair. D9 (Human Continuity) is a multiplier: automating away the single point of failure amplifies the leverage of every other dimension upgrade.
 
 ---
 
@@ -85,5 +97,15 @@
 ---
 
 *This reference card is designed to be printed double-sided and kept at the desk of every architect, engineer, and CISO.*
+
+---
+
+## Cross-References
+
+**Builds On:** All prior chapters (01-18) and appendices A-C.
+
+**Related:** [§2: The Octagon](../01-foundations/02-the-octagon.md) — full axiom detail. [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md) — dimension definitions. [§13: Self-Assessment Diagnostic](../04-synthesis/13-self-assessment.md) — archetype routing.
+
+**Next:** [Appendix E: CISA ZTMM Crosswalk](./appendix-e-cisa-ztmm-crosswalk.md) — federal standards mapping.
 
 *Full textbook: [Zero-Trust Reference Architecture] — available in the `docs/` directory.*

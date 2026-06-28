@@ -8,7 +8,16 @@
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "test": "vitest run",
+    "test:redis": "vitest run src/zta-redis",
+    "test:siem": "vitest run src/zta-siem",
+    "test:webauthn-server": "vitest run src/webauthn-server",
+    "test:webauthn-client": "vitest run src/webauthn-client",
+    "test:enrollment": "vitest run src/enrollment",
+    "test:identity-fabric": "vitest run src/identity-fabric",
+    "test:nfc-defense": "vitest run src/nfc-defense",
+    "test:channel-binding": "vitest run src/channel-binding"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +25,11 @@
   "type": "module",
   "devDependencies": {
     "vitepress": "^1.6.4",
-    "vitepress-sidebar": "^1.36.1"
+    "vitepress-sidebar": "^1.36.1",
+    "vitest": "^3.2.0"
+  },
+  "dependencies": {
+    "@simplewebauthn/server": "^13.3.2",
+    "redis": "^4.7.0"
   }
 }
