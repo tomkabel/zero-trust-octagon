@@ -8,6 +8,7 @@ const mockSet = vi.fn();
 const mockDisconnect = vi.fn();
 const mockOn = vi.fn();
 const mockConnect = vi.fn();
+let capturedConfig: any;
 
 let isOpen = false;
 
@@ -25,14 +26,17 @@ function makeMultiChain() {
 }
 
 vi.mock('redis', () => ({
-  createClient: () => ({
-    get isOpen() { return isOpen; },
-    connect: mockConnect.mockImplementation(async () => { isOpen = true; }),
-    on: mockOn,
-    set: mockSet,
-    multi: () => makeMultiChain(),
-    disconnect: mockDisconnect.mockImplementation(async () => { isOpen = false; })
-  })
+  createClient: (config: any) => {
+    capturedConfig = config;
+    return {
+      get isOpen() { return isOpen; },
+      connect: mockConnect.mockImplementation(async () => { isOpen = true; }),
+      on: mockOn,
+      set: mockSet,
+      multi: () => makeMultiChain(),
+      disconnect: mockDisconnect.mockImplementation(async () => { isOpen = false; })
+    };
+  }
 }));
 
 describe('ZtaRedisPipelineManager', () => {
@@ -40,6 +44,8 @@ describe('ZtaRedisPipelineManager', () => {
     vi.clearAllMocks();
     isOpen = false;
     process.env.REDIS_SECURITY_PASSWORD = 'test-password';
+    process.env.REDIS_PORT = '6379';
+    capturedConfig = undefined;
   });
 
   it('throws when REDIS_SECURITY_PASSWORD is missing', () => {
@@ -53,12 +59,12 @@ describe('ZtaRedisPipelineManager', () => {
     expect(mockConnect).toHaveBeenCalled();
   });
 
-  it('issueChallenge generates a UUID and stores it with TTL', async () => {
+  it('issueChallenge generates a base64url token and stores it with TTL', async () => {
     mockSet.mockResolvedValue('OK');
     const manager = new ZtaRedisPipelineManager();
     await manager.connect();
     const challenge = await manager.issueChallenge(120);
-    expect(challenge).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+    expect(challenge).toMatch(/^[A-Za-z0-9_-]{43}$/);
     expect(mockSet).toHaveBeenCalledWith(expect.stringContaining('zta:challenge:'), '1', { EX: 120 });
   });
 
@@ -92,5 +98,16 @@ describe('ZtaRedisPipelineManager', () => {
     await manager.connect();
     await manager.disconnect();
     expect(mockDisconnect).toHaveBeenCalled();
+  });
+
+  it('parses REDIS_PORT as a number for node-redis socket config', () => {
+    process.env.REDIS_PORT = '6380';
+    new ZtaRedisPipelineManager();
+    expect(capturedConfig.socket.port).toBe(6380);
+  });
+
+  it('throws when REDIS_PORT is invalid', () => {
+    process.env.REDIS_PORT = 'not-a-port';
+    expect(() => new ZtaRedisPipelineManager()).toThrow('REDIS_PORT must be a valid TCP port number');
   });
 });
