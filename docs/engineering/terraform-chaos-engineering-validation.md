@@ -1,6 +1,11 @@
 # Terraform IaC & Chaos Engineering Validation
 
-Production-grade blueprints for cloud infrastructure automation and resilience verification.
+> **Purpose:** Production-grade Terraform blueprints for multi-region cloud infrastructure plus Chaos Mesh validation suite — KMS log signing, ElastiCache global replication, network degradation testing, and split-brain convergence verification.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `multi-region-redis-replication.md` (CrossRegionZtaDataPipeline)
+
+---
 
 ---
 
@@ -35,6 +40,9 @@ provider "aws" {
 ### 2. Cryptographic Kernel & Log Signing Configurations (NIS2 Compliant)
 
 ```hcl
+# NOTE: All KMS key ARNs use placeholder account IDs. Replace '123456789012'
+# with your AWS account ID before terraform apply.
+
 resource "aws_kms_key" "nis2_log_signer_frankfurt" {
   provider                 = aws.frankfurt
   description              = "NIS2 Cryptographic Ledger Immutability Audit Signer Key - Frankfurt"
@@ -254,9 +262,18 @@ kubectl apply -f cross_region_split_brain.yaml
 ### 3. Trigger Verification Test Suites
 
 ```bash
-export FRANKFURT_REDIS_URI="redis://:ZtaCrossRegionPass2026@10.5.0.10:6379"
-export IRELAND_REDIS_URI="redis://:ZtaCrossRegionPass2026@10.5.0.20:6380"
+export FRANKFURT_REDIS_URI="redis://:${REDIS_CROSS_REGION_PASSWORD}@10.5.0.10:6379"
+export IRELAND_REDIS_URI="redis://:${REDIS_CROSS_REGION_PASSWORD}@10.5.0.20:6380"
 npx mocha -r ts-node/register chaos_asserter.spec.ts
 ```
 
 All tests must return clean execution reports. This verifies that the identity fabric meets the strict latency and operational availability standards required for enterprise zero-trust deployments.
+
+---
+
+## References
+
+[1] https://developer.hashicorp.com/terraform/docs
+[2] https://chaos-mesh.org/docs/
+[3] https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
+[4] https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/GlobalDatastore.html

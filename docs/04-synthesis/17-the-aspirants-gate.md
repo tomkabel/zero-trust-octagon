@@ -1,3 +1,9 @@
+---
+title: "17. The Aspirant's Gate"
+description: "Documented failure pivots for the three most common gate failures across all implementation pathways — plus the common D4-before-D5 mistake and the return-to-self-assessment escape hatch."
+outline: deep
+---
+
 # 17. The Aspirant's Gate: When the Path Breaks
 
 > **Learning Objectives**
@@ -6,9 +12,9 @@
 > - Recognize the common failure pattern — skipping D4 before D5 — that causes cascading failures across all three archetypes
 > - Assess whether a gate failure signals a temporary obstacle or a structural problem with the chosen approach
 
-**Prerequisites:** [Chapter 14: Enterprise Turnaround](./14-enterprise-turnaround.md), [Chapter 15: Velocity Defender](./15-velocity-defender.md), [Chapter 16: Scaling Pat](./16-scaling-pat.md)
+**Prerequisites:** [§14: Enterprise Turnaround](./14-enterprise-turnaround.md), [§15: Velocity Defender](./15-velocity-defender.md), [§16: Scaling Pat](./16-scaling-pat.md), [§13: Self-Assessment](./13-self-assessment.md)
 
-> **Note:** Cross-references to chapters 14-16 within the Synthesis section use same-directory paths (./) since all synthesis files are in the same directory.
+> **Note:** Cross-references to chapters 14-16 within the Synthesis section use same-directory paths (`./`) since all synthesis files are in the same directory.
 
 ---
 
@@ -48,6 +54,8 @@ This is the single most prevalent mistake across all archetypes. It has the same
 
 **Why this works:** Hardware attestation is cryptographically definitive — it does not produce false positives in the way behavioral analysis does. A key was either presented or it was not. The trade-off is that hardware attestation covers a narrower surface (authentication events only) than behavioral analysis (full session activity). But for the most critical users, covering the authentication event with certainty is more valuable than covering the full session with noise.
 
+> **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
+
 ---
 
 ## Gate Failure 2: Archetype C — eBPF False Positives Never Drop
@@ -70,6 +78,8 @@ Confidential containers (AWS Nitro Enclaves, Azure confidential VMs with SEV-SNP
 
 **Why this works:** Instead of detecting anomalous behavior and hoping to catch the attack, confidential containers make the workload's data inaccessible regardless of what the workload does. This is a shift from *detection* to *containment* — and it works even when the workload's behavior is indistinguishable from benign because the team's normal work is chaotic.
 
+> **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
+
 ---
 
 ## Gate Failure 3: Archetype D — Automation Cannot Keep Up
@@ -90,6 +100,8 @@ This is a business decision, not a security decision. Pat must present to the CE
 **The implementation:** Over the next 6-12 months, as SaaS contracts come up for renewal, do not auto-renew. Evaluate each for consolidation. A 50-person company does not need 30 different SaaS tools — it needs 10-15 well-chosen ones. Each eliminated platform reduces Pat's alert surface and increases the automation coverage ratio.
 
 **Why this works:** The complexity of the SaaS surface is the problem, not Pat's automation skills. Reducing the surface reduces the attack surface and the management overhead simultaneously.
+
+> **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
 
 ---
 
@@ -143,5 +155,5 @@ The escape hatch is not failure. It is the system working as designed. The gate 
 
 ## Cross-References
 
-**Next:** [Chapter 18: The Decision Matrix in Practice + Conclusion](./18-decision-matrix-and-conclusion.md)
-**Builds on:** [Chapter 14: Enterprise Turnaround](./14-enterprise-turnaround.md), [Chapter 15: Velocity Defender](./15-velocity-defender.md), [Chapter 16: Scaling Pat](./16-scaling-pat.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Next:** [§18: The Decision Matrix in Practice + Conclusion](./18-decision-matrix-and-conclusion.md)
+**Builds On:** [§14: Enterprise Turnaround](./14-enterprise-turnaround.md), [§15: Velocity Defender](./15-velocity-defender.md), [§16: Scaling Pat](./16-scaling-pat.md), [§13: Self-Assessment](./13-self-assessment.md)

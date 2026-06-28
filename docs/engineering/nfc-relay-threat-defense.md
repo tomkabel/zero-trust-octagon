@@ -1,6 +1,11 @@
 # NFC Relay Threat Model & Anti-Relay Defenses
 
-Re-evaluating the onboarding architecture from an advanced threat model perspective exposes a critical security blindspot: NFC is not a true proof of proximity if the user's endpoint is compromised by malware like NGate or an NFCShare relay engine. [1, 2]
+> **Purpose:** Threat model for NFC relay attacks (NGate/NFCShare), defense taxonomy, and hardened enrollment engine to neutralize proxy-relayed APDU traffic during WebAuthn/FIDO2 bootstrapping.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `siem-logging-pipeline.md` (ztaLogger), `webauthn-client-enterprise-handler.md` (WebAuthnClientHandler), `webauthn-server-validation-backend.md` (EnterpriseWebAuthnServerValidator)
+
+---
 
 Adversaries use these malicious packages to bypass the physical short-range limitations of ISO/IEC 14443 (NFC). If an employee's phone runs an active NFCShare relay, the application hooks the local hardware NFC subsystem and forwards raw APDU (Application Protocol Data Unit) traffic over an internet connection (WAN) to an attacker-controlled proxy device anywhere in the world. The attacker can then place their phone against a corporate workstation, relaying the victim's ID card credentials dynamically. [2, 3, 4, 5]
 

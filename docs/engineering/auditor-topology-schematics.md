@@ -1,6 +1,11 @@
 # Auditor Topology Schematics
 
-System architectural topology schematics structured specifically for presentation to corporate compliance auditors, Data Protection Officers (DPOs), and national competent authorities evaluating compliance with NIS2 (Article 21), eIDAS 2.0 (High LoA), and GDPR (Data Minimization).
+> **Purpose:** Architecture topology schematics and compliance mapping matrices for presentation to DPOs, corporate auditors, and national competent authorities evaluating NIS2 Article 21, eIDAS 2.0 High LoA, and GDPR compliance.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** None (reference material — aggregates topology views from all other specs)
+
+---
 
 ---
 
@@ -117,3 +122,12 @@ When walking compliance auditors through this architecture, be prepared to provi
 1. **The Terraform Infrastructure Code**: Proves the use of isolated, multi-region container networks and hardware-backed log encryption (KMS).
 2. **The FIDO2 AAGUID Whitelist**: Demonstrates strict management of approved corporate authenticators, satisfying supply-chain and asset-control requirements.
 3. **The Chaos Testing Reports**: Demonstrates system resilience by proving that local authentication checks continue to operate properly even during an inter-region WAN outage.
+
+---
+
+## References
+
+[1] https://eur-lex.europa.eu/eli/dir/2022/2555
+[2] https://eur-lex.europa.eu/eli/reg/2024/1183
+[3] https://gdpr.eu/
+[4] https://digital-strategy.ec.europa.eu/en/policies/eidas-regulation

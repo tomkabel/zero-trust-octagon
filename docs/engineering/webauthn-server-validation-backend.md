@@ -1,5 +1,12 @@
 # WebAuthn Enterprise Server-Side Validator
 
+> **Purpose:** Production-ready Node.js/TypeScript backend validation server — cryptographically verifies client attestation payloads, parses hardware AAGUID, and enforces NIS2 Zero Trust security checks.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `webauthn-client-enterprise-handler.md` (type definitions), `siem-logging-pipeline.md` (logging pattern)
+
+---
+
 Production-ready Node.js/TypeScript backend validation server handler. This component ingests client-side payloads, cryptographically verifies the `clientDataJSON` and `attestationObject`, parses the hardware AAGUID, and enforces strict security checks matching the 2026/2027 Zero Trust and NIS2 specifications.
 
 ---
@@ -142,3 +149,12 @@ export class EnterpriseWebAuthnServerValidator {
 - **AAGUID Enforcement**: The `hardwareAaguidWhitelist` lookup prevents employees from registering unmanaged WebAuthn-capable items (cheap third-party accessories or insecure virtual software authenticators). Match the verified AAGUID against the global [FIDO Alliance Metadata Service (MDS)](https://fidoalliance.org/metadata/) to audit device certification levels (e.g., FIDO L2/L3 security certifications required by NIS2 guidelines).
 
 - **Origin Binding Strictness**: The `expectedOrigin` parameter must be checked exactly. If the system runs behind reverse proxies or international localization domains (e.g., `.eu` vs `.com`), ensure the incoming host exactly matches cryptographic boundaries to block advanced multi-domain relay attacks.
+
+---
+
+## References
+
+[1] https://simplewebauthn.dev/docs/packages/server
+[2] https://fidoalliance.org/metadata/
+[3] https://www.w3.org/TR/webauthn-3/
+[4] https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html

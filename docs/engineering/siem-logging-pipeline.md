@@ -1,5 +1,12 @@
 # SIEM Logging Pipeline
 
+> **Purpose:** Architecture for routing Zero-Trust token and challenge engine logs into a centralized SIEM pipeline with cryptographic signing and automated detection rules.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `redis-challenge-pipeline-docker.md` (canonical source for `ztaLogger`, `logSecurityEvent`)
+
+---
+
 Architecture for routing Zero-Trust token and challenge engine logs from Redis and Node.js validators into a centralized SIEM pipeline (Splunk, OpenSearch, or ELK). The system aggregates, formats, and cryptographically signs logs before ingestion. This setup fulfills NIS2 Article 21 audit requirements and provides real-time detection for anomalous access patterns.
 
 ```text
@@ -172,3 +179,65 @@ source = 'zta.auth.events'
 
 1. **Non-Repudiation**: Run Fluent Bit on a hardened host where individual application containers cannot tamper with log files written to disk (`/var/log/zta/*.log`).
 2. **Alert Orchestration**: Ensure SIEM rules automatically forward events directly to an automated SOAR playbook (Cortex XSOAR or Splunk SOAR). For instance, an authenticated `REPLAY_ATTACK_DETECTED` event should immediately execute an out-of-band Smart-ID+ lock profile request to quarantine the target user account automatically while security responds.
+
+## 5. Splunk Alert Actions Configuration
+
+### savedsearches.conf — Real-Time Alert Definitions
+
+```ini
+# /opt/splunk/etc/apps/zta_security/default/savedsearches.conf
+
+[ZTA - Replay Attack Detected]
+description = Critical P1: WebAuthn challenge replay attempt intercepted
+search = index=zta_auth sourcetype="_json" action="REPLAY_ATTACK_DETECTED" | stats count BY challenge, userId, src_ip
+cron_schedule = */1 * * * *
+dispatch.earliest_time = -2m
+dispatch.latest_time = now
+alert_type = always
+alert.severity = 1
+alert.suppress = 1
+alert.suppress.period = 5m
+action.webhook = 1
+action.webhook.param.url = https://soar.enterprise.eu/api/v1/soar/webhook-trigger
+action.webhook.param.auth_token = ${SIEM_WEBHOOK_SECRET}
+action.email = 1
+action.email.to = soc-p1@enterprise.eu
+action.email.subject = CRITICAL: WebAuthn Replay Attack Detected
+
+[ZTA - Mass Revocation Anomaly]
+description = Analyst review: >50 session revocations in 1 minute
+search = index=zta_auth sourcetype="_json" action="SESSION_REVOKED" | stats count BY userId span=1m | where count > 50
+cron_schedule = */1 * * * *
+dispatch.earliest_time = -2m
+dispatch.latest_time = now
+alert_type = always
+alert.severity = 3
+alert.suppress = 1
+alert.suppress.period = 10m
+action.webhook = 1
+action.webhook.param.url = https://soar.enterprise.eu/api/v1/soar/webhook-trigger
+action.webhook.param.auth_token = ${SIEM_WEBHOOK_SECRET}
+action.email = 1
+action.email.to = soc-analysts@enterprise.eu
+action.email.subject = WARNING: Anomalous Mass Session Revocation Detected
+
+[ZTA - High-Risk AI Session Flag]
+description = UEBA risk model flagged session — step-up required
+search = index=zta_auth sourcetype="_json" risk_classification_output="HIGH_RISK*" | stats count BY sub, device_id
+cron_schedule = */2 * * * *
+dispatch.earliest_time = -3m
+dispatch.latest_time = now
+alert_type = always
+alert.severity = 4
+alert.suppress = 1
+alert.suppress.period = 15m
+action.email = 1
+action.email.to = security-engineering@enterprise.eu
+```
+
+## References
+
+[1] https://docs.fluentbit.io/manual/pipeline/outputs/splunk
+[2] https://docs.splunk.com/Documentation/Splunk/latest/Alert/WebhookAlertAction
+[3] https://github.com/pinojs/pino
+[4] https://docs.opensearch.org/latest/observing-your-data/ppl/

@@ -1,6 +1,11 @@
 # Zero-Trust Phishing-Resistant Identity Architecture
 
-A blueprint for building a zero-trust, phishing-resistant identity architecture under European regulatory constraints. This design eliminates shared secrets (passwords/SMS) and enforces continuous, context-aware cryptographic verification at the API gateway level.
+> **Purpose:** Executive-level blueprint — eliminates shared secrets, enforces continuous cryptographic verification at the API gateway, and satisfies eIDAS/NIS2/GDPR under European regulatory constraints.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** None (executive overview — no code imports)
+
+---
 
 ---
 

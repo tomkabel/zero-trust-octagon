@@ -1,6 +1,10 @@
 # Appendix B: Architecture Validation Checklist
 
-**Instructions:** Present these questions to the architecture owner or CISO. Score each axiom as Green (satisfied), Yellow (partially satisfied), or Red (violated). The goal is not a numeric score — it is identifying which axioms need attention.
+> **Prerequisites:** [§3: The Octagon as Validation Instrument](../01-foundations/03-octagon-as-instrument.md)
+
+---
+
+**Instructions:** Present these questions to the architecture owner or CISO. Score each axiom as Green (satisfied), Yellow (partially satisfied), or Red (violated). The goal is not a numeric score — it is identifying which axioms need attention. This checklist is designed for annual re-use as a health assessment and for post-incident application as a gap-identification tool.
 
 ## Question 1 — No Intrinsic Trust (Axiom 1)
 
@@ -99,8 +103,16 @@ Does the client verify the resource's state before sending data?
 
 ---
 
-## Cross-Reference
+## Cross-References
 
-- **Full audit guidance:** [Chapter 3: The Octagon as Validation Instrument](../01-foundations/03-octagon-as-instrument.md)
-- **Leverage hierarchy:** [Chapter 7: Meta-Patterns](../02-methodology/07-meta-patterns.md)
-- **Decision matrix:** [Chapter 18: Decision Matrix in Practice](../04-synthesis/18-decision-matrix-and-conclusion.md)
+**Builds On:** [§3: The Octagon as Validation Instrument](../01-foundations/03-octagon-as-instrument.md) — the eight diagnostic questions and scoring rubrics.
+
+**Related:** [§2: The Octagon](../01-foundations/02-the-octagon.md) — eight axioms with invariant definitions. [§7: Meta-Patterns](../02-methodology/07-meta-patterns.md) — leverage point hierarchy (D5 > D4 > D8 > D2 > D7). [§18: Decision Matrix in Practice](../04-synthesis/18-decision-matrix-and-conclusion.md) — pain-threat pairs mapped to chapters.
+
+**Next:** [Appendix C: Glossary Population and Consistency](./appendix-c-glossary.md) — complete glossary of all domain terms.
+
+---
+
+## Complementary Frameworks
+
+This checklist validates architectural integrity against the Octagon. For organizational maturity assessment, use CISA ZTMM v2.0 (see [Appendix E](./appendix-e-cisa-ztmm-crosswalk.md) for crosswalk). For governance assessment, use NIST CSF 2.0 Govern function (see [§7: Meta-Patterns](../02-methodology/07-meta-patterns.md)). For implementation planning, cross-reference NSA ZIG Primer (see [§13: Self-Assessment Diagnostic](../04-synthesis/13-self-assessment.md)).

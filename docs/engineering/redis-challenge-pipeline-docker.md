@@ -1,5 +1,12 @@
 # Redis Challenge Pipeline with Docker
 
+> **Purpose:** Production-ready Dockerized Redis pipeline for challenge management, replay prevention, and session revocation across gRPC API Gateway and WebAuthn Validation Service.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** None (canonical source for `ZtaRedisPipelineManager`)
+
+---
+
 Production-ready Dockerized Redis pipeline blueprint. It manages short-lived challenges, prevents replay attacks, and handles session revocations across the gRPC API Gateway and the WebAuthn Validation Service.
 
 ---
@@ -16,7 +23,7 @@ services:
     container_name: zta_redis_hub
     command: >
       redis-server
-      --requirepass "${REDIS_SECURITY_PASSWORD:-ZtaSecureTokenPass2026}"
+      --requirepass "${REDIS_SECURITY_PASSWORD:?REDIS_SECURITY_PASSWORD must be set}"
       --maxmemory 512mb
       --maxmemory-policy volatile-ttl
       --appendonly yes
@@ -27,7 +34,7 @@ services:
     networks:
       - zta-secure-mesh
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "${REDIS_SECURITY_PASSWORD:-ZtaSecureTokenPass2026}", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_SECURITY_PASSWORD:?REDIS_SECURITY_PASSWORD must be set}", "ping"]
       interval: 5s
       timeout: 3s
       retries: 5
@@ -59,7 +66,8 @@ export class ZtaRedisPipelineManager {
   constructor() {
     const host = process.env.REDIS_HOST || 'localhost';
     const port = process.env.REDIS_PORT || '6379';
-    const password = process.env.REDIS_PASSWORD || 'ZtaSecureTokenPass2026';
+    const password = process.env.REDIS_PASSWORD;
+    if (!password) throw new Error('FATAL: REDIS_PASSWORD environment variable is required');
 
     this.client = createClient({
       url: `redis://:${password}@${host}:${port}`
@@ -172,3 +180,12 @@ async function handleRegistrationEndpoint(req: any, res: any) {
 
 - **Atomic Operations**: Using Redis transactions (`multi().exec()`) guarantees that a challenge can never be fetched twice simultaneously, neutralizing automated Man-in-the-Middle (MitM) credential interception tooling.
 - **Volatile-TTL Memory Eviction Policy**: Configured via `--maxmemory-policy volatile-ttl` to prevent service exhaustion crashes. If memory pressure spikes, Redis automatically drops transient challenges nearest to expiration rather than breaking stateful authentication controls or active blacklists.
+
+---
+
+## References
+
+[1] https://redis.io/docs/latest/develop/clients/nodejs/
+[2] https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/
+[3] https://docs.docker.com/compose/compose-file/
+[4] https://redis.io/docs/latest/develop/connect/clients/nodejs/

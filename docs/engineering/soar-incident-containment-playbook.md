@@ -1,6 +1,11 @@
 # SOAR Incident Containment Playbook
 
-To execute an automated, near-instant response to critical SIEM alerts like a `REPLAY_ATTACK_DETECTED`, the Security Orchestration, Automation, and Response (SOAR) layer must act as a circuit breaker.
+> **Purpose:** Automated 3-tier incident containment for critical SIEM alerts — session eviction via Redis, Smart-ID/eIDAS identity anchor lock, and FIDO2 device quarantine with sub-second enforcement.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `redis-challenge-pipeline-docker.md` (ZtaRedisPipelineManager), `siem-logging-pipeline.md` (ztaLogger, logSecurityEvent)
+
+---
 
 Following NIS2 Article 21 directives for proactive incident mitigation, this script acts as an automated SOAR playbook. When triggered by a SIEM alert, it coordinates with the components built in the previous steps to execute a 3-tier automated containment strategy:
 
@@ -28,10 +33,12 @@ interface SiemAlertPayload {
 
 export class ZtaAutomatedResponsePlaybook {
   private redisPipeline: ZtaRedisPipelineManager;
-  private SMART_ID_ADMIN_API = process.env.SMART_ID_ADMIN_API || 'https://sk.ee';
+  private SMART_ID_ADMIN_API = process.env.SMART_ID_ADMIN_API || '';
   private SMART_ID_AUTH_TOKEN = process.env.SMART_ID_API_AUTH_TOKEN;
 
   constructor() {
+    if (!this.SMART_ID_ADMIN_API) throw new Error('FATAL: SMART_ID_ADMIN_API environment variable is required');
+    if (!this.SMART_ID_AUTH_TOKEN) throw new Error('FATAL: SMART_ID_API_AUTH_TOKEN environment variable is required');
     this.redisPipeline = new ZtaRedisPipelineManager();
   }
 
@@ -183,3 +190,12 @@ app.listen(3000, () => console.log('SOAR Webhook Ingestion Engine Online.'));
 - **Sub-Second Enforcement Edge**: Because the Envoy External Authorization service queries the high-speed Redis cluster on every inbound API or gRPC request, when this playbook executes `revokeSession()`, the attacker's hijacked bearer token becomes invalid across the global cloud infrastructure on their next request.
 
 - **Preventing Attacker Self-Recovery**: An attacker possessing a hijacked session might attempt to immediately re-authenticate via a browser prompt. By placing a programmatic administrative hold on the user's Smart-ID/Mobile-ID anchor profile (Tier 2), the system blocks the user's automated account recovery and enrollment vectors until a human security analyst performs verification.
+
+---
+
+## References
+
+[1] https://www.smart-id.com/smart-id-plus/
+[2] https://www.skidsolutions.eu/news/smart-id-experience-the-next-generation-of-secure-authentication-now/
+[3] https://openid.net/specs/openid-caep-specification-1_0.html
+[4] https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter

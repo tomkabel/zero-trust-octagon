@@ -1,3 +1,9 @@
+---
+title: "14. The Enterprise Turnaround"
+description: "Execute the 24-month phased implementation pathway for transitioning a Fortune 500 deployment from Archetype B toward Archetype A using Octagon axioms"
+outline: deep
+---
+
 # 14. The Enterprise Turnaround: Archetype B → A in 24 Months
 
 > **Learning Objectives**
@@ -6,7 +12,7 @@
 > - Apply gate checks to detect when the primary path breaks and pivot to a fallback
 > - Budget the transformation with realistic cost estimates
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Prerequisites:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [§13: Self-Assessment](./13-self-assessment.md)
 
 ---
 
@@ -67,7 +73,7 @@ The National Security Agency's Zero Trust Implementation Guide defines five matu
 
 | NSA ZIG Phase | NSA Focus | Enterprise Timeline | Equivalent Activity |
 |---------------|-----------|-------------------|-------------------|
-| **Discovery** | Asset inventory, traffic baselining | **Chapter 13 (Self-Assessment)** | Diagnostic questions, archetype identification |
+| **Discovery** | Asset inventory, traffic baselining | [§13: Self-Assessment](./13-self-assessment.md) | Diagnostic questions, archetype identification |
 | **Phase One:** Identity, Devices, Apps | Phishing-resistant MFA, device compliance, app access | **Months 1-8 (Q1-Q3)** | D4+D5 detection modernization, D1 PKI audit, D8 fusion pilot |
 | **Phase Two:** Network, Data | Microsegmentation, data classification, encryption | **Months 8-16 (Q3-Y2Q1)** | D3 service mesh (monitoring → enforcement), D7 dual pipeline |
 | **Phase Three:** Advanced | Automation, orchestration, cross-pillar integration | **Months 16-20 (Y2Q1-Q2)** | D4 Triple attestation, D6 Event-Streamed |
@@ -199,11 +205,23 @@ Deploy Kafka or NATS as the policy distribution backbone. PEPs subscribe and mai
 
 ## Gate Checks
 
-**Gate 1 (End of Q2):** Measure the behavioral attestation false-positive rate. If >80% of behavioral anomalies were false positives (legitimate users flagged), spend Q3 tuning the baselines. **If tuning fails:** The existing telemetry quality is insufficient for behavioral analysis. Pivot: skip behavioral. Go directly to hardware-backed attestation (pilot: 100 hardware security keys + identity provider hardware attestation integration). Budget increase: $200K.
+**Gate 1 (End of Q2):** *Condition:* Behavioral attestation false-positive rate must be ≤80%. False positives from legitimate users mean tuning saves the path.
 
-**Gate 2 (End of Q4):** Measure the service mesh enforcement impact. If >5% of legitimate traffic was denied during monitoring-mode analysis, the mesh policies are too aggressive. Continue monitoring mode for another quarter. **If denied traffic remains >5%:** The application architecture is too dynamic for static policy. Pivot: use adaptive policy (behavioral learning of traffic patterns) rather than manually written rules.
+→ **if FAIL (tuning cannot reduce FP rate below 80%):** Pivot to hardware-backed attestation. Pilot: 100 hardware security keys + identity provider hardware attestation integration. Budget increase: $200K. Rationale: existing telemetry quality is insufficient for behavioral analysis. Hardware-backed attestation bypasses the need for high-quality behavioral signals.
 
-**Gate 3 (End of Q8):** After dual pipeline deployment, compare primary vs. secondary. If divergences are detected in >1% of observations, the primary pipeline has systematic integrity issues. Investigate before proceeding to Year 2.
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
+
+**Gate 2 (End of Q4):** *Condition:* Service mesh enforcement must deny ≤5% of legitimate traffic. If monitoring-mode analysis shows more than 5% of legitimate traffic was denied, the mesh policies are too aggressive — continue monitoring mode for another quarter.
+
+→ **if FAIL (denied traffic remains >5% after continued monitoring):** Pivot to adaptive policy. Use behavioral learning of traffic patterns rather than manually written static rules. Rationale: application architecture is too dynamic for static policy. Adaptive policy learns traffic norms organically.
+
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
+
+**Gate 3 (End of Q8):** *Condition:* Dual pipeline divergence must be ≤1% of observations. Higher divergence means the primary pipeline has systematic integrity issues.
+
+→ **if FAIL (divergences remain above 1% after investigation):** Do not proceed to Year 2. The primary pipeline must be rebuilt or replaced before further investment. Pivot: replace primary SIEM ingestion path, re-baseline telemetry collection.
+
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
 
 ---
 
@@ -218,5 +236,5 @@ Deploy Kafka or NATS as the policy distribution backbone. PEPs subscribe and mai
 
 ## Cross-References
 
-**Next:** [Chapter 15: The Velocity Defender](./15-velocity-defender.md)
-**Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Next:** [§15: The Velocity Defender](./15-velocity-defender.md)
+**Builds On:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§9: Archetype B — Full Attack Trace](../03-archetypes/09-archetype-b-fortune-500.md), [§13: Self-Assessment](./13-self-assessment.md)

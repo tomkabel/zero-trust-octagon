@@ -1,6 +1,11 @@
 # 2026/2027 Identity Fabric Architecture
 
-Designing a State-of-the-Art (SoTA) Zero Trust Architecture (ZTA) under European regulatory pressure requires moving past simple point-in-time authentication. Modern enterprise design mandates a Continuous Adaptive Trust (CAT) framework that treats decentralized wallets, cryptographic device ties, machine-learning risk evaluations, and strict multi-jurisdictional compliance as a single interconnected system. [1]
+> **Purpose:** State-of-the-Art ZTA architecture with Continuous Adaptive Trust (CAT) framework — three-layer Identity Fabric, OID4VC/EUDI Wallet integration, WebAuthn Enterprise Attestation, and EU AI Act governance.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** None (architecture reference — no code imports from other specs)
+
+---
 
 ---
 

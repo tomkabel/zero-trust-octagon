@@ -1,8 +1,11 @@
 # Enrollment & Credential Onboarding Flows
 
-The user enrollment and credential onboarding phase is the most critical security boundary. If an adversary can trick a user during onboarding, or compromise the bootstrap identity, they can bind an unauthorized FIDO2 passkey and gain permanent backdoor access.
+> **Purpose:** eIDAS 2.0 High LoA credential onboarding flow — strictly verified, un-phishable enrollment with EUDI Wallet identity anchoring and hardware enclave key binding.
 
-Under eIDAS 2.0 (High Level of Assurance) and NIS2/GDPR constraints, the system must establish a strictly verified, un-phishable, and highly audited onboarding sequence.
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `redis-challenge-pipeline-docker.md` (ZtaRedisPipelineManager), `siem-logging-pipeline.md` (ztaLogger), `webauthn-client-enterprise-handler.md` (WebAuthnClientHandler), `webauthn-server-validation-backend.md` (EnterpriseWebAuthnServerValidator)
+
+---
 
 ---
 
@@ -304,3 +307,13 @@ When a user begins the re-enrollment flow to bind a replacement device:
 1. The onboarding system issues a programmatic revocation request directly to the `ZtaRedisPipelineManager` to instantly kill all outstanding sessions related to the old device identifier.
 2. The user's previous public key registration index is securely flagged as `DEPRECATED_SUPERSEDED` within the identity directory.
 3. This lifecycle cascade prevents an adversary from using a found or stolen corporate device while a legitimate employee completes their hardware transition.
+
+---
+
+## References
+
+[1] https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/latest/architecture-and-reference-framework-main/
+[2] https://www.w3.org/TR/webauthn-3/
+[3] https://openid.net/specs/openid-4-verifiable-presentations-1_0.html
+[4] https://www.smart-id.com/smart-id-plus/
+[5] https://www.skidsolutions.eu/news/smart-id-experience-the-next-generation-of-secure-authentication-now/

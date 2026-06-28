@@ -1,6 +1,11 @@
 # Multi-Region Active-Active Redis Replication
 
-To build a highly available, low-latency identity architecture across multiple European regions (e.g., `eu-central-1` in Frankfurt and `eu-west-1` in Ireland), deploy an Active-Active multi-region database topology.
+> **Purpose:** Active-active multi-region Redis topology with CRDT patterns for sub-millisecond local reads, cross-region CAEP/SSF revocation sync, and split-brain resilience across eu-central-1 and eu-west-1.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `redis-challenge-pipeline-docker.md` (ZtaRedisPipelineManager base pattern)
+
+---
 
 Point-in-time challenges and high-speed token revocations (CAEP/SSF) cannot rely on a single database node across geographic boundaries, as WAN latency (typically 20–30ms) would degrade the gRPC API gateway validation loops. The following specification outlines how to configure a multi-region Redis cluster using Redis CRDTs (Conflict-Free Replicated Data Types) or active-active replication to maintain sub-millisecond local reads while synchronizing token states cross-region.
 
@@ -34,8 +39,8 @@ services:
     command: >
       redis-server
       --port 6379
-      --requirepass "ZtaCrossRegionPass2026"
-      --masterauth "ZtaCrossRegionPass2026"
+      --requirepass "${REDIS_CROSS_REGION_PASSWORD:?REDIS_CROSS_REGION_PASSWORD must be set}"
+      --masterauth "${REDIS_CROSS_REGION_PASSWORD:?REDIS_CROSS_REGION_PASSWORD must be set}"
       --maxmemory 512mb
       --maxmemory-policy volatile-ttl
       --appendonly yes
@@ -52,8 +57,8 @@ services:
     command: >
       redis-server
       --port 6380
-      --requirepass "ZtaCrossRegionPass2026"
-      --masterauth "ZtaCrossRegionPass2026"
+      --requirepass "${REDIS_CROSS_REGION_PASSWORD:?REDIS_CROSS_REGION_PASSWORD must be set}"
+      --masterauth "${REDIS_CROSS_REGION_PASSWORD:?REDIS_CROSS_REGION_PASSWORD must be set}"
       --maxmemory 512mb
       --maxmemory-policy volatile-ttl
       --appendonly yes
@@ -73,7 +78,7 @@ networks:
 To initialize dynamic replication inside an open-source topology without enterprise clustering tools, execute this cross-region peer-binding hook command right after startup:
 
 ```bash
-docker exec -it zta_redis_ireland redis-cli -p 6380 -a ZtaCrossRegionPass2026 replicaof 10.5.0.10 6379
+docker exec -it zta_redis_ireland redis-cli -p 6380 -a "${REDIS_CROSS_REGION_PASSWORD}" replicaof 10.5.0.10 6379
 ```
 
 ---
@@ -153,3 +158,12 @@ To protect the continuous access evaluation platform against total regional data
 
 - **Continuous Read Resiliency**: If the inter-region WAN connection drops, local replica pools drop into independent standalone operation modes. They continue to process and validate local platform WebAuthn requests and check local session state tables immediately, ensuring zero application downtime for users within that continent quadrant.
 - **Eventual Resynchronization**: Once the WAN connection is restored, the replication controllers automatically reconcile and merge any missing global CAEP/SSF revocation entries in the background using the timestamp metadata.
+
+---
+
+## References
+
+[1] https://redis.io/docs/latest/operate/oss_and_stack/management/replication/
+[2] https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/GlobalDatastore.html
+[3] https://redis.io/docs/latest/develop/data-types/crdts/
+[4] https://docs.docker.com/compose/compose-file/

@@ -1,6 +1,6 @@
 # Appendix A: Quantum + AI Adversary Stress-Tests
 
-> **Prerequisites:** [Chapter 2: The Octagon](../01-foundations/02-the-octagon.md), [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 5: Dimensions 1-4](../02-methodology/05-dimensions-trust-to-attestation.md), [Chapter 6: Dimensions 5-9](../02-methodology/06-dimensions-response-to-human.md)
+> **Prerequisites:** [§2: The Octagon](../01-foundations/02-the-octagon.md), [§7: Meta-Patterns](../02-methodology/07-meta-patterns.md), [§12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md)
 
 ---
 
@@ -49,18 +49,16 @@ The coordination gap produces four structural risks beyond the cryptographic mig
 
 The practical consequence is unchanged:
 
-1. Systems achieve ZTA compliance in 2027 using classical cryptography (ECDSA certificates, ECDHE key exchange, RSA policy signatures).
-2. Those same systems then require complete cryptographic rework when PQC mandates take effect between 2030 and 2035.
+1. Systems achieve ZTA compliance in 2027 using classical cryptography (ECDSA certificates, ECDHE key exchange, RSA policy signatures) [DR-§3.1].
+2. Those same systems then require complete cryptographic rework when PQC mandates take effect between 2030 and 2035 [DR-§3.1].
 3. This includes TPM attestation chains (currently ECDSA P-256), SPIFFE SVID signatures, mTLS cipher suites, policy-hash verification — every cryptographic primitive that ZTA depends on.
-4. PQC algorithms use 4-10x larger key and signature sizes than their classical equivalents, impacting performance, network bandwidth, and certificate chain management.
+4. PQC algorithms use 4-10x larger key and signature sizes than their classical equivalents, impacting performance, network bandwidth, and certificate chain management [DR-§3.2].
 
-**As of May 2026, NO FIPS 140-3 validated PQC module exists.** NIST's own projection (summer/fall 2025, presented at the PKI Consortium PQC Conference in Austin) was not met. The first validated module has no fixed closing date. Organizations that defer PQC planning until the first validated module appears will compress an already-constrained migration timeline — cryptographic migration cycles average 7-10 years across enterprise environments, and organizations starting PQC work in 2026 are already targeting completion at the boundary of the disallowance window with no schedule slack.
-
-- *The PKI Consortium conference projection is corroborated by pqcinformation.com's April 2026 tracking of the FIPS 140-3 validation gap.*
+**As of May 2026, NO FIPS 140-3 validated PQC module exists.** [DR-§3.2] NIST's own projection (summer/fall 2025, presented at the PKI Consortium PQC Conference in Austin) was not met. The first validated module has no fixed closing date. Organizations that defer PQC planning until the first validated module appears will compress an already-constrained migration timeline — cryptographic migration cycles average 7-10 years across enterprise environments, and organizations starting PQC work in 2026 are already targeting completion at the boundary of the disallowance window with no schedule slack.
 
 **The action window for PQC migration in zero-trust is 2026-2030.** Infrastructure procured in 2026 will be receiving firmware updates until 2030-2032. The migration must be planned and funded before the hardware procurement cycle locks in non-PQC silicon. Dual-stack cryptography — conventional and PQC in parallel — is the correct strategy, with an expected 5-7 years of overlap before conventional algorithms can be fully deprecated.
 
-Sources: [NIST IR 8547 (Initial Public Draft, November 2024)](https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf), [Federal PQC Migration Deadlines (April 2026)](https://www.pqcinformation.com/federal-pqc-migration-deadlines-what-agencies-actually-face-in-2026-and-beyond/), [FIPS 140-3 Validation Gap (April 2026)](https://www.pqcinformation.com/fips-140-3-validation-gap-why-no-pqc-algorithm-has-a-validated-module-yet/), [MDPI: Synchronizing PQC, ZTA, and AI Security (February 2026)](https://www.mdpi.com/2079-8954/14/3/233), [DoD DTM 25-003: Zero Trust Strategy (July 2025)](https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dtm/DTM%2025-003.PDF)
+Sources: [DR-§3.1] NIST IR 8547 regulatory PQC timeline; [DR-§3.2] FIPS 140-3 validation gap and PQC market dynamics; [TR-§3.1.4] Mexico government breach and AI adversary landscape analysis; [DR-§2.3] Speed asymmetry and 27-second breakout data; [DR-§4] PQC-ZTA-AI synchronization research.
 
 **What breaks:** Virtually every asymmetric cryptographic primitive used in current zero-trust deployments.
 
@@ -92,6 +90,24 @@ Sources: [NIST IR 8547 (Initial Public Draft, November 2024)](https://nvlpubs.ni
 
 **Critical distinction:** A CRQC breaks *mathematical trust*. An AI adversary breaks *behavioral trust*. The two are orthogonal — an AI adversary cannot forge a TPM-signed attestation report, and a quantum adversary cannot generate a convincing human conversation. The defense against each requires a different architectural upgrade.
 
+#### Real-World AI Adversary: The Mexico Government Breach (Dec 2025 – Feb 2026)
+
+The Mexico government breach is the canonical demonstration of AI-speed autonomous attacks at scale [TR-§3.1.4]. A single operator using Anthropic Claude and OpenAI GPT in parallel — one model handling exploitation, the other processing harvested data and feeding instructions back — executed over 5,000 AI-driven commands across 9 government agencies. Claude autonomously identified SCADA interfaces as high-value targets without explicit direction, discovering attack surface that defenders themselves did not know existed.
+
+The breach validates two core Octagon claims:
+
+1. **Axiom 7 (Epistemic Integrity) is the most universally violated axiom.** The attacker's knowledge of the target system exceeded the defender's knowledge of their own system. This is the asymmetry the textbook warns about: when Epistemic Integrity is violated, the defender cannot protect what they do not know exists [TR-§3.1.4].
+
+2. **D4 (Behavioral Attestation) is the primary AI target.** The attacker LLM did not need to forge hardware signatures — it needed to behave convincingly. The SCADA interfaces were identified through semantic analysis of configuration files, not through cryptographic compromise. An AI adversary targets the behavioral layer because it is the cheapest entry point [TR-§3.1.4].
+
+#### Emerging Threat: Prompt Injection Against AI-Augmented Security Tools
+
+As security operations centers deploy AI-augmented tools for detection triage and alert correlation, a new attack surface emerges: prompt injection against the security tools themselves [DR-§2.3]. Ten verified indirect prompt injection payloads have been deployed on public websites targeting AI-powered security agents with goals including financial fraud, API key theft, and induced denial-of-service on detection pipelines [TR-§3.1.4]. An adversary who compromises the security tool's reasoning chain can induce false negatives on their own attacks — the machine-speed equivalent of blinding the watchtower.
+
+#### Speed Asymmetry: The 27-Second Problem
+
+The defining operational challenge of AI-speed adversaries is the breakout time: CrowdStrike data shows an average eCrime breakout time of 29 minutes, with the fastest observed breakout at 27 seconds [DR-§2.3]. Human-in-the-loop security operations — designed around defense-in-minutes or defense-in-hours — cannot match this pace. The 27-second breakout time means a sophisticated AI-driven attack can complete lateral movement before a human analyst has opened the alert. This speed asymmetry forces architectural decisions: D9 (Human Continuity) must be augmented with automated initial response, and D7 (Observability Trust) must operate at machine speed [DR-§2.3].
+
 ---
 
 ## Stress-Test Results: Each Axiom Under Both Threats
@@ -110,9 +126,9 @@ Sources: [NIST IR 8547 (Initial Public Draft, November 2024)](https://nvlpubs.ni
 
 | Quantum | AI |
 |---------|-----|
-| ⚠️ Vulnerable if policy signing keys use ECDSA or RSA. If a CRQC can forge policy update signatures, an attacker can deploy malicious policies that appear authentic. **Mitigation:** Migrate to post-quantum signatures (Dilithium, FALCON, SPHINCS+) for policy signing. | ✅ Resists. Policy is deterministic — given the same input, the same output. An attacker LLM cannot change the evaluation function. |
+| ⚠️ Vulnerable if policy signing keys use ECDSA or RSA. If a CRQC can forge policy update signatures, an attacker can deploy malicious policies that appear authentic. **Mitigation:** Migrate to post-quantum signatures (ML-DSA, SLH-DSA) for policy signing. | ✅ Resists. Policy is deterministic — given the same input, the same output. An attacker LLM cannot change the evaluation function. |
 
-**Verdict: Quantum-vulnerable.** Migration path: transition policy signing keys to ML-DSA (Dilithium) or SLH-DSA (SPHINCS+) during the PQC migration window.
+**Verdict: Quantum-vulnerable.** Migration path: transition policy signing keys to ML-DSA or SLH-DSA during the PQC migration window.
 
 ---
 
@@ -160,7 +176,7 @@ Sources: [NIST IR 8547 (Initial Public Draft, November 2024)](https://nvlpubs.ni
 
 | Quantum | AI |
 |---------|-----|
-| ❌ **Critically vulnerable.** The entire attestation chain — TPM quotes, SPIFFE identity certificates, policy bundle signatures, code signing — depends on asymmetric cryptography that a CRQC will break. A forged TPM attestation quote + a valid-looking policy signature = a perfect but completely fabricated verdict. **Mitigation:** Transition the entire attestation chain to post-quantum cryptography. TPM firmware must support ML-DSA (Dilithium) or SLH-DSA (SPHINCS+) for attestation quotes. SPIFFE must support PQC certificate chains. | ⚠️ Vulnerable for self-reported attestation. An AI adversary can generate convincing but fabricated state claims — "I am a fully patched Windows 11 device" — that pass syntactic validation but have no hardware backing. **Mitigation:** Provenance must be hardware-rooted. Self-reported state is used for denial, never for authorization. The AI's fabricated claim is treated as hostile by default. |
+| ❌ **Critically vulnerable.** The entire attestation chain — TPM quotes, SPIFFE identity certificates, policy bundle signatures, code signing — depends on asymmetric cryptography that a CRQC will break. A forged TPM attestation quote + a valid-looking policy signature = a perfect but completely fabricated verdict. **Mitigation:** Transition the entire attestation chain to post-quantum cryptography. TPM firmware must support ML-DSA or SLH-DSA for attestation quotes. SPIFFE must support PQC certificate chains. | ⚠️ Vulnerable for self-reported attestation. An AI adversary can generate convincing but fabricated state claims — "I am a fully patched Windows 11 device" — that pass syntactic validation but have no hardware backing. **Mitigation:** Provenance must be hardware-rooted. Self-reported state is used for denial, never for authorization. The AI's fabricated claim is treated as hostile by default. |
 
 **Verdict: Dual-vulnerable.** The quantum attack breaks cryptographic provenance. The AI attack breaks behavioral/semantic provenance. Only hardware-anchored, post-quantum-cryptographic attestation survives both threats.
 
@@ -170,9 +186,9 @@ Sources: [NIST IR 8547 (Initial Public Draft, November 2024)](https://nvlpubs.ni
 
 | Quantum | AI |
 |---------|-----|
-| ⚠️ Vulnerable. Mutual TLS (mTLS) is the standard bilateral verification mechanism, and mTLS key exchange (ECDHE) and authentication (ECDSA) are both broken by a CRQC. An attacker can impersonate either party in a TLS handshake. **Mitigation:** Migrate to post-quantum key exchange (ML-KEM / Kyber) and post-quantum authentication (ML-DSA) in TLS 1.3. | ✅ Resists. Both parties must prove cryptographic state — an LLM cannot forge a private key signature. |
+| ⚠️ Vulnerable. Mutual TLS (mTLS) is the standard bilateral verification mechanism, and mTLS key exchange (ECDHE) and authentication (ECDSA) are both broken by a CRQC. An attacker can impersonate either party in a TLS handshake. **Mitigation:** Migrate to post-quantum key exchange (ML-KEM) and post-quantum authentication (ML-DSA) in TLS 1.3. | ✅ Resists. Both parties must prove cryptographic state — an LLM cannot forge a private key signature. |
 
-**Verdict: Quantum-vulnerable.** Migration path: enable PQC hybrid key exchange (X25519Kyber768) in mTLS handshakes during the transition window.
+**Verdict: Quantum-vulnerable.** Migration path: enable PQC hybrid key exchange (ML-KEM + X25519) in mTLS handshakes during the transition window.
 
 ---
 
@@ -199,13 +215,13 @@ The correct migration strategy for zero-trust cryptography is **dual-stack deplo
 
 **For TPM attestation (D1):**
 - Current: TPM quotes signed with ECDSA P-256
-- Migration: TPM firmware updated to support ML-DSA (Dilithium) in parallel with ECDSA
+- Migration: TPM firmware updated to support ML-DSA in parallel with ECDSA
 - Attestation verification: accept either signature. Log which algorithm was used.
 - Cutover: once ML-DSA is verified at scale, deprecate ECDSA signature acceptance
 
 **For mTLS (D8, D3):**
 - Current: X25519 ECDH key exchange, ECDSA P-256 certificates
-- Migration: Add Kyber-768 / ML-KEM as hybrid key exchange (X25519Kyber768). Issue PQC hybrid certificate chains (ECDSA + ML-DSA).
+- Migration: Add ML-KEM as hybrid key exchange. Issue PQC hybrid certificate chains (ECDSA + ML-DSA).
 - Verification: prefer PQC, accept conventional for legacy peers.
 - Cutover: once all peers have PQC support, disable conventional key exchange.
 
@@ -245,6 +261,16 @@ Against an AI adversary, the architectural defense is fundamentally different fr
 | CRQC capable of TPM attestation forgery | 8-12 years | Advocate for PQC-supporting TPM firmware in procurement cycles today. Hardware deployed now will be in service when this threat arrives. |
 
 **The action window for PQC migration in zero-trust is approximately 2026-2030.** Infrastructure procured in 2026 will be receiving firmware updates until 2030-2032. The migration must be planned and funded before the hardware procurement cycle locks in non-PQC silicon.
+
+---
+
+## Cross-References
+
+**Builds On:** [§2: The Octagon](../01-foundations/02-the-octagon.md) — eight axioms with invariant definitions. [§7: Meta-Patterns](../02-methodology/07-meta-patterns.md) — covariance clusters and leverage point hierarchy. [§12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md) — meta-patterns across all four archetype traces.
+
+**Related:** [§3: Octagon as Instrument](../01-foundations/03-octagon-as-instrument.md) — diagnostic question derivation from axioms. [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md) — nine dimensions and their value ranges. [§13: Self-Assessment Diagnostic](../04-synthesis/13-self-assessment.md) — archetype routing and diagnostic questions.
+
+**Next:** [Appendix B: Architecture Validation Checklist](./appendix-b-validation-checklist.md) — the 8-question checklist derived from the Octagon.
 
 ---
 

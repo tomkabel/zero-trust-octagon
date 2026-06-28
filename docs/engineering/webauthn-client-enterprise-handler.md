@@ -1,5 +1,12 @@
 # WebAuthn Enterprise Client-Side Handler
 
+> **Purpose:** Production-ready TypeScript implementation for client-side WebAuthn — enforces Enterprise Attestation, extracts hardware telemetry, and structures payloads for the ZTA Relying Party server.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** None (canonical source for `WebAuthnClientHandler`)
+
+---
+
 Production-ready TypeScript implementation for the client-side WebAuthn handler. This module enforces Enterprise Attestation, extracts deep hardware telemetry, hooks natively into the browser's `navigator.credentials` APIs, and structures the response payload for a zero-trust Relying Party (RP) server. [1]
 
 ---

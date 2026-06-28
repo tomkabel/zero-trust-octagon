@@ -1,3 +1,9 @@
+---
+title: "16. Scaling Pat"
+description: "A 6-month implementation pathway for securing a solo-operated organization on a one-person budget — hardware keys, automated response, and browser-level SaaS enforcement."
+outline: deep
+---
+
 # 16. Scaling Pat: Hardening Archetype D in 6 Months
 
 > **Learning Objectives**
@@ -6,11 +12,11 @@
 > - Expand the IAP's mediation to the SaaS layer using browser-level enforcement
 > - Build a realistic hardening plan that fits within a solo operator's budget and time
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Prerequisites:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [§13: Self-Assessment](./13-self-assessment.md)
 
 ---
 
-**Starting state:** D1: Software CA | D2: Static JIT | D3: IAP/Gateway | D4: Single | D5: Auto-Escalate | D6: Push | D7: Implicit | D8: Fused (1 person) | D9: Single SPOF
+**Starting state:** D1: Software CA | D2: Static JIT | D3: Application / Gateway | D4: Single | D5: Auto-Escalate to Human | D6: Push | D7: Implicit Trust | D8: Fused (1 person) | D9: Single Point of Failure
 
 **Octagon violations:** 5 of 8 (+ partial on 8). **Budget:** Minimum. **Constraint:** Pat's time and attention — not money.
 
@@ -177,11 +183,23 @@ Archetype D can reach C-level maturity (~6/8 Octagon) on $3K-$7K/month. But D ca
 
 ## Gate Checks
 
-**Gate 1 (Week 4):** After hardware key mandate, measure whether any employee had MFA fatigue incidents in the preceding month. Baseline should be zero going forward.
+**Gate 1 (Week 4):** *Condition:* After hardware key mandate, measure whether any employee had MFA fatigue incidents in the preceding month. Baseline should be zero going forward.
 
-**Gate 2 (Month 2):** Measure what percentage of alerts the automation handles without Pat. If <40% of clear-cut cases are automated, the trigger conditions are too conservative. Tune the thresholds — be more aggressive in auto-revoking for obviously anomalous scenarios.
+→ **if FAIL (MFA fatigue incidents remain non-zero):** Verify all employees have enrolled hardware keys. Check the IDP for users with mobile-push MFA still enabled — remove the fallback. If hardware keys are physically unusable for specific users (contractors, shared devices), create documented exceptions per the Hardware Key Exception Management policy below.
 
-**Gate 3 (Month 6):** If after browser enforcement deployment, Pat's alert load has not dropped below 30 minutes per day, the SaaS surface is too fragmented for the current tooling. Pivot: reduce SaaS footprint. Migrate from many point-solution SaaS vendors to fewer, higher-quality platforms that all support the same security telemetry pipeline. This is a business decision, not a security one — but it is the correct path.
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
+
+**Gate 2 (Month 2):** *Condition:* Automation must handle ≥40% of alerts without Pat. Clear-cut cases — unusual IP + off-hours + device posture fail — should be auto-resolved.
+
+→ **if FAIL (<40% auto-handled):** The trigger conditions are too conservative. Tune the thresholds — be more aggressive in auto-revoking for obviously anomalous scenarios. If tuning still cannot reach 40%, the alert volume is too noisy. Pivot: consolidate alert sources before expanding automation.
+
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
+
+**Gate 3 (Month 6):** *Condition:* After browser enforcement deployment, Pat's alert load must drop below 30 minutes per day.
+
+→ **if FAIL (alert load remains ≥30 min/day):** The SaaS surface is too fragmented for the current tooling. Pivot: reduce SaaS footprint. Migrate from many point-solution SaaS vendors to fewer, higher-quality platforms that all support the same security telemetry pipeline. This is a business decision, not a security one — but it is the correct path.
+
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
 
 ---
 
@@ -196,5 +214,5 @@ Archetype D can reach C-level maturity (~6/8 Octagon) on $3K-$7K/month. But D ca
 
 ## Cross-References
 
-**Next:** [Chapter 17: The Aspirant's Gate — When the Path Breaks](./17-the-aspirants-gate.md)
-**Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Next:** [§17: The Aspirant's Gate — When the Path Breaks](./17-the-aspirants-gate.md)
+**Builds On:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§11: Archetype D — Full Attack Trace](../03-archetypes/11-archetype-d-lean-defense.md), [§13: Self-Assessment](./13-self-assessment.md)

@@ -1,6 +1,11 @@
 # Kubernetes Deployment Manifests for ZTA Infrastructure
 
-To finalize the 2026/2027 Zero Trust Architecture (ZTA), the infrastructure must be deployed within a highly hardened container environment. The following manifests provide the Kubernetes Deployment, Service, and strict NetworkPolicy configuration. They securely host the gRPC external authorization service, isolate the Redis challenge-management pipeline, and protect the cluster in accordance with NIS2 infrastructure isolation mandates.
+> **Purpose:** Hardened K8s manifests for gRPC auth service and Redis challenge pipeline — Deployments, Services, and strict NetworkPolicies under NIS2 infrastructure isolation mandates.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `redis-challenge-pipeline-docker.md` (Redis configuration reference), `caep-ssf-grpc-audit-trail.md` (gRPC authz service definition)
+
+---
 
 ---
 
@@ -273,3 +278,12 @@ kubectl apply -f zta-network-policies.yaml
 ### 3. Verify Network Policy Restrictions
 
 Spin up an unapproved pod in a different namespace and attempt to trace port 6379 on `zta-redis-service.zta-core.svc.cluster.local`. The execution should time out completely, confirming that the isolation layer successfully blocks network lateral movement.
+
+---
+
+## References
+
+[1] https://kubernetes.io/docs/concepts/services-networking/network-policies/
+[2] https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+[3] https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter
+[4] https://redis.io/docs/latest/operate/oss_and_stack/management/security/

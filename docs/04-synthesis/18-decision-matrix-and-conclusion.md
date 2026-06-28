@@ -1,3 +1,9 @@
+---
+title: "18. The Decision Matrix in Practice + Conclusion"
+description: "The cross-archetype decision matrix mapping pain to first move, peer-review evolution from Octagon through Tridecagon, PQC migration timeline, and the three futures of zero-trust architecture."
+outline: deep
+---
+
 # 18. The Decision Matrix in Practice + Conclusion
 
 > **Learning Objectives**
@@ -5,7 +11,7 @@
 > - Use the Octagon as a continuous audit tool beyond the initial transformation
 > - Understand the forward-looking trajectory: quantum, AI, and hardware evolution
 
-**Prerequisites:** [Chapter 14: Enterprise Turnaround](./14-enterprise-turnaround.md), [Chapter 15: Velocity Defender](./15-velocity-defender.md), [Chapter 16: Scaling Pat](./16-scaling-pat.md), [Chapter 17: The Aspirant's Gate](./17-the-aspirants-gate.md)
+**Prerequisites:** [§14: Enterprise Turnaround](./14-enterprise-turnaround.md), [§15: Velocity Defender](./15-velocity-defender.md), [§16: Scaling Pat](./16-scaling-pat.md), [§17: The Aspirant's Gate](./17-the-aspirants-gate.md)
 
 ---
 
@@ -86,9 +92,9 @@ This is not a future problem. It is a design constraint for architectures being 
 
 | NIST Standard | Algorithm | Purpose | Replaces |
 |--------------|-----------|---------|----------|
-| FIPS 203 | ML-KEM (Module-Lattice Key Encapsulation Mechanism, formerly Kyber) | Key establishment | ECDH, RSA key exchange |
-| FIPS 204 | ML-DSA (Module-Lattice Digital Signature Algorithm, formerly Dilithium) | General-purpose signatures | ECDSA, RSA signatures |
-| FIPS 205 | SLH-DSA (Stateless Hash-Based Digital Signature Algorithm, formerly SPHINCS+) | Conservative signatures | ECDSA (fallback) |
+| FIPS 203 | ML-KEM (Module-Lattice Key Encapsulation Mechanism) | Key establishment | ECDH, RSA key exchange |
+| FIPS 204 | ML-DSA (Module-Lattice Digital Signature Algorithm) | General-purpose signatures | ECDSA, RSA signatures |
+| FIPS 205 | SLH-DSA (Stateless Hash-Based Digital Signature Algorithm) | Conservative signatures | ECDSA (fallback) |
 
 #### Key Establishment (FIPS 203 — ML-KEM)
 
@@ -225,5 +231,5 @@ Build toward the Octagon. The rest is implementation detail.
 
 ## Cross-References
 
-**Builds on:** [Chapter 14: Enterprise Turnaround](./14-enterprise-turnaround.md), [Chapter 15: Velocity Defender](./15-velocity-defender.md), [Chapter 16: Scaling Pat](./16-scaling-pat.md), [Chapter 17: The Aspirant's Gate](./17-the-aspirants-gate.md)
+**Builds On:** [§14: Enterprise Turnaround](./14-enterprise-turnaround.md), [§15: Velocity Defender](./15-velocity-defender.md), [§16: Scaling Pat](./16-scaling-pat.md), [§17: The Aspirant's Gate](./17-the-aspirants-gate.md)
 **Related:** [Appendix A: Quantum + AI Adversary Stress-Tests](../appendix/appendix-a-quantum-ai-threats.md)

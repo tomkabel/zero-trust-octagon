@@ -1,3 +1,9 @@
+---
+title: "15. The Velocity Defender"
+description: "A 12-month implementation pathway to harden a high-velocity startup against supply chain injection without adding CI/CD friction — layered attestation, SPIFFE/SPIRE, and selective quarantine."
+outline: deep
+---
+
 # 15. The Velocity Defender: Hardening Archetype C in 12 Months
 
 > **Learning Objectives**
@@ -6,7 +12,7 @@
 > - Deploy cryptographic workload identity (SPIFFE/SPIRE) to bound machine authority
 > - Implement selective quarantine — kill pods on confirmed runtime anomalies while preserving Degrade for ambiguous cases
 
-**Prerequisites:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Prerequisites:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [§13: Self-Assessment](./13-self-assessment.md)
 
 ---
 
@@ -136,13 +142,17 @@ A verifier — a lightweight service running in the cluster — periodically req
 
 ## Gate Checks
 
-**Gate 1 (End of Q1):** Measure the false-positive rate of eBPF anomaly detection. If the runtime detector triggers >1 false alert per day across the entire cluster, the rules are too aggressive or the workload behavior is legitimately anomalous (rapid prototyping, frequent infra changes). Spend the first month of Q2 tuning.
+**Gate 1 (End of Q1):** *Condition:* eBPF anomaly detection false-positive rate must be ≤1 alert per day across the entire cluster. False positives from legitimate workload behavior mean rules are too aggressive or the team's rapid prototyping creates inherently anomalous traffic patterns.
 
-**If tuning fails and FPs remain >1/day:** The team's workflow is inherently anomalous — legitimate deployments trigger eBPF rules. Pivot: skip runtime anomaly detection for all but the top 3 most static services. For the rest, rely on image signing + admission control (Layers 1 and 2) as the supply chain defense. The gap — runtime behavior of new code is not attested — is acknowledged debt.
+→ **if FAIL (FPs remain >1/day after tuning):** Pivot to confidential containers. Skip runtime anomaly detection for all but the top 3 most static services. For the rest, rely on image signing + admission control (Layers 1 and 2) as the supply chain defense. The gap — runtime behavior of new code is not attested — is acknowledged debt.
 
-**If FPs drop to ≤1/day:** Proceed to Q2-3 identity upgrade.
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
 
-**Gate 2 (End of Q3):** After SPIRE deployment, verify that all new workloads receive SPIFFE identities within 5 seconds of startup. If any workload class consistently fails attestation, the SPIRE attestor configuration needs tuning for that class. Do not proceed to Q4 until >95% of workloads attest successfully.
+**Gate 2 (End of Q3):** *Condition:* After SPIRE deployment, >95% of workloads must receive SPIFFE identities within 5 seconds of startup. If any workload class consistently fails SPIRE attestation, the SPIRE attestor configuration needs tuning.
+
+→ **if FAIL (>5% of workloads cannot attest):** Do not proceed to Q4. Investigate attestation failures per workload class. Pivot: exclude problematic workload classes from SPIRE and continue Q4 observability upgrade on attested workloads only.
+
+→ **Other Failure:** Return to [§13: Self-Assessment](./13-self-assessment.md) and re-route.
 
 ---
 
@@ -157,5 +167,5 @@ A verifier — a lightweight service running in the cluster — periodically req
 
 ## Cross-References
 
-**Next:** [Chapter 16: Scaling Pat](./16-scaling-pat.md)
-**Builds on:** [Chapter 4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [Chapter 10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [Chapter 13: Self-Assessment](./13-self-assessment.md)
+**Next:** [§16: Scaling Pat](./16-scaling-pat.md)
+**Builds On:** [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§10: Archetype C — Full Attack Trace](../03-archetypes/10-archetype-c-startup.md), [§13: Self-Assessment](./13-self-assessment.md)

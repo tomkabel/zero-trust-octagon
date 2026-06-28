@@ -1,6 +1,11 @@
 # CAEP/SSF gRPC Implementation & eIDAS Audit Trail
 
-Deep-dive engineering specification for implementing CAEP/SSF tokens, eIDAS EUDI Wallet schema mappings, and a compliant NIS2/EU AI Act audit trail.
+> **Purpose:** Go-based Envoy ExtAuthz gRPC service for CAEP/SSF continuous access evaluation, OID4VC/EUDI Wallet schema mappings, and NIS2/EU AI Act compliant cryptographically chained audit trail.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `redis-challenge-pipeline-docker.md` (Redis key patterns), `webauthn-server-validation-backend.md` (JWT claims structure)
+
+---
 
 ---
 
@@ -275,8 +280,19 @@ This production event entry maps data from an adaptive AI authentication risk ch
     }
   },
   "integrity_seal": {
-    "signing_key_arn": "arn:aws:kms:eu-central-1:123456789012:key/nis2-log-signer-key",
+    "signing_key_arn": "arn:aws:kms:eu-central-1:YOUR_ACCOUNT_ID:key/nis2-log-signer-key",  <!-- PLACEHOLDER: Replace account ID -->
     "signature": "MEYCIQCc1R8g4h6...[Truncated Base64 Cryptographic Signature]..."
   }
 }
 ```
+
+---
+
+## References
+
+[1] https://openid.net/specs/openid-caep-specification-1_0.html
+[2] https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter
+[3] https://github.com/envoyproxy/go-control-plane
+[4] https://redis.io/docs/latest/develop/clients/go/
+[5] https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/latest/architecture-and-reference-framework-main/
+[6] https://www.rfc-editor.org/rfc/rfc9493.html

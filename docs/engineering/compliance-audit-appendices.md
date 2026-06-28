@@ -1,6 +1,11 @@
-# Compliance Audit Appendices
+# Compliance Audit Appendices — Templates
 
-Appendice templates structured to serve as audit artifacts. They provide documented evidence of security controls for the final assurance dossier submitted to regional regulatory competent authorities.
+> **Purpose:** Fictional audit artifact templates for regulatory assurance dossier submission — certificate, ingestion logs, and compliance evidence patterns. **These are templates, not executed artifacts.** Replace placeholder values before audit submission.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** None (template material)
+
+---
 
 ---
 
@@ -165,3 +170,12 @@ These templates provide compliance auditors with explicit verification of the ar
 
 - **Appendix A** acts as a formal executive assurance document.
 - **Appendix B** demonstrates real-time data tracing, illustrating how eIDAS 2.0, NIS2, and EU AI Act compliance bounds are captured, logged, and preserved via hardware-backed cryptographic anchors.
+
+---
+
+## References
+
+[1] https://eur-lex.europa.eu/eli/dir/2022/2555
+[2] https://eur-lex.europa.eu/eli/reg/2024/1183
+[3] https://gdpr.eu/
+[4] https://artificialintelligenceact.eu/

@@ -1,5 +1,9 @@
 # Appendix C: Glossary of Terms
 
+> **Prerequisites:** All chapters and appendices
+
+---
+
 ## A
 
 **Architecture validation checklist** — An eight-question diagnostic instrument derived from the Octagon axioms. Each question maps to one axiom and includes green/yellow/red scoring criteria.
@@ -56,16 +60,32 @@
 
 **Deterministic Bounded Authority** — Axiom 5 of the Octagon. Every grant of access confers a mathematically bounded vector of permitted state transitions. Authority cannot expand without a new, independent authorization decision.
 
+<a id="dod-zt-pfmo"></a>
+**DoD ZT PfMO (Zero Trust Portfolio Management Office)** — The Department of Defense program office responsible for zero-trust strategy, target-level deadlines (September 2027), and enterprise implementation guidance. Produces the DoD Zero Trust Reference Architecture and the ZT Execution Roadmap (DTM-25-003). _See also: [NIST SP 800-207A](#nist-sp-800-207a)._
+
 ## E
 
 **Envy trap** — A pattern where one archetype covets properties of another that are structurally incompatible with its own configuration. B envies C's velocity; C envies A's prevention; A envies C's MTTD.
 
-<a id="epistemic-integrity"></a>
+<a id="eo-14028"></a>
+**EO 14028 (Executive Order 14028)** — The May 2021 Executive Order on Improving the Nation's Cybersecurity, mandating federal agencies adopt zero-trust architecture per NIST guidance. Established the Federal Zero Trust Strategy (OMB M-22-09) and supply chain security requirements under §4. _See also: [NIST SP 800-207A](#nist-sp-800-207a), [DoD ZT PfMO](#dod-zt-pfmo)._
+
 **Epistemic Integrity** — Axiom 7 of the Octagon. State inputs to the evaluation function must carry cryptographic proof of provenance. Unattested data is treated as hostile input and may be used only to deny access.
 
 **Event-stream regress** — The infinite regress problem: the event stream distributing policy changes must itself be secured by zero-trust. Resolved by hardware-attested producers, signed events, and independent observation of the stream itself.
 
 **Event-Streamed (Pub/Sub) policy** — D6 value. Policy state changes are published to an event-streaming backbone (Kafka, NATS). PEPs subscribe and maintain locally cached in-memory policy state. Enables sub-10ms global policy propagation.
+
+## F
+
+<a id="fips-203-ml-kem"></a>
+**FIPS 203 (ML-KEM)** — The NIST Federal Information Processing Standard for Module-Lattice-Based Key-Encapsulation Mechanism, published August 2024. Standardizes ML-KEM as the post-quantum key-encapsulation algorithm for federal systems. _See also: [ML-KEM](#ml-kem), [FIPS 204](#fips-204-ml-dsa), [FIPS 205](#fips-205-slh-dsa)._
+
+<a id="fips-204-ml-dsa"></a>
+**FIPS 204 (ML-DSA)** — The NIST Federal Information Processing Standard for Module-Lattice-Based Digital Signature Algorithm, published August 2024. Standardizes ML-DSA as the primary post-quantum signature algorithm for federal systems. _See also: [ML-DSA](#ml-dsa), [FIPS 203](#fips-203-ml-kem), [FIPS 205](#fips-205-slh-dsa)._
+
+<a id="fips-205-slh-dsa"></a>
+**FIPS 205 (SLH-DSA)** — The NIST Federal Information Processing Standard for Stateless Hash-Based Digital Signature Algorithm, published August 2024. Standardizes SLH-DSA as the secondary post-quantum signature algorithm, providing algorithm diversity independent of lattice-based assumptions. _See also: [SLH-DSA](#slh-dsa), [FIPS 204](#fips-204-ml-dsa)._
 
 ## G
 
@@ -86,6 +106,9 @@
 
 **Identity-Aware Proxy (IAP)** — A reverse proxy that authenticates and authorizes every request before forwarding to a self-hosted resource. The primary enforcement tool for Archetype D.
 
+<a id="icam"></a>
+**ICAM (Identity, Credential, and Access Management)** — The DoD framework for managing digital identities, credentials, and access policies across the enterprise. Zero-trust architectures extend ICAM from human identities to workload identities, device identities, and inter-service authentication.
+
 **Identity rot** — Accumulated permissions from role changes, temporary access grants, and project migrations over time. The Skeptic CISO finds this through exception audits.
 
 **Implicit Trust** — D7 value. The observability pipeline is trusted as a single source of truth without independent verification. Violates Axiom 2 and Axiom 7.
@@ -104,11 +127,23 @@
 
 **Micro-Friction** — Violation response strategy. The system injects subtle friction at specific anomalous interaction points: step-up auth, performance degradation, or forced re-authentication for sensitive actions. Not a lockdown — just enough friction to disrupt attackers.
 
+<a id="ml-dsa"></a>
+**ML-DSA (Module-Lattice-Based Digital Signature Algorithm)** — The primary post-quantum digital signature algorithm standardized in FIPS 204. Based on the CRYSTALS-Dilithium submission to the NIST PQC competition. Produces signature sizes of 2.5-4.8 KB compared to 64 bytes for Ed25519. _See also: [FIPS 204](#fips-204-ml-dsa), [SLH-DSA](#slh-dsa)._
+
+<a id="ml-kem"></a>
+**ML-KEM (Module-Lattice-Based Key-Encapsulation Mechanism)** — The primary post-quantum key-encapsulation algorithm standardized in FIPS 203. Based on the CRYSTALS-Kyber submission to the NIST PQC competition. Used for PQC key exchange in TLS 1.3 as a hybrid with X25519. _See also: [FIPS 203](#fips-203-ml-kem)._
+
 **Morphological matrix** — The nine-dimensional configuration space for zero-trust architecture. Each dimension has 5-7 values, and each deployment maps to exactly one value per dimension.
 
 ## N
 
 **No Intrinsic Trust** — Axiom 1 of the Octagon. Trust is a transient verdict, never a property of identity, position, or history.
+
+<a id="nist-csf-2-0-govern"></a>
+**NIST CSF 2.0 Govern** — The Governance function in NIST Cybersecurity Framework 2.0, released February 2024. Elevates governance to a first-class function (GV) alongside the five existing functions, establishing organizational context, risk management strategy, and supply chain risk management (GV.SC) as foundational capabilities.
+
+<a id="nist-sp-800-207a"></a>
+**NIST SP 800-207A (Zero Trust Architecture)** — The NIST Special Publication (SP 800-207, August 2020) defining the core logical components of zero-trust architecture. Establishes the Policy Decision Point (PDP), Policy Enforcement Point (PEP), Policy Administrator (PA), and Policy Information Point (PIP) as canonical architectural abstractions. _See also: [DoD ZT PfMO](#dod-zt-pfmo), [EO 14028](#eo-14028)._
 
 ## O
 
@@ -143,14 +178,19 @@
 
 **SaaS Coverage Map** — An inventory of every SaaS platform that trusts the organization's identity provider, including the data it holds and the audit logging available.
 
+<a id="sbom"></a>
+**SBOM (Software Bill of Materials)** — A machine-readable inventory of all components, libraries, and dependencies that comprise a software artifact. Required under EO 14028 §4 for federal software procurement. In zero-trust, SBOMs enable cryptographic workload identity by providing the expected code composition against which attestation measurements are verified.
+
 **Self-quarantine rate** — The percentage of nodes that are automatically isolated due to attestation mismatches from benign causes (cosmic ray bit-flips, thermal degradation, firmware update drift). In high-maturity architectures, a 10% rate is considered normal.
 
-<a id="sender-constrained-token"></a>
 **Sender-constrained token** — A token cryptographically bound to its intended presenter, preventing token replay by an attacker who captures the token. Implemented via DPoP (OAuth extension) or mTLS (binding the token to the client certificate). _See also: [DPoP](#dpop-demonstration-of-proof-of-possession), [proof token](#proof-object-proof-token)._
 
 **Session graft** — The atomic transition of an attacker's session from real data to the garden environment. The authentication token, cookies, and headers remain valid but now authenticate to the synthetic environment.
 
 **Silicon Root of Trust** — D1 value. Trust anchored in cryptographic keys embedded in CPU hardware, burned at the foundry. The foundation for Epistemic Integrity (Axiom 7).
+
+<a id="slh-dsa"></a>
+**SLH-DSA (Stateless Hash-Based Digital Signature Algorithm)** — The secondary post-quantum digital signature algorithm standardized in FIPS 205. Based on the SPHINCS+ submission to the NIST PQC competition. Provides algorithm diversity independent of lattice-based assumptions, at the cost of larger signatures (~17-30 KB). _See also: [FIPS 205](#fips-205-slh-dsa), [ML-DSA](#ml-dsa)._
 
 **Software CA (PKI-based)** — D1 value. Trust anchored in a certificate authority hierarchy. Flexible but software-compromiseable.
 
@@ -191,3 +231,13 @@
 **Zero Standing Privileges (ZSP)** — D2 value. No persistent accounts. All access is JIT-minted, time-bounded, and scope-bounded. Credentials self-destruct on expiry.
 
 **ZTA Litmus Test** — "When your policy engine fails, who pays — the attacker or the business?"
+
+---
+
+## Cross-References
+
+**Builds On:** All prior chapters (01-18) and appendices.
+
+**Related:** [§2: The Octagon](../01-foundations/02-the-octagon.md) — eight axioms with invariant definitions. [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md) — nine dimensions and their value ranges. [§13: Self-Assessment Diagnostic](../04-synthesis/13-self-assessment.md) — archetype routing and diagnostic questions.
+
+**Next:** [Appendix D: Quick-Reference Card](./appendix-d-quick-reference.md) — one-page summary of all axioms, dimensions, and archetypes.

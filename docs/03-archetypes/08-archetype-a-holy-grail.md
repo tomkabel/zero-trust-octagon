@@ -19,7 +19,7 @@ Archetype A is not a starting point. It is the destination — the configuration
 - D4: Heterogeneous Triple — eBPF, hypervisor, hardware counter observers
 - D5: Trickle-Truth — garbage pollution, invisible detection
 - D6: Event-Streamed — sub-10ms global policy propagation
-- D7: Air-Gapped Truth Pipeline — cryptographically attested, independently verified
+- D7: Heterogeneous Observer Consensus — cryptographically attested, independently verified
 - D8: Presumptively Wrong — architecture evolves through falsification
 - D9: Fully Automated — no human in the loop for standard response
 

@@ -1,6 +1,11 @@
 # Anti-Relay Cryptographic Channel Binding
 
-To completely neutralize the NFCShare / NGate / relay malware attack vector at a bleeding-edge, State-of-the-Art (SoTA) level for 2026/2027, the architecture must transition from treating NFC as an isolated transport link to implementing End-to-End (E2E) Cryptographic Channel Binding between the browser execution environment and the ID Card hardware chip.
+> **Purpose:** Bleeding-edge E2E cryptographic channel binding to neutralize NFCShare/NGate relay attacks — ECDH key exchange, FIDO2-to-eIDAS transaction chaining, acoustic liveness fingerprinting, and hardware RTT gatekeeping.
+
+**Version:** 1.0.0 | **Last Updated:** 2026-06-28
+**Dependencies:** `nfc-relay-threat-defense.md` (threat model context), `siem-logging-pipeline.md` (ztaLogger)
+
+---
 
 By treating the local phone merely as an untrusted, transparent router, any attempts by malware to relay APDU (Application Protocol Data Unit) blocks over a WAN to a remote attacker will result in an immediate cryptographic signature failure.
 
@@ -149,3 +154,14 @@ When presenting this hardened design to data protection officers and regulatory 
 - **eIDAS 2.0 Compliance Assurance**: Demonstrates that even if an endpoint's OS is compromised at the root level, the system preserves the integrity of Level of Assurance (LoA) High transactions. It achieves this by forcing cryptographic cross-verification between the endpoint browser context and the physical smart card hardware enclave.
 
 - **NIS2 Infrastructure Resiliency Proof**: Proves the presence of active, real-time telemetry monitoring. By continuously evaluating hardware RTT and using cross-device acoustic proximity auditing, the architecture actively stops session-hijacking and identity-spoofing attempts before they can reach internal enterprise microsegments.
+
+---
+
+## References
+
+[1] https://cert.pl/en/posts/2025/11/analiza-ngate/
+[2] https://404-founders.com/blog/nfcshare-malware-uses-fake-banking-app-updates-to-steal-payment-cards
+[3] https://www.w3.org/TR/webauthn-3/#sctn-cryptographic-challenges
+[4] https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+[5] https://acousticid.org/chromaprint
+[6] https://www.etsi.org/deliver/etsi_tr/119400_119499/119476/01.02.01_60/tr_119476v010201p.pdf
