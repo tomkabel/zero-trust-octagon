@@ -146,7 +146,7 @@ export class EnterpriseWebAuthnServerValidator {
 
 - **Replay Attack Protection**: The `expectedChallenge` parameter must be stored in a short-lived (maximum 2-minute expiration), server-side distributed cache like Redis. Once a validation attempt hits this validator endpoint, delete the challenge from Redis immediately to ensure single-use guarantees.
 
-- **AAGUID Enforcement**: The `hardwareAaguidWhitelist` lookup prevents employees from registering unmanaged WebAuthn-capable items (cheap third-party accessories or insecure virtual software authenticators). Match the verified AAGUID against the global [FIDO Alliance Metadata Service (MDS)](https://fidoalliance.org/metadata/) to audit device certification levels (e.g., FIDO L2/L3 security certifications required by NIS2 guidelines).
+- **AAGUID Enforcement**: The `hardwareAaguidWhitelist` lookup constrains authenticator **models**, not individual corporate-owned assets. A personal authenticator of the same approved model can still satisfy this check. Pair AAGUID policy with device inventory binding (serial/attestation cert chain, MDM registration, or user-to-device issuance records). Match approved models against the [FIDO Alliance Metadata Service (MDS)](https://fidoalliance.org/metadata/) to validate certification posture (e.g., FIDO L2/L3).
 
 - **Origin Binding Strictness**: The `expectedOrigin` parameter must be checked exactly. If the system runs behind reverse proxies or international localization domains (e.g., `.eu` vs `.com`), ensure the incoming host exactly matches cryptographic boundaries to block advanced multi-domain relay attacks.
 

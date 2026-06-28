@@ -30,6 +30,7 @@ import (
     "errors"
     "net"
     "strings"
+    "time"
 
     corev3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
     authv3 "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
@@ -42,7 +43,8 @@ import (
 )
 
 type AuthServer struct {
-    rdb *redis.Client
+    rdb         *redis.Client
+    tokenKeyFunc jwt.Keyfunc
 }
 
 type CustomClaims struct {
@@ -61,12 +63,22 @@ func (s *AuthServer) Check(ctx context.Context, req *authv3.CheckRequest) (*auth
 
     tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
 
-    // 2. Fast Parse Token (Without signature validation if already done by gateway)
-    parser := jwt.NewParser()
+    // 2. Parse and validate JWT signature + standard claims before trusting payload data
     var claims CustomClaims
-    _, _, err := parser.ParseUnverified(tokenStr, &claims)
-    if err != nil {
-        return unauthenticatedResponse("Malformed token"), nil
+    parsedToken, err := jwt.ParseWithClaims(
+        tokenStr,
+        &claims,
+        s.tokenKeyFunc,
+        jwt.WithValidMethods([]string{"RS256", "ES256"}),
+        jwt.WithIssuer("https://enterprise.eu"),
+        jwt.WithAudience("https://enterprise.eu"),
+        jwt.WithLeeway(30*time.Second),
+    )
+    if err != nil || !parsedToken.Valid {
+        return unauthenticatedResponse("Invalid token"), nil
+    }
+    if claims.ID == "" || claims.Subject == "" || claims.DeviceID == "" {
+        return unauthenticatedResponse("Token missing required claims"), nil
     }
 
     // 3. CAEP/SSF Check: Query Redis for session/device invalidation status

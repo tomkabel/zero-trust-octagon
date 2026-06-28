@@ -26,6 +26,7 @@ interface SiemAlertPayload {
   alert_id: string;
   trigger_reason: 'REPLAY_ATTACK_DETECTED' | 'MASS_REVOCATION_ANOMALY';
   target_user_id: string;
+  target_session_id: string;
   target_device_id: string;
   source_ip: string;
   associated_challenge: string;
@@ -47,7 +48,7 @@ export class ZtaAutomatedResponsePlaybook {
    */
   public async executeIncidentContainment(alert: SiemAlertPayload): Promise<void> {
     ztaLogger.warn(
-      { alert_id: alert.alert_id, user_id: alert.target_user_id },
+      { alert_id: alert.alert_id, user_id: alert.target_user_id, session_id: alert.target_session_id },
       'SOAR: Initiating automated containment playbook.'
     );
 
@@ -57,7 +58,7 @@ export class ZtaAutomatedResponsePlaybook {
       // --- TIER 1: EVICT SESSIONS (Gateway Enforcement) ---
       // Invalidate the session instantly in the Redis layer read by the Envoy gRPC auth service
       // Set TTL to 1 hour (3600s) to completely outlast any active access tokens
-      await this.redisPipeline.revokeSession(alert.target_user_id, 3600);
+      await this.redisPipeline.revokeSession(alert.target_session_id);
 
       // Blacklist the compromised FIDO2 hardware authenticator device ID across the fabric
       await this.redisPipeline.revokeDevice(alert.target_device_id, 86400); // 24-hour quarantine
@@ -141,6 +142,7 @@ export class ZtaAutomatedResponsePlaybook {
       ],
       mitigated_threat_metadata: {
         isolated_user: alert.target_user_id,
+        isolated_session: alert.target_session_id,
         isolated_device: alert.target_device_id,
         attacker_ip: alert.source_ip,
         consumed_challenge: alert.associated_challenge

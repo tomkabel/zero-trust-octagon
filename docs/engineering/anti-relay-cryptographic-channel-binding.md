@@ -60,7 +60,7 @@ This TypeScript backend validator implements Cryptographic Transaction Chaining 
 
 ```typescript
 import { Request, Response } from 'express';
-import { crypto } from 'crypto';
+import crypto from 'crypto';
 import { ztaLogger } from './ZtaLogger';
 
 interface HighAssuranceSession {
@@ -84,24 +84,8 @@ export class SoTAAntiRelayValidator {
     const {
       eidasSignedPayload,
       idCardPublicKey,
-      fido2ClientDataJSON,
-      clientSideRttMs
+      fido2ClientDataJSON
     } = req.body;
-
-    const validationStartTime = performance.now();
-
-    // 1. Audit Hardware Latency
-    if (clientSideRttMs > SoTAAntiRelayValidator.MAX_PHYSICAL_RTT_MS) {
-      ztaLogger.error({
-        regulatory_tags: ['NIS2_CRITICAL_VECTOR'],
-        client_reported_rtt: clientSideRttMs,
-        user: activeSession.userId
-      }, 'CRITICAL ALERT: Secure handshake telemetry exceeded physical constraints. Drop execution due to active WAN proxy relay.');
-
-      return res.status(403).json({
-        error: 'Hardware Environment Anomaly: Request rejected due to transit network latency rules.'
-      });
-    }
 
     // 2. Compute the current FIDO2 context signature to prevent credential substitution
     const computedClientDataHash = crypto
@@ -116,6 +100,30 @@ export class SoTAAntiRelayValidator {
       idCardPublicKey,
       activeSession.expectedClientDataHash
     );
+
+    // 4. Audit hardware latency using trusted, server-side timing metadata from mTLS gateway
+    const serverMeasuredRttMs = Number.parseInt(
+      (req.header('x-zta-rtt-ms') || '').trim(),
+      10
+    );
+
+    if (!Number.isFinite(serverMeasuredRttMs)) {
+      return res.status(400).json({
+        error: 'Missing trusted RTT telemetry from gateway.'
+      });
+    }
+
+    if (serverMeasuredRttMs > SoTAAntiRelayValidator.MAX_PHYSICAL_RTT_MS) {
+      ztaLogger.error({
+        regulatory_tags: ['NIS2_CRITICAL_VECTOR'],
+        server_measured_rtt_ms: serverMeasuredRttMs,
+        user: activeSession.userId
+      }, 'CRITICAL ALERT: Secure handshake telemetry exceeded physical constraints. Drop execution due to active WAN proxy relay.');
+
+      return res.status(403).json({
+        error: 'Hardware Environment Anomaly: Request rejected due to trusted transit latency telemetry.'
+      });
+    }
 
     if (!isChannelBound || computedClientDataHash !== activeSession.expectedClientDataHash) {
       ztaLogger.warn(
