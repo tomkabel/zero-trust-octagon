@@ -103,10 +103,10 @@ describe('fluent-bit.conf structural validation', () => {
     expect(content).toContain('Splunk_Token');
   });
 
-  it('fluent-bit.conf references JSON parser for Redis input', () => {
+  it('fluent-bit.conf references JSON parser and sends full structured records', () => {
     const configPath = path.resolve(__dirname, '../../../fluent-bit.conf');
     const content = fs.readFileSync(configPath, 'utf-8');
     expect(content).toContain('Parser       json');
-    expect(content).toContain('Message_Key  log');
+    expect(content).not.toContain('Message_Key');
   });
 });
