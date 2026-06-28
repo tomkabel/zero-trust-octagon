@@ -8,7 +8,11 @@ export class ZtaRedisPipelineManager {
 
   constructor() {
     const host = process.env.REDIS_HOST || 'localhost';
-    const port = Number.parseInt(process.env.REDIS_PORT || '6379', 10);
+    const rawPort = (process.env.REDIS_PORT || '6379').trim();
+    if (!/^\d+$/.test(rawPort)) {
+      throw new Error('Infrastructure Fault: REDIS_PORT must be a valid TCP port number');
+    }
+    const port = Number(rawPort);
     const password = process.env.REDIS_SECURITY_PASSWORD;
     if (!Number.isInteger(port) || port < 1 || port > 65535) {
       throw new Error('Infrastructure Fault: REDIS_PORT must be a valid TCP port number');
@@ -48,9 +52,12 @@ export class ZtaRedisPipelineManager {
     return storedValue !== null;
   }
 
-  public async revokeSession(sessionId: string): Promise<void> {
+  public async revokeSession(sessionId: string, ttlSeconds: number = 900): Promise<void> {
+    if (!Number.isInteger(ttlSeconds) || ttlSeconds < 1) {
+      throw new Error('Infrastructure Fault: ttlSeconds must be a positive integer');
+    }
     const key = `${ZtaRedisPipelineManager.REVOCATION_PREFIX}${sessionId}`;
-    await this.client.set(key, 'revoked', { EX: 900 });
+    await this.client.set(key, 'revoked', { EX: ttlSeconds });
   }
 
   public async disconnect(): Promise<void> {

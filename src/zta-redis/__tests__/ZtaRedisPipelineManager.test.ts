@@ -93,6 +93,14 @@ describe('ZtaRedisPipelineManager', () => {
     expect(mockSet).toHaveBeenCalledWith('revoked:session:session-abc', 'revoked', { EX: 900 });
   });
 
+  it('revokeSession accepts explicit TTL overrides', async () => {
+    mockSet.mockResolvedValue('OK');
+    const manager = new ZtaRedisPipelineManager();
+    await manager.connect();
+    await manager.revokeSession('session-abc', 3600);
+    expect(mockSet).toHaveBeenCalledWith('revoked:session:session-abc', 'revoked', { EX: 3600 });
+  });
+
   it('disconnects cleanly', async () => {
     const manager = new ZtaRedisPipelineManager();
     await manager.connect();
@@ -108,6 +116,11 @@ describe('ZtaRedisPipelineManager', () => {
 
   it('throws when REDIS_PORT is invalid', () => {
     process.env.REDIS_PORT = 'not-a-port';
+    expect(() => new ZtaRedisPipelineManager()).toThrow('REDIS_PORT must be a valid TCP port number');
+  });
+
+  it('throws when REDIS_PORT has trailing non-numeric characters', () => {
+    process.env.REDIS_PORT = '6379junk';
     expect(() => new ZtaRedisPipelineManager()).toThrow('REDIS_PORT must be a valid TCP port number');
   });
 });
