@@ -151,6 +151,38 @@ describe('WebAuthnClientHandler', () => {
         static isUserVerifyingPlatformAuthenticatorAvailable = mockIsUVPAA;
       });
     });
+
+    it('normalizes base64url challenge/input before decoding', async () => {
+      vi.stubGlobal('atob', (s: string) => {
+        if (/[-_]/.test(s) || s.length % 4 !== 0) {
+          throw new Error('InvalidCharacterError');
+        }
+        return Buffer.from(s, 'base64').toString('binary');
+      });
+
+      mockCreate.mockResolvedValue({
+        id: 'cred-urlsafe',
+        rawId: new ArrayBuffer(32),
+        type: 'public-key',
+        response: {
+          clientDataJSON: new ArrayBuffer(128),
+          attestationObject: new ArrayBuffer(64),
+        },
+      });
+
+      const optionsWithUrlSafeInput = {
+        ...options,
+        challenge: Buffer.from([251, 255, 239, 250]).toString('base64url'),
+        user: {
+          ...options.user,
+          id: Buffer.from([251, 255, 239]).toString('base64url'),
+        },
+      };
+
+      await expect(
+        WebAuthnClientHandler.createCredential(optionsWithUrlSafeInput)
+      ).resolves.toEqual(expect.objectContaining({ id: 'cred-urlsafe' }));
+    });
   });
 
   describe('getCredential', () => {

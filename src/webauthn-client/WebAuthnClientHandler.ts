@@ -1,5 +1,25 @@
 const g = globalThis as any;
 
+export interface WebAuthnServerOptions {
+  challenge: string;
+  rp: { name: string; id: string };
+  user: { id: string; name: string; displayName: string };
+  pubKeyCredParams: Array<{ type: 'public-key'; alg: number }>;
+}
+
+export interface WebAuthnCredentialOutput {
+  id: string;
+  rawId: string;
+  type: 'public-key';
+  response: {
+    clientDataJSON: string;
+    attestationObject?: string;
+    authenticatorData?: string;
+    signature?: string;
+    userHandle?: string;
+  };
+}
+
 function getPKC(): any {
   return typeof g.PublicKeyCredential !== 'undefined' ? g.PublicKeyCredential : undefined;
 }
@@ -118,7 +138,9 @@ export class WebAuthnClientHandler {
 
   private static b64ToBuffer(b64: string): ArrayBuffer {
     const atobFn = g.atob || ((s: string) => Buffer.from(s, 'base64').toString('binary'));
-    const binary = atobFn(b64);
+    const normalized = b64.replace(/-/g, '+').replace(/_/g, '/');
+    const withPadding = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
+    const binary = atobFn(withPadding);
     const bytes = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) {
       bytes[i] = binary.charCodeAt(i);
