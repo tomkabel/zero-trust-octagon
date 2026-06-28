@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  zta-redis-hub:
+    image: redis:7.2-alpine
+    container_name: zta_redis_hub
+    command: >
+      redis-server
+      --requirepass "${REDIS_SECURITY_PASSWORD:?REDIS_SECURITY_PASSWORD must be set}"
+      --maxmemory 512mb
+      --maxmemory-policy volatile-ttl
+      --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - zta_redis_data:/data
+    networks:
+      - zta-secure-mesh
+    read_only: true
+    user: "999:999"
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH='${REDIS_SECURITY_PASSWORD:?REDIS_SECURITY_PASSWORD must be set}' redis-cli ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+volumes:
+  zta_redis_data:
+    driver: local
+networks:
+  zta-secure-mesh:
+    driver: bridge
