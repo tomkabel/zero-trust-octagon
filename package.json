@@ -23,6 +23,9 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "vitepress": "^1.6.4",
     "vitepress-sidebar": "^1.36.1",
@@ -30,6 +33,6 @@
   },
   "dependencies": {
     "@simplewebauthn/server": "^14.0.1",
-    "redis": "^4.7.0"
+    "redis": "^6.2.1"
   }
 }
