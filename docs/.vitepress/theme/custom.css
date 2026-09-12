@@ -282,9 +282,18 @@ div[class*='language-'] {
   line-height: 1.7;
 }
 
+/* Block + overflow keeps VitePress's horizontal scroll for wide tables on narrow
+   screens; from tablet up they stretch to the reading column. */
 .vp-doc table {
-  display: table;
+  display: block;
   width: 100%;
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .vp-doc table {
+    display: table;
+  }
 }
 
 .vp-doc th,

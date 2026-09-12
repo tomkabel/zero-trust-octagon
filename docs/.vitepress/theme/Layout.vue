@@ -170,6 +170,7 @@ onUnmounted(() => {
               :href="withBase(item.link)"
               :title="item.text"
               :class="['zt-sidebar-group-title', 'is-link', { active: isActive(item.link) }]"
+              :aria-current="isActive(item.link) ? 'page' : undefined"
             >{{ item.text }}</a>
             <div v-else-if="item.text" class="zt-sidebar-group-title">{{ item.text }}</div>
             <template v-for="(sub, sIdx) in item.items" :key="(sub.text || '') + '-' + (sub.link || '') + '-' + sIdx">
@@ -178,6 +179,7 @@ onUnmounted(() => {
                 :href="withBase(sub.link)"
                 :title="sub.text"
                 :class="['zt-sidebar-link', { active: isActive(sub.link) }]"
+                :aria-current="isActive(sub.link) ? 'page' : undefined"
               >{{ sub.text }}</a>
               <span v-else class="zt-sidebar-link no-link">{{ sub.text }}</span>
             </template>
