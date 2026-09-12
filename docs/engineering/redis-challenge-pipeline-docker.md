@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/redis-challenge-pipeline-docker.webp
+coverAlt: "Illustration: container crates carrying single-use tokens, one expiring while a replay is turned away"
+---
+
 # Redis Challenge Pipeline with Docker
 
 > **Purpose:** Production-ready Dockerized Redis pipeline for challenge management, replay prevention, and session revocation across gRPC API Gateway and WebAuthn Validation Service.

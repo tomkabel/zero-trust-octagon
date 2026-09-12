@@ -1,3 +1,8 @@
+---
+cover: /images/covers/02-methodology/05-dimensions-trust-to-attestation.webp
+coverAlt: "Illustration: four precision gauges for trust, identity, enforcement and attestation"
+---
+
 # 5. Dimensions 1-4: Trust, Identity, Enforcement, Attestation
 
 > **Learning Objectives**

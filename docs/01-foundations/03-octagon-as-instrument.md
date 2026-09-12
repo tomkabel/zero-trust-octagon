@@ -1,3 +1,8 @@
+---
+cover: /images/covers/01-foundations/03-octagon-as-instrument.webp
+coverAlt: "Illustration: an octagonal gauge with green-amber-red lamps auditing a network map"
+---
+
 # 3. The Octagon as Validation Instrument
 
 > **Learning Objectives**

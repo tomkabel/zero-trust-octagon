@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/terraform-chaos-engineering-validation.webp
+coverAlt: "Illustration: a bridge holding under scripted lightning while one span is flagged for repair"
+---
+
 # Terraform IaC & Chaos Engineering Validation
 
 > **Purpose:** Production-grade Terraform blueprints for multi-region cloud infrastructure plus Chaos Mesh validation suite — KMS log signing, ElastiCache global replication, network degradation testing, and split-brain convergence verification.

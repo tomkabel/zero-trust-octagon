@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/enrollment-onboarding-flows.webp
+coverAlt: "Illustration: a credential booklet moving through identity, key-binding and liveness stations"
+---
+
 # Enrollment & Credential Onboarding Flows
 
 > **Purpose:** eIDAS 2.0 High LoA credential onboarding flow — strictly verified, un-phishable enrollment with EUDI Wallet identity anchoring and hardware enclave key binding.

@@ -1,3 +1,8 @@
+---
+cover: /images/covers/01-foundations/02-the-octagon.webp
+coverAlt: "Illustration: eight glowing stones arranged as a ring, each bearing one axiom symbol"
+---
+
 # 2. The Octagon: Eight Irreducible Axioms
 
 > **Learning Objectives**

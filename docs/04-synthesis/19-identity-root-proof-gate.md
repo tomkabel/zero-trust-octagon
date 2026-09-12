@@ -1,3 +1,8 @@
+---
+cover: /images/covers/04-synthesis/19-identity-root-proof-gate.webp
+coverAlt: "Illustration: a keyhole gate with a glowing key-circuit root system spreading below it"
+---
+
 # 19. Identity Is the Root. Proof Is the Gate.
 
 > **Learning Objectives**

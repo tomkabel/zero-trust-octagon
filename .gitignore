@@ -23,6 +23,9 @@ docs/.vitepress/cache/
 
 node_modules/
 
+# Agent tooling artifacts
+.playwright-mcp/
+
 .commandcode/
 .agents/
 _bmad/

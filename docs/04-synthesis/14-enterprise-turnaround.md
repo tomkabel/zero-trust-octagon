@@ -2,6 +2,8 @@
 title: "14. The Enterprise Turnaround"
 description: "Execute the 24-month phased implementation pathway for transitioning a Fortune 500 deployment from Archetype B toward Archetype A using Octagon axioms"
 outline: deep
+cover: /images/covers/04-synthesis/14-enterprise-turnaround.webp
+coverAlt: "Illustration: a gantry crane rebuilding a tower while a lit milestone timeline arcs past it"
 ---
 
 # 14. The Enterprise Turnaround: Archetype B → A in 24 Months

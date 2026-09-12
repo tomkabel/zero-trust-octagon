@@ -2,6 +2,8 @@
 title: "17. The Aspirant's Gate"
 description: "Documented failure pivots for the three most common gate failures across all implementation pathways — plus the common D4-before-D5 mistake and the return-to-self-assessment escape hatch."
 outline: deep
+cover: /images/covers/04-synthesis/17-the-aspirants-gate.webp
+coverAlt: "Illustration: a jammed mountain gate with three alternate pivot routes around it"
 ---
 
 # 17. The Aspirant's Gate: When the Path Breaks

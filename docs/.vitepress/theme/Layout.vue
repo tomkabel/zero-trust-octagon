@@ -44,6 +44,13 @@ function ensureStartingSlash(p: string) {
   return p.startsWith('/') ? p : '/' + p
 }
 
+// Highlights the sidebar entry for the page currently being read.
+function isActive(link?: string) {
+  if (!link) return false
+  const normalize = (p: string) => (p !== '/' ? p.replace(/\/+$/, '') : p)
+  return normalize(withBase(link)) === normalize(route.path)
+}
+
 const showSidebar = computed(() => {
   return frontmatter.value.sidebar !== false && sidebar.value.length > 0
 })
@@ -158,13 +165,21 @@ onUnmounted(() => {
       <nav class="zt-sidebar-nav">
         <template v-for="(item, idx) in sidebar" :key="(item.text || '') + '-' + (item.link || '') + '-' + idx">
           <div v-if="item.items" class="zt-sidebar-group">
-            <div v-if="item.text" class="zt-sidebar-group-title">{{ item.text }}</div>
+            <a
+              v-if="item.text && item.link"
+              :href="withBase(item.link)"
+              :title="item.text"
+              :class="['zt-sidebar-group-title', 'is-link', { active: isActive(item.link) }]"
+              :aria-current="isActive(item.link) ? 'page' : undefined"
+            >{{ item.text }}</a>
+            <div v-else-if="item.text" class="zt-sidebar-group-title">{{ item.text }}</div>
             <template v-for="(sub, sIdx) in item.items" :key="(sub.text || '') + '-' + (sub.link || '') + '-' + sIdx">
               <a
                 v-if="sub.link"
                 :href="withBase(sub.link)"
                 :title="sub.text"
-                class="zt-sidebar-link"
+                :class="['zt-sidebar-link', { active: isActive(sub.link) }]"
+                :aria-current="isActive(sub.link) ? 'page' : undefined"
               >{{ sub.text }}</a>
               <span v-else class="zt-sidebar-link no-link">{{ sub.text }}</span>
             </template>
@@ -293,9 +308,10 @@ onUnmounted(() => {
 }
 
 .zt-sidebar-group-title {
+  display: block;
   font-size: 11px;
   font-weight: 600;
-  color: var(--vp-c-text-3);
+  color: #9a9aa8;
   padding: 2px 8px 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -304,23 +320,39 @@ onUnmounted(() => {
   text-overflow: ellipsis;
 }
 
+a.zt-sidebar-group-title.is-link {
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a.zt-sidebar-group-title.is-link:hover,
+a.zt-sidebar-group-title.is-link.active {
+  color: var(--vp-c-brand-2);
+}
+
 .zt-sidebar-link {
   display: block;
-  padding: 3px 8px;
+  padding: 4px 8px;
+  margin-bottom: 1px;
   font-size: 12px;
-  line-height: 1.5;
-  color: var(--vp-c-text-2);
+  line-height: 1.45;
+  color: #bebecb;
   text-decoration: none;
   border-radius: 3px;
   transition: color 0.15s, background 0.15s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .zt-sidebar-link:hover {
   color: var(--vp-c-brand-1);
   background: var(--vp-c-gray-soft);
+}
+
+.zt-sidebar-link.active {
+  color: #ffffff;
+  background: rgba(0, 255, 159, 0.07);
+  box-shadow: inset 2px 0 0 var(--vp-c-brand-1);
 }
 
 .zt-sidebar-link.top-level {

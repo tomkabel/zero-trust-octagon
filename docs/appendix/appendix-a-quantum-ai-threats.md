@@ -1,3 +1,8 @@
+---
+cover: /images/covers/appendix/appendix-a-quantum-ai-threats.webp
+coverAlt: "Illustration: quantum lattice and AI filament storms nearing an octagonal bastion's shield"
+---
+
 # Appendix A: Quantum + AI Adversary Stress-Tests
 
 > **Prerequisites:** [§2: The Octagon](../01-foundations/02-the-octagon.md), [§7: Meta-Patterns](../02-methodology/07-meta-patterns.md), [§12: Cross-Trace Synthesis](../03-archetypes/12-cross-trace-synthesis.md)

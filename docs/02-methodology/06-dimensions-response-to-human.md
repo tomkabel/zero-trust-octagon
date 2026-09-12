@@ -1,3 +1,8 @@
+---
+cover: /images/covers/02-methodology/06-dimensions-response-to-human.webp
+coverAlt: "Illustration: an arc of five dials for response, distribution, observability, posture and continuity"
+---
+
 # 6. Dimensions 5-9: Response, Distribution, Observability, Posture, Continuity
 
 > **Learning Objectives**

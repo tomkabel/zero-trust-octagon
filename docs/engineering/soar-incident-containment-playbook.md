@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/soar-incident-containment-playbook.webp
+coverAlt: "Illustration: three concentric containment seals closing around a glowing alarm core"
+---
+
 # SOAR Incident Containment Playbook
 
 > **Purpose:** Automated 3-tier incident containment for critical SIEM alerts — session eviction via Redis, Smart-ID/eIDAS identity anchor lock, and FIDO2 device quarantine with sub-second enforcement.

@@ -1,3 +1,8 @@
+---
+cover: /images/covers/03-archetypes/12-cross-trace-synthesis.webp
+coverAlt: "Illustration: four coloured attack trails converging into one magnifying lens above a map"
+---
+
 # 12. Cross-Trace Synthesis: What the Four Breaches Teach
 
 > **Learning Objectives**

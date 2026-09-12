@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/zero-trust-identity-blueprint.webp
+coverAlt: "Illustration: a phishing lure's hook sliding off a hardware key before a keyhole gateway"
+---
+
 # Zero-Trust Phishing-Resistant Identity Architecture
 
 > **Purpose:** Executive-level blueprint — eliminates shared secrets, enforces continuous cryptographic verification at the API gateway, and satisfies eIDAS/NIS2/GDPR under European regulatory constraints.

@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/siem-logging-pipeline.webp
+coverAlt: "Illustration: log-stream rivers converging into a signing lens tower with detection gears"
+---
+
 # SIEM Logging Pipeline
 
 > **Purpose:** Architecture for routing Zero-Trust token and challenge engine logs into a centralized SIEM pipeline with cryptographic signing and automated detection rules.

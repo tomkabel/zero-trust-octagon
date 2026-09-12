@@ -1,3 +1,8 @@
+---
+cover: /images/covers/03-archetypes/10-archetype-c-startup.webp
+coverAlt: "Illustration: a fast workshop conveyor with one poisoned crate among green build crates"
+---
+
 # 10. Archetype C: Move Fast, Fix It In Prod
 
 > **Learning Objectives**

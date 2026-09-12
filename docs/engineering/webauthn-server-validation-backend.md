@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/webauthn-server-validation-backend.webp
+coverAlt: "Illustration: sealed attestation capsules checked against a registry wall and stamped or deflected"
+---
+
 # WebAuthn Enterprise Server-Side Validator
 
 > **Purpose:** Production-ready Node.js/TypeScript backend validation server — cryptographically verifies client attestation payloads, parses hardware AAGUID, and enforces NIS2 Zero Trust security checks.

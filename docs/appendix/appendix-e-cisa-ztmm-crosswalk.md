@@ -1,3 +1,8 @@
+---
+cover: /images/covers/appendix/appendix-e-cisa-ztmm-crosswalk.webp
+coverAlt: "Illustration: two framework maps joined by luminous crosswalk threads between matching features"
+---
+
 # Appendix E: CISA Zero Trust Maturity Model v2.0 Crosswalk
 
 > **Prerequisites:** [§2: The Octagon](../01-foundations/02-the-octagon.md), [§4: The Morphological Matrix](../02-methodology/04-the-morphological-matrix.md), [§7: Meta-Patterns](../02-methodology/07-meta-patterns.md), [§13: Self-Assessment Diagnostic](../04-synthesis/13-self-assessment.md)

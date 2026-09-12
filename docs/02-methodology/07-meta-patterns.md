@@ -1,3 +1,8 @@
+---
+cover: /images/covers/02-methodology/07-meta-patterns.webp
+coverAlt: "Illustration: nine linked nodes, a lever on a fulcrum, and a rising capability surface"
+---
+
 # 7. Meta-Patterns: Covariance, Leverage, and the Capability Surface
 
 > **Learning Objectives**
