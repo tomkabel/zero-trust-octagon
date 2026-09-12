@@ -13,6 +13,9 @@
  * Registered from docs/.vitepress/config.ts via `markdown.config`.
  */
 
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
+
 const PART_LABELS = [
   [/^01-foundations\//, 'Part I — Foundations'],
   [/^02-methodology\//, 'Part II — Architecture'],
@@ -64,6 +67,28 @@ function countWords(tokens) {
   return words
 }
 
+/**
+ * Cover assets live in `<srcDir>/public/...` and are served from the site
+ * root. During a build the asset pipeline resolves `/images/...` imports
+ * against that public dir — if the file is missing, the rollup build FAILS.
+ * Skip the figure (with a warning) instead, so frontmatter referencing an
+ * asset can land before/independently of the asset file itself.
+ *
+ * srcDir is derived from `env.path` (absolute) minus `env.relativePath`,
+ * and the check fails open: if anything is off we keep the figure.
+ */
+function coverFileExists(env, coverPath) {
+  try {
+    const abs = String(env.path || '')
+    const rel = String(env.relativePath || '')
+    if (!abs || !rel || !abs.endsWith(rel)) return true
+    const srcDir = abs.slice(0, abs.length - rel.length).replace(/[\\/]+$/, '')
+    return existsSync(join(srcDir, 'public', coverPath.replace(/^\/+/, '')))
+  } catch {
+    return true
+  }
+}
+
 export function postHeaderPlugin(md) {
   md.core.ruler.push('zt_post_header', (state) => {
     const env = state.env || {}
@@ -93,15 +118,23 @@ export function postHeaderPlugin(md) {
     const caption = frontmatter.coverCaption
       ? `<figcaption>${escapeHtml(frontmatter.coverCaption)}</figcaption>`
       : ''
+    const coverAvailable = coverFileExists(env, frontmatter.cover)
+    if (!coverAvailable) {
+      console.warn(
+        `[zt-post-header] cover asset missing, skipping figure: ${frontmatter.cover} (${relativePath})`,
+      )
+    }
     const headHtml =
-      `<figure class="zt-post-cover">` +
-      // NOTE: keep the public-dir path without the site base — VitePress's
-      // asset pipeline resolves `/images/...` against the public dir and
-      // prepends the base itself. Including the base here breaks the build.
-      `<img src="${escapeHtml(frontmatter.cover)}"` +
-      ` alt="${escapeHtml(alt)}" loading="eager" decoding="async">` +
-      caption +
-      `</figure>` +
+      (coverAvailable
+        ? `<figure class="zt-post-cover">` +
+          // NOTE: keep the public-dir path without the site base — VitePress's
+          // asset pipeline resolves `/images/...` against the public dir and
+          // prepends the base itself. Including the base here breaks the build.
+          `<img src="${escapeHtml(frontmatter.cover)}"` +
+          ` alt="${escapeHtml(alt)}" loading="eager" decoding="async">` +
+          caption +
+          `</figure>`
+        : '') +
       (kicker ? `<p class="zt-post-kicker">${escapeHtml(kicker)}</p>` : '')
 
     // ---- meta line (after the H1) ---------------------------------------
