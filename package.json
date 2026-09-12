@@ -29,7 +29,7 @@
     "vitest": "^5.0.0"
   },
   "dependencies": {
-    "@simplewebauthn/server": "^13.3.2",
+    "@simplewebauthn/server": "^14.0.1",
     "redis": "^4.7.0"
   }
 }
