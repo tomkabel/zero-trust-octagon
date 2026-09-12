@@ -1,3 +1,8 @@
+---
+cover: /images/covers/03-archetypes/08-archetype-a-holy-grail.webp
+coverAlt: "Illustration: a sensor-guarded citadel on a silicon chip, attack sparks dissolving at its gate"
+---
+
 # 8. Archetype A: The Holy Grail — Full Attack Trace
 
 > **Learning Objectives**

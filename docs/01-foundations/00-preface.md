@@ -1,3 +1,8 @@
+---
+cover: /images/covers/01-foundations/00-preface.webp
+coverAlt: "Illustration: a drafting table at night with an unfinished octagonal blueprint"
+---
+
 # Preface
 
 **Prerequisites:** None

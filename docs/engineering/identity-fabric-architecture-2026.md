@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/identity-fabric-architecture-2026.webp
+coverAlt: "Illustration: three interlaced fabric layers wrapped by a continuous adaptive loop"
+---
+
 # 2026/2027 Identity Fabric Architecture
 
 > **Purpose:** State-of-the-Art ZTA architecture with Continuous Adaptive Trust (CAT) framework — three-layer Identity Fabric, OID4VC/EUDI Wallet integration, WebAuthn Enterprise Attestation, and EU AI Act governance.

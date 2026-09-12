@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/anti-relay-cryptographic-channel-binding.webp
+coverAlt: "Illustration: two devices bound by a distance-measuring tether while a relay chain stretches away"
+---
+
 # Anti-Relay Cryptographic Channel Binding
 
 > **Purpose:** Bleeding-edge E2E cryptographic channel binding to neutralize NFCShare/NGate relay attacks — ECDH key exchange, FIDO2-to-eIDAS transaction chaining, acoustic liveness fingerprinting, and hardware RTT gatekeeping.

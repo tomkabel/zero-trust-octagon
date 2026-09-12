@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/compliance-audit-appendices.webp
+coverAlt: "Illustration: a desk of blank certificate templates, a stamper, and a hologram of chained ledger rows"
+---
+
 # Compliance Audit Appendices — Templates
 
 > **Purpose:** Fictional audit artifact templates for regulatory assurance dossier submission — certificate, ingestion logs, and compliance evidence patterns. **These are templates, not executed artifacts.** Replace placeholder values before audit submission.

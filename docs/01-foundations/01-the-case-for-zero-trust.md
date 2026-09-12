@@ -1,3 +1,8 @@
+---
+cover: /images/covers/01-foundations/01-the-case-for-zero-trust.webp
+coverAlt: "Illustration: a stone perimeter wall dissolving into a glowing network lattice"
+---
+
 # 1. The Case for Zero Trust
 
 > **Learning Objectives**

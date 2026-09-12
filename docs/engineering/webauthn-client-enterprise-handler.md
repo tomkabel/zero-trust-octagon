@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/webauthn-client-enterprise-handler.webp
+coverAlt: "Illustration: a hardware key inserted into a browser-window keyhole, streaming an attestation ribbon"
+---
+
 # WebAuthn Enterprise Client-Side Handler
 
 > **Purpose:** Production-ready TypeScript implementation for client-side WebAuthn — enforces Enterprise Attestation, extracts hardware telemetry, and structures payloads for the ZTA Relying Party server.

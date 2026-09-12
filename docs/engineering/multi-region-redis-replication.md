@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/multi-region-redis-replication.webp
+coverAlt: "Illustration: a globe with data clusters exchanging balanced streams while a seam knits closed"
+---
+
 # Multi-Region Active-Active Redis Replication
 
 > **Purpose:** Active-active multi-region Redis topology with CRDT patterns for sub-millisecond local reads, cross-region CAEP/SSF revocation sync, and split-brain resilience across eu-central-1 and eu-west-1.

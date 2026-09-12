@@ -1,3 +1,8 @@
+---
+cover: /images/covers/appendix/appendix-b-validation-checklist.webp
+coverAlt: "Illustration: an inspection bench with an octagonal stamp, blank checklist and three marking pens"
+---
+
 # Appendix B: Architecture Validation Checklist
 
 > **Prerequisites:** [§3: The Octagon as Validation Instrument](../01-foundations/03-octagon-as-instrument.md)

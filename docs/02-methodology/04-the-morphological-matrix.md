@@ -1,3 +1,8 @@
+---
+cover: /images/covers/02-methodology/04-the-morphological-matrix.webp
+coverAlt: "Illustration: a nine-axis configuration lattice with marker cubes and constraint lines"
+---
+
 # 4. The Morphological Matrix: A Configuration Space for Zero Trust
 
 > **Learning Objectives**

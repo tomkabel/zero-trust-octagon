@@ -1,3 +1,8 @@
+---
+cover: /images/covers/03-archetypes/09-archetype-b-fortune-500.webp
+coverAlt: "Illustration: a walled corporate tower with many open side doors and a stolen key-card"
+---
+
 # 9. Archetype B: The Fortune 500 Illusion of Control
 
 > **Learning Objectives**

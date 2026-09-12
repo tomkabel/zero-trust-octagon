@@ -1,3 +1,8 @@
+---
+cover: /images/covers/03-archetypes/11-archetype-d-lean-defense.webp
+coverAlt: "Illustration: a small command post tethered to floating service bubbles, one tether spliced"
+---
+
 # 11. Archetype D: SaaS-Glued Lean Defense
 
 > **Learning Objectives**

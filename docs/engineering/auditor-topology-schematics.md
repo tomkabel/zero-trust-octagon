@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/auditor-topology-schematics.webp
+coverAlt: "Illustration: a network topology like a city plan with auditor lenses at its intersections"
+---
+
 # Auditor Topology Schematics
 
 > **Purpose:** Architecture topology schematics and compliance mapping matrices for presentation to DPOs, corporate auditors, and national competent authorities evaluating NIS2 Article 21, eIDAS 2.0 High LoA, and GDPR compliance.

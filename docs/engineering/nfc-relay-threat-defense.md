@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/nfc-relay-threat-defense.webp
+coverAlt: "Illustration: a short-range handshake stretched by a ghost relay while a lock resists at the near end"
+---
+
 # NFC Relay Threat Model & Anti-Relay Defenses
 
 > **Purpose:** Threat model for NFC relay attacks (NGate/NFCShare), defense taxonomy, and hardened enrollment engine to neutralize proxy-relayed APDU traffic during WebAuthn/FIDO2 bootstrapping.

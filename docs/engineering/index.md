@@ -1,3 +1,10 @@
+---
+title: Engineering
+cover: /images/covers/engineering/index.webp
+coverAlt: "Illustration: a workbench where a blueprint cable runs into a glowing server rack"
+meta: "16 specs"
+---
+
 # Engineering Specs Index
 
 Companion implementation contracts for the Zero-Trust Octagon architecture. These specs define the "how" — complementing the theory chapters (`01-foundations/` through `04-synthesis/`) that define the "why."

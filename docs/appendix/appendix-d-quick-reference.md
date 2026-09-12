@@ -1,3 +1,8 @@
+---
+cover: /images/covers/appendix/appendix-d-quick-reference.webp
+coverAlt: "Illustration: a fanned field reference card embossed with a condensed octagon diagram"
+---
+
 # Appendix D: Dimensions + Axioms Quick-Reference Card
 
 > **Prerequisites:** All chapters and appendices

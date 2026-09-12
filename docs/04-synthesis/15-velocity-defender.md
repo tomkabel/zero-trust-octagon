@@ -2,6 +2,8 @@
 title: "15. The Velocity Defender"
 description: "A 12-month implementation pathway to harden a high-velocity startup against supply chain injection without adding CI/CD friction — layered attestation, SPIFFE/SPIRE, and selective quarantine."
 outline: deep
+cover: /images/covers/04-synthesis/15-velocity-defender.webp
+coverAlt: "Illustration: a light-streak runner passing tightening gates at full speed, threats bouncing off"
 ---
 
 # 15. The Velocity Defender: Hardening Archetype C in 12 Months

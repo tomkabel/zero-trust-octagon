@@ -2,6 +2,8 @@
 title: "18. The Decision Matrix in Practice + Conclusion"
 description: "The cross-archetype decision matrix mapping pain to first move, peer-review evolution from Octagon through Tridecagon, PQC migration timeline, and the three futures of zero-trust architecture."
 outline: deep
+cover: /images/covers/04-synthesis/18-decision-matrix-and-conclusion.webp
+coverAlt: "Illustration: one illuminated path through a dark decision lattice toward a distant spire"
 ---
 
 # 18. The Decision Matrix in Practice + Conclusion

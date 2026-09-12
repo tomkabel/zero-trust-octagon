@@ -1,3 +1,8 @@
+---
+cover: /images/covers/appendix/appendix-c-glossary.webp
+coverAlt: "Illustration: a shelf of geometric crystal specimens arranged like a lexicon"
+---
+
 # Appendix C: Glossary of Terms
 
 > **Prerequisites:** All chapters and appendices

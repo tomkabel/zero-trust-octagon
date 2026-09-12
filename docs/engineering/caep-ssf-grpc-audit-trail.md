@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/caep-ssf-grpc-audit-trail.webp
+coverAlt: "Illustration: sealed event pipelines from client towers flowing into an auditor vault with a looping clock"
+---
+
 # CAEP/SSF gRPC Implementation & eIDAS Audit Trail
 
 > **Purpose:** Go-based Envoy ExtAuthz gRPC service for CAEP/SSF continuous access evaluation, OID4VC/EUDI Wallet schema mappings, and NIS2/EU AI Act compliant cryptographically chained audit trail.

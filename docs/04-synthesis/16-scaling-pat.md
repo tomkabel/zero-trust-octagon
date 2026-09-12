@@ -2,6 +2,8 @@
 title: "16. Scaling Pat"
 description: "A 6-month implementation pathway for securing a solo-operated organization on a one-person budget — hardware keys, automated response, and browser-level SaaS enforcement."
 outline: deep
+cover: /images/covers/04-synthesis/16-scaling-pat.webp
+coverAlt: "Illustration: one chair at the hub of a control room while robotic arms work around it"
 ---
 
 # 16. Scaling Pat: Hardening Archetype D in 6 Months

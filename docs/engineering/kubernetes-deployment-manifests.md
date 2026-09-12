@@ -1,3 +1,8 @@
+---
+cover: /images/covers/engineering/kubernetes-deployment-manifests.webp
+coverAlt: "Illustration: container-cubes arranged on a grid by a crane inside a fence of policy lines"
+---
+
 # Kubernetes Deployment Manifests for ZTA Infrastructure
 
 > **Purpose:** Hardened K8s manifests for gRPC auth service and Redis challenge pipeline — Deployments, Services, and strict NetworkPolicies under NIS2 infrastructure isolation mandates.

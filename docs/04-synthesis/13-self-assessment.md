@@ -2,6 +2,8 @@
 title: "Self-Assessment: Mapping Your Organization to an Archetype"
 description: "Twelve diagnostic questions to identify your zero-trust archetype and route to the correct implementation pathway."
 outline: deep
+cover: /images/covers/04-synthesis/13-self-assessment.webp
+coverAlt: "Illustration: a diagnostic console with twelve ticks, a sweeping needle and three diverging paths"
 ---
 
 # 13. Self-Assessment: Mapping Your Organization to an Archetype
