@@ -233,6 +233,73 @@ This is not a theoretical concern. NIST's PQC migration timeline (RSA/ECC deprec
 
 ---
 
+## Pattern 9: Jurisdictional Exposure — The Compellability Predicate
+
+**Compellability Predicate v1.0 — 2026-10.** Cite as: *Zero-Trust Octagon, §7 Pattern 9, Compellability Predicate v1.0 (2026-10).*
+
+"EU-only" (or any-jurisdiction-only) is not an axiom. "Hosted in the EU, therefore trusted" is intrinsic trust in a jurisdiction — Axiom 1's trusted-network perimeter re-entering as a legal perimeter with a compliance badge. It is also anti-correlated with Axioms 6 and 10: verifiers under one legal regime are correlated components, and a single court order compromises the whole quorum at once. The requirement is real; the axiom form is wrong.
+
+Geography is not attestable. Compellability is. *Ask who can compel the key holder, not where the bytes sit.*
+
+```
+GOVERNED(r, J) := compel(r) ⊆ J  ∧  t > max_parent(r)
+```
+
+- `compel(r)` — the set of jurisdictions that can lawfully order **any holder of a key in r's decryption or verdict-signing path** to act.
+- `J` — the admissible jurisdiction set (for the EU case, the EEA).
+- `t` — the Axiom 10 quorum threshold.
+- `max_parent(r)` — the largest number of quorum members under any single ultimate parent outside `J`.
+
+Machine-evaluable inputs:
+
+1. every key in the path attested non-exportable in an HSM whose attestation chain terminates in a Trusted List QTSP inside `J`;
+2. each quorum member presents a qualified electronic attestation of attributes (QEAA) asserting legal-entity domicile and ultimate control;
+3. `t` exceeds the count of members under any single parent outside `J`.
+
+Fail any clause → **DENY**. The predicate evaluates to `true`, `false`, or `indeterminate`; forcing a binary on incomplete evidence produces a wrong verdict.
+
+### The grant/deny table
+
+Axiom 7 says unattested data may only deny, never grant. Most of the sovereignty stack is paper.
+
+| Class | Input | Why |
+|---|---|---|
+| **GRANT-capable** | eIDAS 2.0 (Reg. (EU) 2024/1183) QTSP certificates, qualified seals, qualified timestamps | Cryptographically verifiable; issuer revocable in real time by a supervisory body |
+| **GRANT-capable** | QEAA verified against the EU Trusted List | The only real jurisdiction anchor: revocable, legally binding, machine-checkable |
+| **GRANT-capable** | CRA-mandated signed SBOM, in-toto / SLSA build attestations | Artifact provenance — not jurisdiction |
+| **GRANT-capable** | HSM non-exportability attestation chaining to a Trusted List QTSP | Proves the key cannot leave the module |
+| **DENY-only** | GDPR Ch. V SCCs, transfer impact assessments | Contract, not proof |
+| **DENY-only** | EU–US Data Privacy Framework adequacy | A revocable Commission act — a cache entry with no expiry semantics (fails Axiom 4) |
+| **DENY-only** | EUCS sovereignty tier | Immunity requirements removed from the draft; scheme unadopted as of 2026-09. Adjacent instruments (Cloud Sovereignty Framework, CADA) are non-binding |
+| **DENY-only** | Data Act (Reg. (EU) 2023/2854) Art. 32 safeguards | A promise to litigate |
+| **DENY-only** | NIS2 / DORA registers of information, subcontracting RTS | Self-declared |
+| **DENY-only** | Gaia-X labels | Self-declaration |
+| **DENY-only** | Provider-managed CMK "in eu-central-1", residency toggles, "sovereign cloud" run by a non-EU-parented subsidiary, EU-resident support staff without a customer-held approval key | The provider holds the key. Region is a billing and latency property, not a compellability property |
+| **Allowlist only** | EUCC (Reg. (EU) 2024/482) / Common Criteria certificates | Gate which HSM and TPM models are admitted; never a runtime grant |
+
+### Where it attaches
+
+| Axiom | What attaches |
+|---|---|
+| 7 — Epistemic Integrity | Jurisdiction is an attested attribute. Unattested jurisdiction is hostile input: DENY-only. |
+| 5 — Bounded Authority | "Who can lawfully compel the key holder" is part of a credential's calculable blast radius. |
+| 3 — Unbypassable Mediation | Lawful intercept and compelled key release are mediation paths. The set of actors able to compel access must be enumerated, and each path must produce an audited, non-repudiable decision. |
+| 6 — Byzantine Fault Tolerance | The operator and its legal compellers are inside the Byzantine component set. A gag order makes the compromise silent. Quorum members must be jurisdictionally decorrelated. |
+| 8 — Corollary 8.3 | The refusal predicate: fail closed on unproven jurisdiction. |
+| 10 — Sovereign Quorum | *Independent verifiers* means *jurisdictionally decorrelated verifiers*. |
+
+### The ceiling — stated, not hidden
+
+- **Jurisdiction is attributable, never provable.** Cryptography shows who released a key and when; it never shows where bytes travelled. The deliverable is court-usable attribution.
+- **The silicon root is non-EU for confidential computing.** AMD SEV-SNP chains to the AMD Key Distribution Service; Intel TDX to Intel's PCS. Both are live operational dependencies on US-operated endpoints. Discrete TPMs from Infineon, NXP, or STMicroelectronics do terminate at an EU legal entity.
+- **`compel(r) ⊆ EEA` is a reduction from N to 27, not to zero.** National security remains member-state competence (Art. 4(2) TEU). The mitigation is architectural: decorrelate across member states so no single national authority reaches a quorum.
+- **A witness set you own alone is one failure domain with extra steps.** Split-view detection needs N-of-M witnesses across operators in different member states and corporate groups.
+- **Every layer is fail-closed.** A fail-closed key broker outage is an Axiom 9 violation. Budget a cached-key TTL and a written degraded mode.
+
+**Scope boundary.** This predicate establishes technical facts and enumerates the compulsion surface. Whether a given law reaches a given entity is a legal conclusion for counsel, not an output of the method.
+
+---
+
 ## Key Takeaways
 
 1. **The nine dimensions are not independent. They form self-reinforcing covariance clusters. Single-dimension upgrades produce diminishing returns until critical mass shifts to the high-maturity cluster.**
@@ -243,6 +310,7 @@ This is not a theoretical concern. NIST's PQC migration timeline (RSA/ECC deprec
 6. **The ZTMM and the Octagon measure different things — organizational maturity vs. architectural integrity — and the cross-cutting capability mapping shows they are complementary, not competing.**
 7. **D8 (Organizational Posture) is the only dimension with a zero-dollar cost floor. The DoD's DTM-25-003 ZT PfMO validates D8 as a first-class architectural control.**
 8. **Post-quantum cryptographic transition is an architectural concern, not a cryptographic one — signature size increases affect D4 attestation bandwidth, D6 policy propagation latency, and D7 telemetry pipeline capacity.**
+9. **Jurisdiction is not an axiom and not a geography. The compellability predicate asks who can lawfully order a key holder to act; only Trusted List-anchored evidence can grant, everything else can only deny.**
 
 ---
 

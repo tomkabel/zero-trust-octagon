@@ -33,7 +33,9 @@ SUMMARY OF ASSURANCE FINDINGS:
 ----------------------------------------------------------------------------------------------------
 The evaluation authority certifies that the target architecture has been rigorously assessed under
 adversarial simulation conditions and code-level inspection. The system successfully demonstrates
-the elimination of phishable vectors and satisfies the strict bounds of European data sovereignty.
+the elimination of phishable vectors. Data-residency controls are deployed in EU regions; this audit
+does NOT evaluate key-holder compellability (see Chapter 7, Compellability Predicate v1.0) and makes
+no sovereignty claim beyond residency.
 
 1. CRITERION: PHISHING-RESISTANT MFA (NIS2 ART 21)
    - Status: Verified Passive and Active Enforcement.

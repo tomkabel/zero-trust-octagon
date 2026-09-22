@@ -91,6 +91,16 @@ Does the client verify the resource's state before sending data?
 
 ---
 
+## Supplementary — Jurisdictional Exposure (Compellability Predicate v1.0)
+
+Who can lawfully compel any holder of a key in the decryption or verdict-signing path? This is not a ninth axiom; it scores the jurisdictional binding of Axioms 3, 5, 6, 7, and 10 per [§7 Pattern 9](../02-methodology/07-meta-patterns.md#pattern-9-jurisdictional-exposure-the-compellability-predicate).
+
+| Green 🟢 | Yellow 🟡 | Red 🔴 |
+|---------|----------|--------|
+| `compel(r)` is enumerated as a list of named legal entities and ultimate parents. Every key in the path is attested non-exportable in an HSM chaining to a Trusted List QTSP. Quorum members are jurisdictionally decorrelated and verified by QEAA. Compelled-access paths produce a customer-visible, non-repudiable record. | `compel(r)` is enumerated but rests on DPAs and subprocessor lists rather than attestation. Keys are customer-generated but provider-held (BYOK). Quorum members share one ultimate parent or one legal regime. | Jurisdiction is asserted by region selection or a "sovereign cloud" label. Provider-managed keys. Compelled access is invisible to the customer. Verdict: `indeterminate` at best. |
+
+---
+
 ## Score Summary
 
 | Axiom | Score 🟢🟡🔴 | Notes |
@@ -103,6 +113,7 @@ Does the client verify the resource's state before sending data?
 | 6. Byzantine Fault Tolerance | | |
 | 7. Epistemic Integrity | | |
 | 8. Bilateral Symmetry | | |
+| S. Jurisdictional Exposure | | *supplementary — not an axiom* |
 
 **Red axioms are architectural violations. Address them in priority order: start with the lowest-cost fix (typically D8 or D9) or the highest-leverage fix (D5 or D4), per the decision matrix in Chapter 18.**
 

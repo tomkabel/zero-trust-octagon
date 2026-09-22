@@ -184,7 +184,7 @@ The Octagon's eight axioms are the stable, peer-reviewed foundation — individu
 
 ### Axiom 10 — Sovereign Quorum
 
-> No single organization may unilaterally declare an entity trusted. Trust verdicts that cross organizational boundaries require cryptographic attestation from a quorum of independent verifiers, preventing any one compromised authority from contaminating the trust fabric.
+> No single organization may unilaterally declare an entity trusted. Trust verdicts that cross organizational boundaries require cryptographic attestation from a quorum of independent — and jurisdictionally decorrelated — verifiers, preventing any one compromised or compelled authority from contaminating the trust fabric.
 
 ### Axiom 11 — Temporal Epistemic Integrity
 

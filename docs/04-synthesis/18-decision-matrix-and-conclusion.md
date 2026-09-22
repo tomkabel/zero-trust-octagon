@@ -48,37 +48,47 @@ The eight-question architecture audit from Chapter 3 is not a one-time exercise.
 
 ## Peer-Review Evolution: Octagon → Hendecagon → Tridecagon
 
-The eight Octagon axioms (Axioms 1-8) were extended through adversarial peer review into a refined set. This section documents that evolution — what each extension adds, what gap it closes, and what remains formalized.
+The eight Octagon axioms (Axioms 1-8) were extended through adversarial peer review into a refined set. The numbering and names are fixed in [§2: The Octagon](../01-foundations/02-the-octagon.md#beyond-the-octagon-hendecagon-and-tridecagon); this section documents what each extension adds, what gap it closes, and what remains to be formalized.
 
-### Axiom 9: Layer-Provenance Integrity (Added in Review)
+### Axiom 9: Functional Preservation
 
-**What it adds:** Every architectural claim must be traceable to a specific layer of abstraction. A network enforcement claim must trace to a concrete policy, a concrete enforcement point, and a concrete verification event. Layer-provenance prevents claims from floating abstractly — "we do microsegmentation" without a verifiable enforcement chain.
+**What it adds:** The system must continue to perform its operational function while under active attack, without degrading to denial-first responses.
 
-**The gap it closes:** Abstract architectural claims are unfalsifiable. "We have zero-trust" is a claim that can be made by an organization with overlapping tools but no integration. Axiom 9 forces claims to be traced to specific, verifiable layer artifacts.
+**The gap it closes:** The Hard Deny-to-outage cascade (Chapter 9). An architecture that preserves confidentiality by destroying availability has handed the attacker a denial-of-service victory. Axiom 9 makes that trade an architectural violation, not an operations incident.
 
-**Motivation:** Adversarial review of Early Archetype A traces found that organizational architecture claims were systematically ambiguous at abstraction boundaries. Axiom 9 formalizes the requirement: every claim must anchor to a concrete layer.
+### Axiom 10: Sovereign Quorum
 
-### Axiom 10: Cryptographic Non-Repudiation (Added in Review)
+**What it adds:** No single organization may unilaterally declare an entity trusted. Cross-boundary trust verdicts require attestation from a quorum of independent verifiers.
 
-**What it adds:** All enforcement decisions — allow, deny, challenge, redirect — must be cryptographically signed by the decision-making entity. PEPs must produce a signed decision log that can be independently audited. The PEP cannot deny having made a decision.
+**The gap it closes:** A single compromised — or compelled — authority contaminating the trust fabric. *Independent* must be read as **jurisdictionally decorrelated**: verifiers under one legal regime are correlated components, and one court order reaches all of them at once. See the compellability predicate in [§7 Pattern 9](../02-methodology/07-meta-patterns.md#pattern-9-jurisdictional-exposure-the-compellability-predicate).
 
-**The gap it closes:** Without non-repudiation, an auditor cannot distinguish between "the PEP allowed the traffic" and "the PEP was compromised and silently allowed everything." Non-repudiation makes PEP compromise detectable by producing a signed log that, if legitimate decisions are absent, proves the PEP was offline or under attacker control.
+### Axiom 11: Temporal Epistemic Integrity
 
-**Motivation:** Attack traces showing the Hard Deny-to-outage cascade (Chapter 9) revealed that when a PEP fails, there is no cryptographically verifiable record of *what* it decided before failure. Axiom 10 closes that forensic gap.
+**What it adds:** Provenance proofs have a shelf life determined by the cryptographic algorithms that secure them.
 
-### Axiom 11: Cross-Pillar Coupling Bound (Added in Review)
+**The gap it closes:** Axiom 7 treats a valid signature as timeless. Axiom 11 makes algorithmic obsolescence a provenance failure with a known date.
 
-**What it adds:** No single pillar upgrade may increase the attack surface of a different pillar. An upgrade to Identity (adding a new SSO provider) must not degrade Network posture (creating a new authentication channel that bypasses existing network policy). Coupling must be measured and bounded.
+### Axiom 12: Algorithmic Impermanence
 
-**The gap it closes:** The confidence/reality gap (57% believe Advanced, 69% breached) is driven by pillar upgrades that degrade non-upgraded pillars. Axiom 11 makes that degradation architecturally prohibited — not just recognized.
+**What it adds:** Algorithm migration is a continuous operation, not a flag-day transition. NIST's PQC timeline (RSA/ECC deprecation by 2030, disallowance by 2035) places this inside the design lifetime.
 
-### Axioms 12-13: Structural and Temporal Integrity (Provisionally Added)
+### Axiom 13: Architectural Polymorphism
 
-**Axiom 12 (Structural Integrity):** The dimension configuration vector (D1 through D9) must be stable under architectural change. Adding a new platform must not change the D-vector unless the change is an intentional upgrade. If adding a new vendor creates a new Single Source attestation path, that is an architectural regression — even if the vendor is "more secure" in isolation.
+**What it adds:** Topology, routing, and response behavior must be non-static against adversaries operating at machine speed. A predictable architecture is one an AI-speed adversary models faster than a human defends.
 
-**Axiom 13 (Temporal Integrity):** The configuration must be self-stabilizing over time. Configuration drift that is not automatically corrected must be detected within one operational cycle. If a policy expires and enforcement falls back to a default-allow, that is an architectural violation — not an operations incident.
+### Candidate invariants not promoted to axioms
 
-> **Note on Axioms 10-13:** Axioms 9 is fully formalized with corollaries. Axioms 10 and 11 are defined with initial corollaries. Axioms 12-13 are provisionally identified — their implications are visible in adversarial stress-test results, but their corollaries and enforcement mechanisms are not yet fully specified. These axioms represent the frontier of the peer-review evolution. Future editions of this work should complete their formalization.
+Review also surfaced five properties that earlier drafts numbered as axioms. Each is a theorem of Axioms 1–8 rather than an irreducible invariant, so they are kept as named corollary-level requirements:
+
+| Candidate | Derives from | Requirement |
+|---|---|---|
+| **Layer-Provenance Integrity** | Axiom 2, Axiom 7 | Every architectural claim traces to a concrete policy, enforcement point, and verification event. "We do microsegmentation" without an enforcement chain is unfalsifiable. |
+| **Cryptographic Non-Repudiation** | Axiom 6 (Cor. 6.1), Axiom 7 | Every enforcement decision is signed by the deciding entity. Absence of legitimate decisions in the signed log proves the PEP was offline or under attacker control. |
+| **Cross-Pillar Coupling Bound** | Axiom 3, Axiom 5 | No pillar upgrade may increase another pillar's attack surface. This is the mechanism behind the confidence/reality gap (57% believe Advanced, 69% breached). |
+| **Structural Integrity** | Axiom 7 (Cor. 7.2) | The D1–D9 configuration vector is stable under change. A new vendor that creates a Single Source attestation path is a regression regardless of the vendor's isolated quality. |
+| **Temporal Integrity** | Axiom 4 | Drift not automatically corrected is detected within one operational cycle. A policy expiring into default-allow is an architectural violation. |
+
+> **Note:** Axioms 9–13 are stated as invariants but are not yet formalized with corollaries. Their implications are visible in the adversarial stress-tests of Appendix A; their enforcement mechanisms are the frontier of this work. Future editions should complete their formalization.
 
 ---
 
