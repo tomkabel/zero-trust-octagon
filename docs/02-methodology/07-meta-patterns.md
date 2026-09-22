@@ -262,6 +262,7 @@ Fail any clause → **DENY**. The predicate evaluates to `true`, `false`, or `in
 
 Axiom 7 says unattested data may only deny, never grant. Most of the sovereignty stack is paper.
 
+<!-- #region grant-deny-table -->
 | Class | Input | Why |
 |---|---|---|
 | **GRANT-capable** | eIDAS 2.0 (Reg. (EU) 2024/1183) QTSP certificates, qualified seals, qualified timestamps | Cryptographically verifiable; issuer revocable in real time by a supervisory body |
@@ -276,6 +277,9 @@ Axiom 7 says unattested data may only deny, never grant. Most of the sovereignty
 | **DENY-only** | Gaia-X labels | Self-declaration |
 | **DENY-only** | Provider-managed CMK "in eu-central-1", residency toggles, "sovereign cloud" run by a non-EU-parented subsidiary, EU-resident support staff without a customer-held approval key | The provider holds the key. Region is a billing and latency property, not a compellability property |
 | **Allowlist only** | EUCC (Reg. (EU) 2024/482) / Common Criteria certificates | Gate which HSM and TPM models are admitted; never a runtime grant |
+<!-- #endregion grant-deny-table -->
+
+Standalone, linkable copy: [Appendix F](../appendix/appendix-f-grant-deny-table.md).
 
 ### Where it attaches
 
