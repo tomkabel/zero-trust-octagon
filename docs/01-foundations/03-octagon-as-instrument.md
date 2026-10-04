@@ -123,7 +123,7 @@ Applying the eight-question audit to the four archetypes produces a clear patter
 
 | Axiom | A (Holy Grail) | B (Fortune 500) | C (Startup) | D (Lean Defense) |
 |-------|:---:|:---:|:---:|:---:|
-| 1. No Intrinsic Trust | 🟢 | 🟢 | 🟡 | 🟢 |
+| 1. No Intrinsic Trust | 🟢 | 🔴 | 🟡 | 🟢 |
 | 2. Verifiable Policy | 🟢 | 🔴 | 🟢 | 🔴 |
 | 3. Unbypassable Mediation | 🟢 | 🔴 | 🟡 | 🔴 |
 | 4. Continuous Verification | 🟢 | 🔴 | 🔴 | 🔴 |
@@ -132,7 +132,7 @@ Applying the eight-question audit to the four archetypes produces a clear patter
 | 7. Epistemic Integrity | 🟢 | 🔴 | 🔴 | 🔴 |
 | 8. Bilateral Symmetry | 🟢 | 🔴 | 🔴 | 🟡 |
 
-**Total violations per archetype:** A = 0, B = 6, C = 5.5, D = 5.5 (yellow counts as 0.5).
+**Total violations per archetype:** A = 0, B = 7.5, C = 6, D = 5.5 (yellow counts as 0.5).
 
 ---
 
