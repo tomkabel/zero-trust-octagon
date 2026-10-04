@@ -188,7 +188,7 @@ This is not an argument against integrated platforms. It is a recognition that t
 
 ## Key Takeaways
 
-1. **The Fortune 500 vendor suite satisfies appearance but violates structure. Six of eight Octagon axioms are violated, and each violation enables a step in the attack chain.**
+1. **The Fortune 500 vendor suite satisfies appearance but violates structure. Seven of eight Octagon axioms are violated outright and one partially, and each violation enables a step in the attack chain.**
 2. **Hard Deny is the single most damaging dimension value in the matrix. It turns security incidents into business outages and trains the organization to disable zero-trust controls.**
 3. **Network perimeter enforcement (D3) is insufficient. Once the attacker is past the perimeter, the flat internal network offers no further mediation — every resource is reachable.**
 4. **Siloed organizations (D8) cannot operate zero-trust architectures. The seams between Identity, Network, and Security Operations teams are the attack surface the Red Team exploits after the perimeter fails.**
