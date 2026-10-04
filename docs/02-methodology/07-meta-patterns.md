@@ -59,6 +59,25 @@ Not all dimension upgrades produce equal impact. The hierarchy, derived from att
 
 **D1 (Trust Anchor) is not in the top five** — not because it is unimportant, but because upgrading it before upgrading D4 (Attestation) and D7 (Observability) is wasted investment. A hardware root of trust whose attestations are verified by an implicitly trusted SIEM is not meaningfully more secure than a software root.
 
+### Leverage Within Covariance Clusters
+
+The hierarchy above ranks **potential impact per dimension**, assuming the dimension could be upgraded in isolation. However, Pattern 1 established that dimensions are not independent — they form covariance clusters where each value reinforces others.
+
+**Practical implication:** Upgrading D5 (Violation Response) from Hard Deny to Trickle-Truth delivers maximum leverage **only when** D4 (Attestation), D6 (Policy Distribution), and D8 (Organization) are simultaneously at compatible values:
+
+- If D4 = Single Source (low signal quality), Trickle-Truth seamlessly deceives legitimate users flagged by noisy attestation
+- If D6 = Push (30-second sync), the `transition:trickle-truth` event arrives long after the attacker's next request
+- If D8 = Siloed, the three teams cannot execute the coordinated graft/de-graft protocol
+
+Upgrading D5 in isolation without upgrading covariant dimensions produces diminishing returns. The leverage hierarchy tells you **which dimension to upgrade first within your cluster transition**, not **which dimension you can upgrade independently**.
+
+**How to apply this hierarchy:**
+1. Identify which covariance cluster your organization belongs to (Pattern 1, above)
+2. Use the leverage hierarchy to prioritize **the first dimension upgrade within that cluster**
+3. Plan the coordinated upgrade of all covariant dimensions as a single project (not sequential)
+4. Re-evaluate cluster membership after each major upgrade
+5. See Part IV (Implementation) for cluster-based transition roadmaps
+
 ---
 
 ## Pattern 3: The Detect-Respond Gap

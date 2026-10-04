@@ -15,6 +15,24 @@ coverAlt: "Illustration: a small command post tethered to floating service bubbl
 
 ---
 
+## Archetype D as Transitional State
+
+Archetype D represents the **current state of many organizations** with limited infrastructure control and heavy SaaS dependency. It is a **transitional state, not a recommended end-state architecture**.
+
+Many organizations default to Archetype D because:
+- **Cost:** SaaS vendors provide identity, security, and compliance features at lower cost than building internal infrastructure
+- **Velocity:** Adopting SaaS platforms is faster than building internal controls
+- **Staffing:** Small teams cannot maintain complex internal architectures
+
+However, Archetype D with unmitigated SaaS blind spots is structurally vulnerable due to the limitations explored in this chapter. Organizations in Archetype D should view this chapter as both a vulnerability assessment and an exit planning tool:
+
+- **Path 1 (Recommended):** Migrate toward Archetype B or A by reclaiming control of critical infrastructure
+- **Path 2:** Harden Archetype D in place with detective/compensating controls at the API gateway and application layer (see "Compensating Controls" section below)
+
+---
+
+## The Lean Defense Reality
+
 Archetype D is the reality for a 30-to-100-person fully remote company with exactly one person handling IT, Security, and DevOps. We call them Pat. Pat has no CAPEX budget, no on-premise hardware, no Kubernetes clusters, and no SIEM. Pat's defense is identity-aware proxies, hardware security keys, SaaS vendor dashboards, and human intuition.
 
 **Configuration:**

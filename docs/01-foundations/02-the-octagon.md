@@ -17,11 +17,13 @@ coverAlt: "Illustration: eight glowing stones arranged as a ring, each bearing o
 
 ## Why Axioms?
 
-An axiom is a statement accepted as true without proof, from which other statements are logically derived. In geometry, "two points determine a line" is an axiom — you do not prove it, you accept it as the foundation and build geometry on top. A zero-trust architecture needs the same kind of foundation: a set of irreducible statements that, if satisfied, guarantee the system behaves as zero-trust, regardless of implementation details.
+An axiom is a statement accepted as true without proof, from which other statements are logically derived. In geometry, "two points determine a line" is an axiom — you do not prove it, you accept it as the foundation and build geometry on top. A zero-trust architecture needs the same kind of foundation: a set of core irreducible statements that, if satisfied, guarantee baseline zero-trust behavior. Additional specialized statements (Axioms 9-13) extend this foundation for emerging threats and organizational contexts.
 
 The eight axioms presented here — the Octagon — were developed through a systematic first-principles analysis that stripped away every vendor name, every product feature, and every implementation pattern, asking only: *"What must be true about any system that claims to distrust by default, verify continuously, and survive the compromise of its own components?"*
 
-The result is not a framework. It is a requirement specification. Any architecture that satisfies all eight axioms is zero-trust. Any architecture that fails one is not. The rest of this book is about understanding what that means in practice.
+The result is not a framework. It is a requirement specification. Any architecture that satisfies all eight core axioms is zero-trust. Any architecture that fails one is not. The rest of this book is about understanding what that means in practice.
+
+**Note:** The eight Octagon axioms form the baseline requirement set for current deployments. Axioms 9–13 (Hendecagon and Tridecagon) extend this foundation for quantum-era and AI-speed threat modeling. See §2.4 (Beyond the Octagon) for the distinction between the current deployment mandate and the future research frontier.
 
 ---
 
