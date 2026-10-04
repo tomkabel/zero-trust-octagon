@@ -18,11 +18,25 @@ coverAlt: "Illustration: a gantry crane rebuilding a tower while a lit milestone
 
 ---
 
+## Success Assumptions
+
+This 24-month roadmap is credible **if and only if** the following conditions are met:
+
+| Assumption | What It Means | If Not Met |
+|-----------|--------------|-----------|
+| **Annual budget: $2-5M** | Consulting ($500K-1M), tooling ($1-2M), infrastructure ($500K-1M) | Extend timeline proportionally (3-4 years for $1M annual budget) |
+| **Dedicated transformation team: 8-12 FTE** | Cross-functional: identity architect, network engineer, security operations, infrastructure, change management | Extend timeline 50% (add 12 months) for 4-6 FTE team |
+| **Executive sponsorship** | CTO/CISO/CEO commitment; ability to override business-as-usual obstacles in Q1-Q2 | Roadmap will fail in first gate check (§14.2) — abort and pivot to smaller scope |
+| **Starting point validation** | Your D9 is actually "24/7 SOC" and D6 is actually "Push" (validate against §13: Self-Assessment) | Adjust phase timeline based on your actual D9 and D6 values |
+| **No major business disruptions** | Mergers, acquisitions, major platform migrations, or regulatory changes during 24 months | Pause roadmap; restart after stabilization |
+
+**This chapter is not about spending more.** You are already spending. It is about spending on the right dimensions, in the right order, with the right dependencies acknowledged.
+
+---
+
 **Starting state:** D1: Software CA | D2: ABAC | D3: Network | D4: Single | D5: Hard Deny | D6: Push | D7: Implicit | D8: Siloed | D9: 24/7 SOC
 
-**Octagon violations:** 6 of 8. **Budget:** $5M+ annually. **Constraint:** Organizational inertia, not money.
-
-This chapter is not about spending more. You are already spending. It is about spending on the right dimensions, in the right order, with the right dependencies acknowledged.
+**Octagon violations:** 6 of 8.
 
 ---
 
