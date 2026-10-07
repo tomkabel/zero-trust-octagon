@@ -1,23 +1,5 @@
 # Zero-Trust Octagon
 
-<div align="center">
-
-<!-- Status: live, service-generated state -->
-[![CI](https://img.shields.io/github/actions/workflow/status/tomkabel/zero-trust-octagon/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI&labelColor=0d1117)](https://github.com/tomkabel/zero-trust-octagon/actions/workflows/ci.yml)
-[![Pages deploy](https://img.shields.io/github/actions/workflow/status/tomkabel/zero-trust-octagon/deploy.yml?branch=main&style=for-the-badge&logo=githubpages&logoColor=white&label=Pages&labelColor=0d1117)](https://github.com/tomkabel/zero-trust-octagon/actions/workflows/deploy.yml)
-[![Read online](https://img.shields.io/website?url=https%3A%2F%2Ftomkabel.github.io%2Fzero-trust-octagon%2F&style=for-the-badge&logo=readthedocs&logoColor=white&label=Read%20online&labelColor=0d1117&up_message=live&down_message=down)](https://tomkabel.github.io/zero-trust-octagon/)
-[![Last commit](https://img.shields.io/github/last-commit/tomkabel/zero-trust-octagon/main?style=for-the-badge&logo=git&logoColor=white&labelColor=0d1117)](https://github.com/tomkabel/zero-trust-octagon/commits/main)
-
-<!-- Metadata: license, runtime, toolchain, supply chain -->
-[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-ef9421?style=for-the-badge&logo=creativecommons&logoColor=white&labelColor=0d1117)](LICENSE)
-[![Node](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftomkabel%2Fzero-trust-octagon%2Fmain%2Fpackage.json&query=%24.engines.node&style=for-the-badge&logo=nodedotjs&logoColor=white&label=node&color=5fa04e&labelColor=0d1117)](package.json)
-[![VitePress](https://img.shields.io/github/package-json/dependency-version/tomkabel/zero-trust-octagon/dev/vitepress?style=for-the-badge&logo=vitepress&logoColor=white&color=5c73e7&labelColor=0d1117)](https://vitepress.dev/)
-[![Dependabot](https://img.shields.io/badge/dependabot-enabled-025e8c?style=for-the-badge&logo=dependabot&logoColor=white&labelColor=0d1117)](.github/dependabot.yml)
-
-**[Read the book online](https://tomkabel.github.io/zero-trust-octagon/)**
-
-</div>
-
 > **Zero-trust architecture from first principles — not products, not compliance checklists.**
 
 <img width="1408" height="768" alt="prompt-optimizer-20260527-064953-508" src="https://github.com/user-attachments/assets/10b3da67-59d9-4d89-a08c-36f010febb4e" />
@@ -92,11 +74,17 @@ Browse at `http://localhost:5173` after running the dev server.
 ## Built With
 
 - [VitePress](https://vitepress.dev/) — Static site generator
-- [Vitest](https://vitest.dev/) – Test runner for the `src/` reference implementations
 - Node.js — Runtime
 
 ---
 
 ## License
 
-The content is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE).
+Copyright © 2026 Tom Kristian Abel.
+
+This repository is dual-licensed by content type:
+
+- **Text and figures** (`docs/`, `research/` and all other prose): [Creative Commons Attribution-ShareAlike 4.0 International](LICENSE) (CC BY-SA 4.0). You may share and adapt it, including commercially, with attribution; adaptations must be released under the same license.
+- **Code and configuration** (`src/`, build and test configuration, `docker-compose.yml`, `fluent-bit.conf`): [Mozilla Public License 2.0](LICENSES/MPL-2.0.txt) (MPL-2.0). You can use the reference implementations in any project; changes to these files must stay under MPL-2.0.
+
+Copies obtained under the earlier CC BY 4.0 notice keep those terms.
