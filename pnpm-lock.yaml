@@ -20,7 +20,7 @@ importers:
         version: 1.6.4(@algolia/client-search@5.52.1)(postcss@8.5.23)(search-insights@2.17.3)
       vitepress-sidebar:
         specifier: ^1.36.1
-        version: 1.40.0
+        version: 1.41.0
       vitest:
         specifier: ^5.0.0
         version: 5.0.1(vite@7.3.6)
@@ -1252,9 +1252,9 @@ packages:
     resolution: {integrity: sha512-BbubeCEyTuQjVMakvJQ/Sxbc93F2pwmbsxONT/ZRrwU7Ua38d8unYTwXpTVLAKJ4BDuH9IGztCjQcd/N/39Dvg==}
     engines: {node: '>=16.0.0'}
 
-  qsu@1.18.0:
-    resolution: {integrity: sha512-YMfqHAbfQzyJueKDW0E+khjn4HrRxfTLSYZ7/U1kaywn3YQDyUUNvCFnZ/SyfPypvRVA6jpx3Dm5wIi8T0rN7g==}
-    engines: {node: '>=18.0.0'}
+  qsu@1.100.0:
+    resolution: {integrity: sha512-esVtSwI4AetasN5wl6olIoNGNkK26+5lN769d5JCiCYxRGFEEgjV1zGvrU/4uImz9iVNQCrIxmy9nQh5KhZ8dA==}
+    engines: {node: '>=20.0.0'}
 
   redis@6.2.1:
     resolution: {integrity: sha512-Z9VHtgYs48PiQC77X9O2Er8Hj4T+5BtFjT91/vi5Is1D04N72cA946ZslM1ImJw8ZctFBZWAVjM7S5wJNeHMpg==}
@@ -1449,8 +1449,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-sidebar@1.40.0:
-    resolution: {integrity: sha512-HwcZHixwwnLSbcDAbh+TRISX0zNerzL4UUpVlIEjbQleae095lfOQEFtB0Jkbxajy2yUiluH+TgLTLVMOj7+Tw==}
+  vitepress-sidebar@1.41.0:
+    resolution: {integrity: sha512-nL+jWlSgmn0Ssg8/PBcZmwbJ2vBFFg3nur+pX1qWihuP/ihTCI12Z/U2cFG54e/jTsWAGLm0KVfaid0NpA/jsQ==}
     engines: {node: '>=20.0.0'}
 
   vitepress@1.6.4:
@@ -2616,7 +2616,7 @@ snapshots:
 
   pvutils@1.2.0: {}
 
-  qsu@1.18.0: {}
+  qsu@1.100.0: {}
 
   redis@6.2.1:
     dependencies:
@@ -2821,11 +2821,11 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  vitepress-sidebar@1.40.0:
+  vitepress-sidebar@1.41.0:
     dependencies:
       glob: 13.0.6
       gray-matter: 4.0.3
-      qsu: 1.18.0
+      qsu: 1.100.0
 
   vitepress@1.6.4(@algolia/client-search@5.52.1)(postcss@8.5.23)(search-insights@2.17.3):
     dependencies:
